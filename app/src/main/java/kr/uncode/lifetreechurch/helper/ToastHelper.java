@@ -98,5 +98,5 @@ public class ToastHelper {
         showToastCenter(msg, Toast.LENGTH_LONG);
     }
 
-    
+
 }

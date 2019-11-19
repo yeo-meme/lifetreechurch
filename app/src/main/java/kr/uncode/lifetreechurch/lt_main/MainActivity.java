@@ -30,7 +30,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void initPageLoad() {
-       replaceFragment(new InitFragment(), true);
+       replaceFragment(new InitFragment(), false);
     }
 
     public void setTollbarTitle(String title) {

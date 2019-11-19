@@ -62,7 +62,7 @@ public class BaseFragment extends Fragment {
     public void replaceFragment(Fragment fragment, boolean addToBackStack) {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {
-//            ((BaseActivity) activity).replaceFragment(R.id.base_container,fragment,addToBackStack);
+            ((BaseActivity) activity).replaceFragment(R.id.main_container,fragment,addToBackStack);
         }
     }
 

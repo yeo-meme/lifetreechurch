@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--전체 메뉴 세로 나누기-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!--첫번째 레이아웃칸 가로나누기 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/youtube_color"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="설교영상\n(유튜브)"
+                    android:fontFamily="@font/scdream1"
+                    android:gravity="center_horizontal"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/gallery_color"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="생명나무교회\n 갤러리"
+                    android:gravity="center_horizontal"
+                    android:fontFamily="@font/scdream1"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+            <!--첫번째 레이아웃칸 가로나누기 마지막-->
+        </LinearLayout>
+
+        <!--전체 메뉴 세로 나누기 끝 1-->
+    </LinearLayout>
+
+
+    <!--전체 메뉴 세로 나누기 2-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <!--두번째 레이아웃칸-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/weekend_bg"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/scdream1"
+                android:text="주보"
+                android:textSize="48sp"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+        <!--전체 메뉴 세로 나누기 2 끝-->
+    </LinearLayout>
+
+    <!--하단영역 Area-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/toolbar_bg"
+            android:textStyle="bold"
+            android:text="교역자 소개"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/scdream3"
+            android:id="@+id/introduce_btn"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/scdream3"
+            android:background="@color/toolbar_bg"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="교회 소개"
+            android:id="@+id/introduce_church_btn"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

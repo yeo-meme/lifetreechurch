@@ -105,6 +105,11 @@
             android:layout_height="0dp"
             android:layout_weight="1.5"
             android:orientation="vertical" >
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/youtube_player_view"/>
         </LinearLayout>
         <!--세로 레이아웃 끝 3-->
 

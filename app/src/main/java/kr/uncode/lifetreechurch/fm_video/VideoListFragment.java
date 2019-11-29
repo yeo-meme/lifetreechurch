@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +19,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
@@ -30,7 +28,7 @@ import kr.uncode.lifetreechurch.databinding.FmVideolistBinding;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
 
 public class VideoListFragment extends BaseFragment {
-
+    private YoutubeRecyclerAdapter mSettingsListAdapter;
     YoutubeRecyclerAdapter mRecyclerAdapter;
 //    @BindView(R.id.recyclerViewFeed)
      private RecyclerView recyclerViewFeed;
@@ -39,6 +37,8 @@ public class VideoListFragment extends BaseFragment {
     FmVideolistBinding binding;
 
 
+
+    public YouTubePlayer youTubePlayer;
 
 
     @Nullable
@@ -76,14 +76,18 @@ public class VideoListFragment extends BaseFragment {
         Activity activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
             ButterKnife.bind(getActivity());
+        setYoutubeData();
 
-
-        List<YoutubeVideoModel> youtubeVideo = preapreList();
-        mRecyclerAdapter = new YoutubeRecyclerAdapter(youtubeVideo);
-        mLayoutManager =new LinearLayoutManager(getActivity());
 
     }
-    private List<YoutubeVideoModel> preapreList() {
+    private void setYoutubeData() {
+        List<YoutubeVideoModel> youtubeVideo = prepareList();
+        mRecyclerAdapter = new YoutubeRecyclerAdapter(youtubeVideo);
+        mLayoutManager =new LinearLayoutManager(getActivity());
+    }
+
+
+    private List<YoutubeVideoModel> prepareList() {
         ArrayList<YoutubeVideoModel> videoArrayList = new ArrayList<>();
 
         //add 데모 아이템
@@ -130,4 +134,9 @@ public class VideoListFragment extends BaseFragment {
         videoArrayList.add(video4);
         return videoArrayList;
     }
+
+
+
+
+
 }

@@ -1,6 +1,8 @@
 package kr.uncode.lifetreechurch;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +17,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+    public static final int CHILD = 1;
 
     public static final int VIEW_TYPE_NOMAL = 1;
     private List<YoutubeVideoModel> mYoutubeVideos;
@@ -98,4 +102,9 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
             }
         }
     }
+
+
+
+
 }
+

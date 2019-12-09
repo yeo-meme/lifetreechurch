@@ -5,11 +5,15 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
+
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
+    ItemYoutubeListBinding binding;
     private int mCurrentPosition;
-    public BaseViewHolder(@NonNull View itemView) {
-        super(itemView);
+    public BaseViewHolder(@NonNull ItemYoutubeListBinding itemView) {
+        super(itemView.getRoot());
+        binding = itemView;
     }
 
 

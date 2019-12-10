@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import kr.uncode.lifetreechurch.R;
+import kr.uncode.lifetreechurch.WeeklyFm.Weekly_Fm;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmMainBinding;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
@@ -29,15 +30,16 @@ public class InitFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         menuListener();
     }
 
     private void menuListener() {
         binding.videoMenu.setOnClickListener(this::videoClick);
+        binding.galleryMenu.setOnClickListener(this::weeklyClick);
     }
 
     private void videoClick(View view) {
         replaceFragment(new VideoFragment(),true);
     }
+    private void weeklyClick(View view) { replaceFragment(new Weekly_Fm(),true);}
 }

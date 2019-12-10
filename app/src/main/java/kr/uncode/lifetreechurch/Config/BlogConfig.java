@@ -1,41 +1,39 @@
-package kr.uncode.lifetreechurch;
+package kr.uncode.lifetreechurch.Config;
 
+import kr.uncode.lifetreechurch.RetroApiService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitConfig {
-    public static final String SERVER_URL = "https://www.googleapis.com";
+public class BlogConfig {
+    public static final String SEVER_URL = "https://api.uncode.kr:6000/ttlmc/";
+    private static BlogConfig instance = null;
 
-    private static RetrofitConfig instance = null;
     private Retrofit retrofit;
     private RetroApiService apiService;
 
-    private RetrofitConfig() {
-
+    private BlogConfig() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(SERVER_URL)
+                .baseUrl(SEVER_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
+
         apiService = retrofit.create(RetroApiService.class);
+
     }
 
-
-    public static RetrofitConfig getInstance() {
+    public static BlogConfig getInstance() {
         if (instance == null) {
-            instance = new RetrofitConfig();
+            instance = new BlogConfig();
         }
         return instance;
     }
 
-
-    public RetroApiService getApiService() {
-        return apiService;
-    }
+    public RetroApiService getApiService() {return apiService; }
 }

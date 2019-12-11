@@ -35,7 +35,7 @@ public class InitFragment extends BaseFragment {
 
     private void menuListener() {
         binding.videoMenu.setOnClickListener(this::videoClick);
-        binding.galleryMenu.setOnClickListener(this::weeklyClick);
+        binding.weekly.setOnClickListener(this::weeklyClick);
     }
 
     private void videoClick(View view) {

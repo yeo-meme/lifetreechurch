@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -23,7 +24,8 @@ import kr.uncode.lifetreechurch.utils.MLog;
 
 public class Weekly_Fm extends Fragment {
 
-    private String temImageUrl;
+    private String weekly1Url;
+    private String weekly2Url;
     private JiNuConfig jinuConfig;
 
     FmWeeklyBinding binding;
@@ -50,8 +52,10 @@ public class Weekly_Fm extends Fragment {
                     MLog.d("jinuAPI ok!!");
                     for (int i = 0; i < response.data.size(); i++) {
                         BlogWeekly.Data blogWeekly = response.data.get(i);
-                        temImageUrl = blogWeekly.imgurl1;
-                        MLog.d("data get ImageUrl : " + temImageUrl);
+                        weekly1Url = blogWeekly.imgurl1;
+                        weekly2Url = blogWeekly.imgurl2;
+                        MLog.d("data get ImageUrl : " + weekly1Url);
+                        MLog.d("data get ImageUrl : " + weekly2Url);
                     }
                     showWeekly();
                 }
@@ -60,12 +64,21 @@ public class Weekly_Fm extends Fragment {
     }
 
     private void showWeekly() {
-        if (temImageUrl != null) {
+        if (weekly1Url != null ) {
             Glide.with(binding.getRoot())
-                    .load(temImageUrl)
+                    .load(weekly1Url)
                     .override(500,300)
-//                        .apply(new RequestOptions().override(displayMetrics.widthPixels - 36, 200))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage1);
+        }
+
+        if (weekly2Url != null) {
+            Glide.with(binding.getRoot())
+                    .load(weekly2Url)
+                    .override(500,300)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(binding.weeklyImage2);
+
         }
 
     }

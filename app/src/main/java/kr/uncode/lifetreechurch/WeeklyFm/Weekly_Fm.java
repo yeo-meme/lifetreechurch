@@ -1,9 +1,11 @@
 package kr.uncode.lifetreechurch.WeeklyFm;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
@@ -24,9 +27,14 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmWeeklyBinding;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class Weekly_Fm extends BaseFragment {
+
+    private ProgressDialog progressDialog;
+
+
     private static final String IMAGE_URL = "WEEKLY_IMAGE";
     private String weekly1Url;
     private String weekly2Url;
@@ -76,10 +84,14 @@ public class Weekly_Fm extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getJinNu();
+//        progressDialog = new ProgressDialog(getContext());
+//        binding.progress.setVisibility(View.GONE);
+        getJinNu(view);
     }
 
-    private void getJinNu() {
+
+    private void getJinNu(View view) {
+
         jinuConfig = new JiNuConfig();
         jinuConfig.jiNuList(new ResponseCallback<BlogWeekly>() {
             @Override
@@ -93,16 +105,18 @@ public class Weekly_Fm extends BaseFragment {
                         MLog.d("data get ImageUrl : " + weekly1Url);
                         MLog.d("data get ImageUrl : " + weekly2Url);
                     }
-                    showWeekly();
+                    showWeekly(view);
+
                 }
             }
         });
     }
 
-    private void showWeekly() {
+    private void showWeekly(View view) {
         if (weekly1Url != null ) {
             Glide.with(binding.getRoot())
                     .load(weekly1Url)
+                    .format(DecodeFormat.PREFER_ARGB_8888)
                     .override(500,300)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage1);
@@ -111,6 +125,7 @@ public class Weekly_Fm extends BaseFragment {
         if (weekly2Url != null) {
             Glide.with(binding.getRoot())
                     .load(weekly2Url)
+                    .format(DecodeFormat.PREFER_ARGB_8888)
                     .override(500,300)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage2);

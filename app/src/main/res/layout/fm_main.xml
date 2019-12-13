@@ -95,6 +95,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/menu_column"
             android:foreground="?attr/selectableItemBackground"
             android:layout_height="match_parent"
             android:background="@color/happyColumn"
@@ -105,7 +106,7 @@
                 android:fontFamily="@font/scdream1"
                 android:text="행복컬럼"
                 android:id="@+id/happycolum"
-                android:textSize="48sp"
+                android:textSize="39sp"
                 android:textColor="@color/white"
                 />
         </LinearLayout>
@@ -147,5 +148,13 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progress"
+        android:visibility="gone"/>
+
 </LinearLayout>
+
 </layout>

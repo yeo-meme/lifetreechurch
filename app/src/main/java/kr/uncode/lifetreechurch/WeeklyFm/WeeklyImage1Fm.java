@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import kr.uncode.lifetreechurch.R;
@@ -51,7 +52,8 @@ public class WeeklyImage1Fm extends BaseFragment {
         if (image_url != null) {
             Glide.with(binding.getRoot())
                     .load(image_url)
-                    .override(500,300)
+                    .format(DecodeFormat.PREFER_ARGB_8888)
+                    .override(5000,5000)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage1);
 

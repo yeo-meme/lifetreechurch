@@ -116,8 +116,8 @@ public class Weekly_Fm extends BaseFragment {
         if (weekly1Url != null ) {
             Glide.with(binding.getRoot())
                     .load(weekly1Url)
+                    .override(3000,3000)
                     .format(DecodeFormat.PREFER_ARGB_8888)
-                    .override(500,300)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage1);
         }
@@ -125,8 +125,8 @@ public class Weekly_Fm extends BaseFragment {
         if (weekly2Url != null) {
             Glide.with(binding.getRoot())
                     .load(weekly2Url)
+                    .override(3000,3000)
                     .format(DecodeFormat.PREFER_ARGB_8888)
-                    .override(500,300)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage2);
 

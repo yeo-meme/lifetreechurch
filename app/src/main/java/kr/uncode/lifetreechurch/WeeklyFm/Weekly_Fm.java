@@ -2,10 +2,10 @@ package kr.uncode.lifetreechurch.WeeklyFm;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,16 +18,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import java.util.List;
-
 import kr.uncode.lifetreechurch.Config.JiNuConfig;
 import kr.uncode.lifetreechurch.Model.BlogWeekly;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmWeeklyBinding;
-import kr.uncode.lifetreechurch.fm_video.VideoFragment;
-import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class Weekly_Fm extends BaseFragment {
@@ -64,7 +60,7 @@ public class Weekly_Fm extends BaseFragment {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fmt = fm.beginTransaction();
         fragment.setArguments(bundle);
-        fmt.replace(R.id.main_container,fragment).addToBackStack(null).commit();
+        fmt.replace(R.id.main_container, fragment).addToBackStack(null).commit();
     }
 
 
@@ -76,7 +72,7 @@ public class Weekly_Fm extends BaseFragment {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fmt = fm.beginTransaction();
         fragment.setArguments(bundle);
-        fmt.replace(R.id.main_container,fragment).addToBackStack(null).commit();
+        fmt.replace(R.id.main_container, fragment).addToBackStack(null).commit();
 
     }
 
@@ -90,8 +86,20 @@ public class Weekly_Fm extends BaseFragment {
     }
 
 
-    private void getJinNu(View view) {
+    private void startProgress() {
 
+        progressON("Loading...");
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressOFF();
+            }
+        },3500);
+
+    }
+    private void getJinNu(View view) {
+        startProgress();
         jinuConfig = new JiNuConfig();
         jinuConfig.jiNuList(new ResponseCallback<BlogWeekly>() {
             @Override
@@ -113,10 +121,10 @@ public class Weekly_Fm extends BaseFragment {
     }
 
     private void showWeekly(View view) {
-        if (weekly1Url != null ) {
+        if (weekly1Url != null) {
             Glide.with(binding.getRoot())
                     .load(weekly1Url)
-                    .override(3000,3000)
+                    .override(3000, 3000)
                     .format(DecodeFormat.PREFER_ARGB_8888)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage1);
@@ -125,7 +133,7 @@ public class Weekly_Fm extends BaseFragment {
         if (weekly2Url != null) {
             Glide.with(binding.getRoot())
                     .load(weekly2Url)
-                    .override(3000,3000)
+                    .override(3000, 3000)
                     .format(DecodeFormat.PREFER_ARGB_8888)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(binding.weeklyImage2);

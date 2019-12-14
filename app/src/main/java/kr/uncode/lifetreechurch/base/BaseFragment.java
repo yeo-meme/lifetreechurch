@@ -16,6 +16,7 @@ import kr.uncode.lifetreechurch.lt_main.MainActivity;
 public class BaseFragment extends Fragment {
     private boolean isDialogShow = false;
 
+    Activity activity;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -90,5 +91,29 @@ public class BaseFragment extends Fragment {
             MainActivity parentActivity = (MainActivity) activity;
 //            parentActivity.toolbarMenuButtonController(isShowMenuButton);
         }
+    }
+
+    public void progressON() {
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            BaseApplication.getInstance().progressON(activity,null);
+        }}
+
+    public void progressON(String message) {
+
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            BaseApplication.getInstance().progressON(activity,message);
+        }
+
+
+    }
+
+    public void progressOFF() {
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            BaseApplication.getInstance().progressOFF();
+        }
+
     }
 }

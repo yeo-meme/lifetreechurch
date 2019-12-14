@@ -35,4 +35,6 @@ public class BaseActivity extends AppCompatActivity {
         if (addToBackStack) ft.addToBackStack(null);
         ft.commit();
     }
+
+
 }

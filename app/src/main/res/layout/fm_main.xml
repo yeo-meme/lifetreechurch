@@ -29,6 +29,7 @@
                 android:background="@color/youtube_color"
                 android:foreground="?attr/selectableItemBackground">
 
+
 <!--                android:background="@color/youtube_color"-->
 <!--                android:gravity="center">-->
                 <TextView
@@ -41,6 +42,13 @@
                     android:textColor="@color/white"
                     />
             </LinearLayout>
+
+            <View
+                android:layout_width="0.6dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="#ffffff"/>
+
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -66,6 +74,11 @@
         <!--전체 메뉴 세로 나누기 끝 1-->
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:layout_centerInParent="true"
+        android:background="#ffffff"/>
 
     <!--전체 메뉴 세로 나누기 2-->
     <LinearLayout
@@ -92,14 +105,20 @@
                 android:textColor="@color/white"
                 />
         </LinearLayout>
+        <View
+            android:layout_width="0.6dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="#ffffff"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/menu_column"
             android:foreground="?attr/selectableItemBackground"
             android:layout_height="match_parent"
-            android:background="@color/happyColumn"
+            android:background="@color/happy"
             android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,6 +131,13 @@
         </LinearLayout>
         <!--전체 메뉴 세로 나누기 2 끝-->
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:layout_centerInParent="true"
+        android:background="#ffffff"/>
 
     <!--하단영역 Area-->
     <LinearLayout
@@ -129,15 +155,18 @@
             android:textSize="24sp"
             android:textColor="@color/white"
             android:fontFamily="@font/scdream3"
-            android:id="@+id/introduce_btn"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="2.5dp"/>
+            android:id="@+id/introduce_btn"/>
+        <View
+            android:layout_width="0.6dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:background="#ffffff"/>
+
+
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="2.5dp"
             android:textSize="24sp"
             android:fontFamily="@font/scdream3"
             android:background="@color/toolbar_bg"

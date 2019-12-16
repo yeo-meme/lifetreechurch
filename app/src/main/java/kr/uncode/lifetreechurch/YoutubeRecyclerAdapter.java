@@ -53,7 +53,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     @Override
     public int getItemCount() {
-       return 3;
+       return UtubeBasket.size();
     }
 
     public void setItems(List<YoutubeResponse.Items> youtubeVideos) {

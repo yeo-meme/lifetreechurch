@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
-    <string name="app_name">LifeTreeChurch</string>
+
+    <string name="app_name">생명나무교회</string>
     <string name="youtube_key">AIzaSyAw_oKC0mMtfXVZYdkxVBrdpAhYQylkpDU</string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+
 
 </resources>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class NewMemberFragment extends BaseFragment {
 
     private List<NewMemberModel.Data> memberList;
-    private LinearLayoutManager mGridLayoutManager;
+    private GridLayoutManager mGridLayoutManager;
     FmNewmemberBinding binding;
 
     private List<String> aa;
@@ -43,8 +44,10 @@ public class NewMemberFragment extends BaseFragment {
     }
 
     private void setRecycler() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        binding.newMemberRecycler.setLayoutManager(layoutManager);
+        int numberOfColumns = 2;
+        mGridLayoutManager = new GridLayoutManager(getContext(),numberOfColumns);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        binding.newMemberRecycler.setLayoutManager(mGridLayoutManager);
         binding.newMemberRecycler.setAdapter(mRecyclerAdapter);
     }
 

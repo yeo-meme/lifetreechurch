@@ -100,7 +100,6 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
             if (temVideoId != null) {
                 Glide.with(itemView.getContext())
                         .load(idUrl)
-                        .override(500,300)
 //                        .apply(new RequestOptions().override(displayMetrics.widthPixels - 36, 200))
                         .into(binding.imageViewItem);
             }

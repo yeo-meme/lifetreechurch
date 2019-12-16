@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import kr.uncode.lifetreechurch.Model.NewMemberModel;
@@ -67,7 +69,11 @@ public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBase
 
         public void onBind(int position) {
             super.onBind(position);
-            binding.test.setText(memberList.get(position).title);
+
+                Glide.with(itemView.getContext())
+                        .load(memberList.get(position).imgurl)
+//                        .apply(new RequestOptions().override(displayMetrics.widthPixels - 36, 200))
+                        .into(binding.recyclerViewImage);
         }
     }
 }

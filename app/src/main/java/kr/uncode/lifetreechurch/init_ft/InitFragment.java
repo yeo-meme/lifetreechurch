@@ -15,6 +15,7 @@ import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.WeeklyFm.Weekly_Fm;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmMainBinding;
+import kr.uncode.lifetreechurch.fm_news.NewMiddleFragment;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
 
 public class InitFragment extends BaseFragment {
@@ -40,14 +41,17 @@ public class InitFragment extends BaseFragment {
         binding.videoMenu.setOnClickListener(this::videoClick);
         binding.weekly.setOnClickListener(this::weeklyClick);
         binding.menuColumn.setOnClickListener(this::videoClick);
-        binding.galleryMenu.setOnClickListener(this::videoClick);
+        binding.newsMenu.setOnClickListener(this::news);
 
         binding.introduceBtn.setOnClickListener(this::videoClick);
         binding.introduceChurchBtn.setOnClickListener(this::videoClick);
     }
 
 
+    private void news(View view) {
+        replaceFragment(new NewMiddleFragment(),true);
 
+    }
     private void alert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Coming Soon");

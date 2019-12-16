@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/familyNews"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/happy"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새가족 소식"
+            android:fontFamily="@font/scdream2"
+            android:textSize="50sp"
+            android:id="@+id/newMemBtn"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/newFamily"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/happyColumn">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="교우 소식"
+            android:fontFamily="@font/scdream2"
+            android:textSize="50sp"
+            android:id="@+id/newsBtn"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+
+</layout>

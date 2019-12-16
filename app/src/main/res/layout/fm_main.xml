@@ -54,14 +54,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:id="@+id/galleryMenu"
+                android:id="@+id/newsMenu"
                 android:foreground="?attr/selectableItemBackground"
                 android:background="@color/gallery_color"
                 android:gravity="center">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="생명나무교회\n 갤러리"
+                    android:text="생명나무교회\n 소식"
                     android:gravity="center_horizontal"
                     android:fontFamily="@font/scdream1"
                     android:textSize="30sp"

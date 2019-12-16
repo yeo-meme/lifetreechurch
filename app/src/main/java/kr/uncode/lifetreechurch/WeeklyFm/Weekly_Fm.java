@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch.WeeklyFm;
 
 import android.app.ProgressDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,8 +16,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import kr.uncode.lifetreechurch.Config.JiNuConfig;
 import kr.uncode.lifetreechurch.Model.BlogWeekly;
@@ -43,6 +48,7 @@ public class Weekly_Fm extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_weekly, container, false);
         ClickCheck();
+        progressON("Loading...");
         return binding.getRoot();
     }
 
@@ -53,6 +59,9 @@ public class Weekly_Fm extends BaseFragment {
 
 
     private void weekly1DetailView(View view) {
+
+        progressON("Loading...");
+
         MLog.d();
         Fragment fragment = new WeeklyImage1Fm(); // Fragment 생성
         Bundle bundle = new Bundle(1); // 파라미터는 전달할 데이터 개수
@@ -65,6 +74,8 @@ public class Weekly_Fm extends BaseFragment {
 
 
     private void weekly2DetailView(View view) {
+        progressON("Loading...");
+
         MLog.d();
         Fragment fragment = new WeeklyImage2Fm(); // Fragment 생성
         Bundle bundle = new Bundle(1); // 파라미터는 전달할 데이터 개수
@@ -90,16 +101,16 @@ public class Weekly_Fm extends BaseFragment {
 
         progressON("Loading...");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressOFF();
-            }
-        },3500);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                progressOFF();
+//            }
+//        }, 3500);
 
     }
+
     private void getJinNu(View view) {
-        startProgress();
         jinuConfig = new JiNuConfig();
         jinuConfig.jiNuList(new ResponseCallback<BlogWeekly>() {
             @Override
@@ -121,12 +132,29 @@ public class Weekly_Fm extends BaseFragment {
     }
 
     private void showWeekly(View view) {
+
+
         if (weekly1Url != null) {
+
             Glide.with(binding.getRoot())
                     .load(weekly1Url)
                     .override(3000, 3000)
                     .format(DecodeFormat.PREFER_ARGB_8888)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            MLog.d("Glide failed");
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                         MLog.d("glide sucess");
+                            progressOFF();
+                            return false;
+                        }
+                    })
                     .into(binding.weeklyImage1);
         }
 

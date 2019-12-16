@@ -16,7 +16,6 @@ import kr.uncode.lifetreechurch.WeeklyFm.Weekly_Fm;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmMainBinding;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
-import kr.uncode.lifetreechurch.lt_main.MainActivity;
 
 public class InitFragment extends BaseFragment {
     private ProgressDialog progressDialog;
@@ -47,6 +46,8 @@ public class InitFragment extends BaseFragment {
         binding.introduceChurchBtn.setOnClickListener(this::videoClick);
     }
 
+
+
     private void alert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Coming Soon");
@@ -56,9 +57,9 @@ public class InitFragment extends BaseFragment {
     }
 
     private void videoClick(View view) {
-        alert();
+//        alert();
 
-//        replaceFragment(new VideoFragment(),true);
+        replaceFragment(new VideoFragment(),true);
     }
 
     private void weeklyClick(View view) {

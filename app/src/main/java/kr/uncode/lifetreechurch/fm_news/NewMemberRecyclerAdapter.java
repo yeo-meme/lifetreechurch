@@ -6,27 +6,29 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.Model.NewMemberModel;
+import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.databinding.FmPicturenewmemBinding;
-import kr.uncode.lifetreechurch.lt_main.MainActivity;
+import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBaseHolder> {
 
-    private List<String> mData = null;
+    private List<NewMemberModel.Data> memberList;
+
+    public NewMemberModel.Data getMember;
     FmPicturenewmemBinding binding;
-    public NewMemberRecyclerAdapter(List<String> list) {
-        mData = list;
-        MLog.d("test" + mData);
+    public NewMemberRecyclerAdapter() {
+
     }
 
     @NonNull
     @Override
     public NewMemberBaseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = FmPicturenewmemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
         return new ViewHolder(binding);
     }
 
@@ -37,7 +39,15 @@ public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBase
 
     @Override
     public int getItemCount() {
-        return 3;
+        return memberList.size();
+    }
+
+
+
+    public void setItems(List<NewMemberModel.Data> member) {
+        memberList = member;
+        MLog.d("recyclerAdapter setData method :" + memberList);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends NewMemberBaseHolder {
@@ -57,7 +67,7 @@ public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBase
 
         public void onBind(int position) {
             super.onBind(position);
-
+            binding.test.setText(memberList.get(position).title);
         }
     }
 }

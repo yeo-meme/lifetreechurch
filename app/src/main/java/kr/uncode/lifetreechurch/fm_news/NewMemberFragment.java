@@ -1,6 +1,5 @@
 package kr.uncode.lifetreechurch.fm_news;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.Config.NewMemConfig;
@@ -31,19 +28,21 @@ public class NewMemberFragment extends BaseFragment {
 
     private List<String> aa;
 
+    private NewMemberModel.Data getMem;
+    private NewMemberRecyclerAdapter mRecyclerAdapter;
+
     public NewMemConfig newMemConfig;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mRecyclerAdapter = new NewMemberRecyclerAdapter();
         getNewMember();
 
 
     }
 
     private void setRecycler() {
-        NewMemberRecyclerAdapter mRecyclerAdapter = new NewMemberRecyclerAdapter(aa);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.newMemberRecycler.setLayoutManager(layoutManager);
         binding.newMemberRecycler.setAdapter(mRecyclerAdapter);
@@ -56,11 +55,16 @@ public class NewMemberFragment extends BaseFragment {
             public void response(NewMemberModel response) {
                 MLog.d(response.data.toString());
 
-                for (int i=0; i<response.data.size(); i++) {
-                    NewMemberModel.Data getMember = response.data.get(i);
-                }
 
-//                MLog.d("list " +aa);
+                if (response != null) {
+                    for (int i=0; i<response.data.size(); i++) {
+                        getMem =  response.data.get(i);
+                        mRecyclerAdapter.setItems(response.data);
+
+                    }
+                }
+                setRecycler();
+                MLog.d("list " +getMem.title);
 //                setRecycler();
 
             }

@@ -18,6 +18,7 @@ import kr.uncode.lifetreechurch.Model.NewMemberModel;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmNewmemberBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
@@ -32,6 +33,7 @@ public class NewMemberFragment extends BaseFragment {
     private NewMemberModel.Data getMem;
     private NewMemberRecyclerAdapter mRecyclerAdapter;
 
+    private List<Object> ee;
     public NewMemConfig newMemConfig;
 
     @Override
@@ -40,8 +42,21 @@ public class NewMemberFragment extends BaseFragment {
         mRecyclerAdapter = new NewMemberRecyclerAdapter();
         getNewMember();
 
+        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onListItemClick(List aa, int position) {
+
+
+                NewMemberModel.Data ee = (NewMemberModel.Data)aa.get(position);
+                MLog.d("fu"+ee);
+                String imgurl = ee.imgurl;
+                replaceFragment(new MemberDetailsFragment(imgurl),true);
+            }
+        });
+
 
     }
+
 
     private void setRecycler() {
         int numberOfColumns = 2;

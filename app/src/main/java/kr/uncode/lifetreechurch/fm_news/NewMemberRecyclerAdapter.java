@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch.fm_news;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,21 +12,27 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.Model.NewMemberModel;
-import kr.uncode.lifetreechurch.Model.YoutubeResponse;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmPicturenewmemBinding;
-import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
-public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBaseHolder> {
+public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBaseHolder>{
 
     private List<NewMemberModel.Data> memberList;
 
     public NewMemberModel.Data getMember;
     FmPicturenewmemBinding binding;
+    private OnItemClickListener mListener = null;
+
     public NewMemberRecyclerAdapter() {
 
     }
 
+
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        this.mListener = listener;
+    }
     @NonNull
     @Override
     public NewMemberBaseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -52,6 +59,8 @@ public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBase
         notifyDataSetChanged();
     }
 
+
+
     public class ViewHolder extends NewMemberBaseHolder {
 
         FmPicturenewmemBinding binding;
@@ -59,6 +68,19 @@ public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBase
         public ViewHolder(@NonNull FmPicturenewmemBinding itemView) {
             super(itemView);
             binding = itemView;
+            binding.recyclerViewImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MLog.d("이미지뷰 클릭 이벤트 오키");
+
+                    int pos = getAdapterPosition();
+
+                    if (mListener != null) {
+                        mListener.onListItemClick(memberList,pos);
+
+                    }
+                }
+            });
         }
 
         @Override
@@ -77,3 +99,4 @@ public class NewMemberRecyclerAdapter extends RecyclerView.Adapter<NewMemberBase
         }
     }
 }
+

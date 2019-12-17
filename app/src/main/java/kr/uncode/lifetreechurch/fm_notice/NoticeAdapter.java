@@ -56,8 +56,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeHolder> {
             super.onBind(position);
             if (noticeList != null) {
                 binding.noticeTitle.setText(noticeList.get(position).title);
-                binding.noticeCenter.setText(noticeList.get(position).content);
-                binding.noticeData.setText(noticeList.get(position).date);
             }
             ;
         }

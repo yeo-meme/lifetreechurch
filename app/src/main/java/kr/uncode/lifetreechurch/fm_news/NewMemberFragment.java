@@ -47,7 +47,7 @@ public class NewMemberFragment extends BaseFragment implements MainActivity.OnBa
             @Override
             public void onListItemClick(List aa, int position) {
 
-
+                progressON("Loading...");
                 NewMemberModel.Data ee = (NewMemberModel.Data)aa.get(position);
                 MLog.d("fu"+ee);
                 String imgurl = ee.imgurl;

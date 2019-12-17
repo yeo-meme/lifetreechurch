@@ -49,6 +49,7 @@ public class NewMiddleFragment extends BaseFragment {
     }
 
     private void newMem(View view) {
+        progressON("Loading...");
         replaceFragment(new NewMemberFragment(),true);
     }
 }

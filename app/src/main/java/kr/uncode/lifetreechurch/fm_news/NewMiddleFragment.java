@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmNewsmiddleBinding;
+import kr.uncode.lifetreechurch.fm_notice.NoticeFragment;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class NewMiddleFragment extends BaseFragment {
@@ -45,7 +46,7 @@ public class NewMiddleFragment extends BaseFragment {
     }
 
     private void news(View view) {
-        replaceFragment(new NewsFragment(),true);
+        replaceFragment(new NoticeFragment(),true);
     }
 
     private void newMem(View view) {

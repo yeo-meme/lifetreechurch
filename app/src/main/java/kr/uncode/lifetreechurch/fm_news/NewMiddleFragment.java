@@ -46,6 +46,8 @@ public class NewMiddleFragment extends BaseFragment {
     }
 
     private void news(View view) {
+
+        progressON("Loading...");
         replaceFragment(new NoticeFragment(),true);
     }
 

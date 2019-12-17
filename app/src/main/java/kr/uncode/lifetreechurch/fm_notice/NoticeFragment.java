@@ -11,12 +11,17 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import java.util.List;
+
 import kr.uncode.lifetreechurch.Config.NoticeConfig;
+import kr.uncode.lifetreechurch.Model.NewMemberModel;
 import kr.uncode.lifetreechurch.Model.NoticeModel;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmNoticeBinding;
+import kr.uncode.lifetreechurch.fm_news.MemberDetailsFragment;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class NoticeFragment extends BaseFragment {
@@ -37,6 +42,15 @@ public class NoticeFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         noticeAdapter = new NoticeAdapter();
         getContent();
+
+        noticeAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onListItemClick(List aa, int position) {
+               NoticeModel.Data ee = (NoticeModel.Data)aa.get(position);
+                MLog.d("notice click"+ee);
+                replaceFragment(new NoticeDetailsFragment(ee),true);
+            }
+        });
     }
 
     private void getContent() {

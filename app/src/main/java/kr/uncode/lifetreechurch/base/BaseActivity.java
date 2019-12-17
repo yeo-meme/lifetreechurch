@@ -8,9 +8,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import kr.uncode.lifetreechurch.fm_news.NewMemberFragment;
+import kr.uncode.lifetreechurch.utils.MLog;
+
 public class BaseActivity extends AppCompatActivity {
     private FragmentManager fm;
 
+    private OnBackPressedListener mBackListener;
+
+    public void setOnBackPressedListener(OnBackPressedListener listener) {
+        mBackListener = listener;
+    }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,5 +44,14 @@ public class BaseActivity extends AppCompatActivity {
         ft.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MLog.d("onback Pressed");
 
+    }
+
+    public interface OnBackPressedListener {
+        public void onBack();
+    }
 }

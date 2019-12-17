@@ -61,4 +61,8 @@ dependencies {
 
     //loading..
     testImplementation 'junit:junit:4.12'
+
+
+    //pinch zoom
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 }

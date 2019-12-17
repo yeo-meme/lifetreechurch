@@ -20,9 +20,10 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmNewmemberBinding;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
-public class NewMemberFragment extends BaseFragment {
+public class NewMemberFragment extends BaseFragment implements MainActivity.OnBackPressedListener {
 
     private List<NewMemberModel.Data> memberList;
     private GridLayoutManager mGridLayoutManager;
@@ -50,12 +51,11 @@ public class NewMemberFragment extends BaseFragment {
                 NewMemberModel.Data ee = (NewMemberModel.Data)aa.get(position);
                 MLog.d("fu"+ee);
                 String imgurl = ee.imgurl;
-                replaceFragment(new MemberDetailsFragment(imgurl),true);
+                replaceFragment(new MemberDetailsFragment(imgurl),false);
             }
         });
-
-
     }
+
 
 
     private void setRecycler() {
@@ -97,4 +97,7 @@ public class NewMemberFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onBack() {
+    }
 }

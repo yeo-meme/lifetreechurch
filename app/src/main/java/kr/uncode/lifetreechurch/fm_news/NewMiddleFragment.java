@@ -40,6 +40,8 @@ public class NewMiddleFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
     }
 
     private void news(View view) {

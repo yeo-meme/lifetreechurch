@@ -10,18 +10,60 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
+import kr.co.prnd.YouTubePlayerView;
+import kr.uncode.lifetreechurch.Config.VideoConfig;
+import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
+import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmYoutubeBinding;
+import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 import kr.uncode.lifetreechurch.video_bottom_menu.RecentMyVideo;
 
 
 public class VideoFragment extends BaseFragment {
 
+    private YouTubePlayerView youTubePlayerView;
+    private VideoConfig videoConfig;
     FmYoutubeBinding binding;
+
+    private String newest = null;
+    private void videoDate() {
+        videoConfig = new VideoConfig();
+        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+            @Override
+            public void response(YoutubeResponse response) {
+
+
+                for (int e = 0; e < response.items.size(); e++) {
+                    YoutubeResponse.Items items = response.items.get(e);
+                    if (e == 0) {
+                        newest = items.id.videoId;
+                        MLog.d("newest :" + newest);
+                    }
+                }
+
+              binding.youtubePlayerView.play(newest, new YouTubePlayerView.OnInitializedListener() {
+                  @Override
+                  public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                      MLog.d("success youtube");
+                  }
+
+                  @Override
+                  public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                  }
+              });
+            }
+        });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,7 +79,7 @@ public class VideoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         menuListener(view);
 
-        video();
+        videoDate();
 //        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //            @Override
 //            public void onReady(YouTubePlayer youTubePlayer) {
@@ -46,9 +88,6 @@ public class VideoFragment extends BaseFragment {
 //                youTubePlayer.loadVideo(videoId,0);
 //            }
 //        });
-    }
-
-    private void video() {
     }
 
     private void menuListener(View v) {
@@ -61,7 +100,7 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void recentView(View view) {
-        replaceFragment(new RecentMyVideo(),true);
+        replaceFragment(new RecentMyVideo(), true);
 
     }
 
@@ -71,6 +110,6 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void worshipVideoList(View view) {
-        replaceFragment(new VideoListFragment(),true);
+        replaceFragment(new VideoListFragment(), true);
     }
 }

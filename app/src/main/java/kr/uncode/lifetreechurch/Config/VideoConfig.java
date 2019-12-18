@@ -19,7 +19,7 @@ public class VideoConfig {
     }
 
     public void videoList(final ResponseCallback<YoutubeResponse> callback) {
-        final Call<YoutubeResponse> task = apiService.videoList("snippet", "UCVTQLxRfWz4nypo8q74iE1Q", "AIzaSyD20axF8pwlVcco5B0WMa_LTZM9Cq5VcZY",50);
+        final Call<YoutubeResponse> task = apiService.videoList("snippet", "UCVTQLxRfWz4nypo8q74iE1Q", "AIzaSyD20axF8pwlVcco5B0WMa_LTZM9Cq5VcZY",5,"date");
         task.enqueue(new Callback<YoutubeResponse>() {
             @Override
             public void onResponse(Call<YoutubeResponse> call, Response<YoutubeResponse> response) {

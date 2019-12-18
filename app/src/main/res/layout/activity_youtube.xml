@@ -3,12 +3,14 @@
 <layout  xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
 
-<!--    <com.google.android.youtube.player.YouTubePlayerView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:id="@+id/youtube_player_view"/>-->
+
+    <kr.co.prnd.YouTubePlayerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/youtube_player_view"/>
 
 </LinearLayout>
 

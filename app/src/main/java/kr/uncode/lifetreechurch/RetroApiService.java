@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface RetroApiService {
 
     @GET("/youtube/v3/search")
-    Call<YoutubeResponse> videoList(@Query("part") String part, @Query("channelId") String channelId, @Query("key") String key, @Query("maxResults")Integer max);
+    Call<YoutubeResponse> videoList(@Query("part") String part, @Query("channelId") String channelId, @Query("key") String key, @Query("maxResults")Integer max, @Query("order") String date);
 
 
     @Headers({

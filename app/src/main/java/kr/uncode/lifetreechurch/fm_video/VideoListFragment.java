@@ -14,9 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.prnd.YouTubePlayerView;
 import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
@@ -32,13 +36,13 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class VideoListFragment extends BaseFragment {
     private YoutubeRecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-//    private YouTubePlayerView youTubePlayerViewLayout;
+    //    private YouTubePlayerView youTubePlayerViewLayout;
     private FmVideolistBinding binding;
 
     private VideoConfig videoConfig;
 
-//    public YouTubePlayer youTubePlayer;
-private static String YOUTUBE = "YOUTUBE";
+    //    public YouTubePlayer youTubePlayer;
+    private static String YOUTUBE = "YOUTUBE";
     public Activity activity;
 
     @Nullable
@@ -72,7 +76,7 @@ private static String YOUTUBE = "YOUTUBE";
 
         activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
-        getVideoId();
+            getVideoId();
 
 
         mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -82,13 +86,12 @@ private static String YOUTUBE = "YOUTUBE";
                 YoutubeResponse.Items items = (YoutubeResponse.Items) aa.get(position);
                 String playId = items.id.videoId;
 
-                Intent intent = new Intent(getActivity(),YoutubePlayerActivity.class);
-                intent.putExtra(YOUTUBE,playId);
+                Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
+                intent.putExtra(YOUTUBE, playId);
                 startActivity(intent);
             }
         });
 //        setYoutubeData();
-
 
 
     }
@@ -101,69 +104,41 @@ private static String YOUTUBE = "YOUTUBE";
                 if (response != null) {
                     MLog.d("youtubeModel Ok!");
                     mRecyclerAdapter.setItems(response.items);
+
+                    for (int a = 0; a < response.items.size(); a++) {
+                        if (a == 1) {
+                            String secondVideo = response.items.get(a).id.videoId;
+                            MLog.d("second video:" + secondVideo);
+                            secondVideoRun(secondVideo);
+                        }
+                    }
                     setYoutubeData();
                 }
             }
         });
     }
 
+    private void secondVideoRun(String secondVideo) {
+        binding.youtubePlayerView.play(secondVideo, new YouTubePlayerView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                MLog.d("youtube success");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        });
+    }
+
     private void setYoutubeData() {
-//        List<YoutubeVideoModel> youtubeVideo = prepareList();
         binding.recyclerViewFeed.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewFeed.setLayoutManager(layoutManager);
         binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration(2));
         binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
     }
-
-
-//    private List<YoutubeVideoModel> prepareList() {
-//        ArrayList<YoutubeVideoModel> videoArrayList = new ArrayList<>();
-//
-//        //add 데모 아이템
-//        YoutubeVideoModel video1 = new YoutubeVideoModel();
-//        video1.setId(1l);
-//        video1.setImageUrl("https://i.ytimg.com/vi/zI-Pux4uaqM/maxresdefault.jpg");
-//        video1.setTitle(
-//                "Thugs Of Hindostan - Official Trailer | Amitabh Bachchan | Aamir Khan");
-//        video1.setVideoId("zI-Pux4uaqM");
-//        videoArrayList.add(video1);
-//
-//        // add second item
-//        YoutubeVideoModel video2 = new YoutubeVideoModel();
-//        video2.setId(2l);
-//        video2.setImageUrl("https://i.ytimg.com/vi/8ZK_S-46KwE/maxresdefault.jpg");
-//        video2.setTitle(
-//                "Colors for Children to Learning with Baby Fun Play with Color Balls Dolphin...");
-//        video2.setVideoId("8ZK_S-46KwE");
-//
-//        // add third item
-//        YoutubeVideoModel video3 = new YoutubeVideoModel();
-//        video3.setId(3l);
-//        video3.setImageUrl("https://i.ytimg.com/vi/8czMWUH7vW4/hqdefault.jpg");
-//        video3.setTitle("Air Hostess Accepts Marriage Proposal Mid-Air, Airline Fires her.");
-//        video3.setVideoId("8czMWUH7vW4");
-//
-//        // add four item
-//        YoutubeVideoModel video4 = new YoutubeVideoModel();
-//        video4.setId(4l);
-//        video4.setImageUrl("https://i.ytimg.com/vi/YrQVYEb6hcc/maxresdefault.jpg");
-//        video4.setTitle("EXPERIMENT Glowing 1000 degree METAL BALL vs Gunpowder (100 grams)");
-//        video4.setVideoId("YrQVYEb6hcc");
-//
-//        // add four item
-//        YoutubeVideoModel video5 = new YoutubeVideoModel();
-//        video5.setId(5l);
-//        video5.setImageUrl("https://i.ytimg.com/vi/S84Fuo2rGoY/maxresdefault.jpg");
-//        video5.setTitle("What happened after Jauhar of Padmavati");
-//        video5.setVideoId("S84Fuo2rGoY");
-//
-//        videoArrayList.add(video1);
-//        videoArrayList.add(video2);
-//        videoArrayList.add(video3);
-//        videoArrayList.add(video4);
-//        return videoArrayList;
-//    }
 
 
 }

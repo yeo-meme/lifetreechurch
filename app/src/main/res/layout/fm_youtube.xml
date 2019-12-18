@@ -5,6 +5,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/white"
+
         android:orientation="vertical">
 
         <!--세로 레이아웃 시작 1-->
@@ -17,6 +19,7 @@
 
             <!-- 가로 레이아이웃 첫줄-->
             <LinearLayout
+                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -24,7 +27,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="0.6dp"
+                android:layout_marginRight="0.6dp"
+                android:layout_marginBottom="0.6dp"
                 android:id="@+id/sun_morning"
                 android:foreground="?attr/selectableItemBackground"
                 android:background="@color/gallery_color">
@@ -62,6 +66,7 @@
             android:layout_width="match_parent"
             android:background="@color/colorPrimaryDark"
             android:layout_height="0dp"
+            android:backgroundTint="@color/white"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -74,7 +79,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_margin="0.6dp"
+                    android:layout_marginRight="0.6dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:id="@+id/wednesday_worship"
                     android:background="@color/weekend_bg">
@@ -88,7 +93,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_margin="0.6dp"
+                    android:layout_marginTop="0.6dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:foreground="?attr/selectableItemBackground"
@@ -119,8 +124,7 @@
             <kr.co.prnd.YouTubePlayerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/youtube_player_view"
-                app:videoId="bvxzZWpIDj8"/>
+                android:id="@+id/youtube_player_view"/>
 
 
         </LinearLayout>

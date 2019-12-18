@@ -11,6 +11,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 
 import java.util.List;
 
+import kr.co.prnd.YouTubePlayerView;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
@@ -43,7 +44,16 @@ public class YoutubePlayerActivity extends BaseActivity {
         MLog.d("youtube player :" +videoId);
 
 
-        BaseFragment.YoutubeFm.newInstance();
+      binding.youtubePlayerView.play(videoId, new YouTubePlayerView.OnInitializedListener() {
+          @Override
+          public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+              MLog.d("youtube seccess");
+          }
 
+          @Override
+          public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+          }
+      });
     }
 }

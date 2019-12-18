@@ -84,7 +84,9 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
             String temTitle = UtubeBasket.get(position).snippet.title;
             MLog.d(temTitle);
 
-            binding.textViewTitle.setText(temTitle);
+//            String date = UtubeBasket.get(position).snippet.publishedAt;
+//            binding.youtubeDate.setText(date);
+            binding.youtubeTitle.setText(temTitle);
 //
 //            final YoutubeVideoModel mYoutubeVideo = mYoutubeVideos.get(position);
 //            ((Activity) itemView.getContext()).getWindowManager()
@@ -100,8 +102,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
             if (temVideoId != null) {
                 Glide.with(itemView.getContext())
                         .load(idUrl)
-//                        .apply(new RequestOptions().override(displayMetrics.widthPixels - 36, 200))
-                        .into(binding.imageViewItem);
+                        .into(binding.youtubeImg);
             }
         }
     }

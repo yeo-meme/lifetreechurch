@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import java.util.ArrayList;
+
 import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
+import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
 import kr.uncode.lifetreechurch.base.BaseFragment;
@@ -59,6 +62,7 @@ public class VideoListFragment extends BaseFragment {
 //        });
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +91,10 @@ public class VideoListFragment extends BaseFragment {
 
     private void setYoutubeData() {
 //        List<YoutubeVideoModel> youtubeVideo = prepareList();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        binding.recyclerViewFeed.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         binding.recyclerViewFeed.setLayoutManager(layoutManager);
+        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration(2));
         binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
     }
 

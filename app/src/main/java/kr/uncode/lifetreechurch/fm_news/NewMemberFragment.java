@@ -1,5 +1,6 @@
 package kr.uncode.lifetreechurch.fm_news;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import kr.uncode.lifetreechurch.databinding.FmNewmemberBinding;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
-public class NewMemberFragment extends BaseFragment implements MainActivity.OnBackPressedListener {
+public class NewMemberFragment extends BaseFragment {
 
     private List<NewMemberModel.Data> memberList;
     private GridLayoutManager mGridLayoutManager;
@@ -36,6 +37,9 @@ public class NewMemberFragment extends BaseFragment implements MainActivity.OnBa
 
     private List<Object> ee;
     public NewMemConfig newMemConfig;
+    private String imgUrl = null;
+
+    private static String DETAILS_IMAGE_CODE= "MEME";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +54,21 @@ public class NewMemberFragment extends BaseFragment implements MainActivity.OnBa
                 progressON("Loading...");
                 NewMemberModel.Data ee = (NewMemberModel.Data)aa.get(position);
                 MLog.d("fu"+ee);
-                String imgurl = ee.imgurl;
-                replaceFragment(new MemberDetailsFragment(imgurl),false);
+                String imgUrl = ee.imgurl;
+
+
+                Intent intent = new Intent(getActivity(),MemberDetailsActivity.class);
+                intent.putExtra(DETAILS_IMAGE_CODE,imgUrl);
+                startActivity(intent);
+//              startNewDetails();
+//                replaceFragment(new MemberDetailsFragment(imgurl),false);
             }
         });
     }
 
+    private void startNewDetails() {
+
+    }
 
 
     private void setRecycler() {
@@ -97,7 +110,5 @@ public class NewMemberFragment extends BaseFragment implements MainActivity.OnBa
         return binding.getRoot();
     }
 
-    @Override
-    public void onBack() {
-    }
+
 }

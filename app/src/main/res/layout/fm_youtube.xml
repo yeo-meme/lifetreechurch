@@ -120,8 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/youtube_player_view"
-                app:videoId="bvxzZWpIDj8"
-                app:fragment="kr.uncode.lifetreechurch"/>
+                app:videoId="bvxzZWpIDj8"/>
 
 
         </LinearLayout>

@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".fm_news.MemberDetailsActivity"/>
         <activity android:name=".fm_notice.NoticeDetailsActivity"/>
+        <activity android:name=".fm_video.YoutubePlayerActivity"/>
     </application>
 
 </manifest>

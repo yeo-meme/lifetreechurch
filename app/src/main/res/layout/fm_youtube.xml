@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_margin="0.6dp"
                 android:id="@+id/sun_morning"
+                android:foreground="?attr/selectableItemBackground"
                 android:background="@color/gallery_color">
                 <TextView
                     android:layout_width="match_parent"
@@ -37,6 +40,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:layout_margin="0.6dp"
+                android:foreground="?attr/selectableItemBackground"
                 android:id="@+id/sun_afternoon"
                 android:background="@color/afternoon_bg">
                 <TextView
@@ -69,6 +74,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_margin="0.6dp"
+                    android:foreground="?attr/selectableItemBackground"
                     android:id="@+id/wednesday_worship"
                     android:background="@color/weekend_bg">
                     <TextView
@@ -81,8 +88,10 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_margin="0.6dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:foreground="?attr/selectableItemBackground"
                     android:id="@+id/dawn_worship"
                     android:background="@color/dawn">
                     <TextView
@@ -106,10 +115,15 @@
             android:layout_weight="1.5"
             android:orientation="vertical" >
 
-            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+
+            <kr.co.prnd.YouTubePlayerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/youtube_player_view"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/youtube_player_view"
+                app:videoId="bvxzZWpIDj8"
+                app:fragment="kr.uncode.lifetreechurch"/>
+
+
         </LinearLayout>
         <!--세로 레이아웃 끝 3-->
 

@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch.fm_video;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
@@ -24,6 +24,7 @@ import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
 import kr.uncode.lifetreechurch.base.BaseFragment;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmVideolistBinding;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
@@ -31,19 +32,20 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class VideoListFragment extends BaseFragment {
     private YoutubeRecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private YouTubePlayerView youTubePlayerViewLayout;
+//    private YouTubePlayerView youTubePlayerViewLayout;
     private FmVideolistBinding binding;
 
     private VideoConfig videoConfig;
 
-    public YouTubePlayer youTubePlayer;
-
+//    public YouTubePlayer youTubePlayer;
+private static String YOUTUBE = "YOUTUBE";
     public Activity activity;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
+        BaseFragment.YoutubeFm.newInstance();
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_videolist, container, false);
 
         return binding.getRoot();
@@ -66,10 +68,27 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         activity = getActivity();
+        mRecyclerAdapter = new YoutubeRecyclerAdapter();
+
+        activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
         getVideoId();
+
+
+        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onListItemClick(List aa, int position) {
+
+                YoutubeResponse.Items items = (YoutubeResponse.Items) aa.get(position);
+                String playId = items.id.videoId;
+
+                Intent intent = new Intent(getActivity(),YoutubePlayerActivity.class);
+                intent.putExtra(YOUTUBE,playId);
+                startActivity(intent);
+            }
+        });
 //        setYoutubeData();
+
 
 
     }
@@ -81,7 +100,6 @@ public class VideoListFragment extends BaseFragment {
             public void response(YoutubeResponse response) {
                 if (response != null) {
                     MLog.d("youtubeModel Ok!");
-                    mRecyclerAdapter = new YoutubeRecyclerAdapter();
                     mRecyclerAdapter.setItems(response.items);
                     setYoutubeData();
                 }

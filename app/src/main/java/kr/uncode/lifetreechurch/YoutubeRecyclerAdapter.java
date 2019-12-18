@@ -1,29 +1,19 @@
 package kr.uncode.lifetreechurch;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import kr.uncode.lifetreechurch.Model.SnippetResponse;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
@@ -36,13 +26,20 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     DisplayMetrics displayMetrics = new DisplayMetrics();
     private String temVideoId;
 
+    private OnItemClickListener mListener = null;
+
     public YoutubeRecyclerAdapter() {
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
     }
 
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -53,7 +50,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     @Override
     public int getItemCount() {
-       return UtubeBasket.size();
+        return UtubeBasket.size();
     }
 
     public void setItems(List<YoutubeResponse.Items> youtubeVideos) {
@@ -65,10 +62,21 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public class ViewHolder extends BaseViewHolder {
 
         ItemYoutubeListBinding binding;
+
         public ViewHolder(@NonNull ItemYoutubeListBinding itemView) {
             super(itemView);
             binding = itemView;
 
+            binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    MLog.d("youtube card Click");
+                    if (mListener != null) {
+                        mListener.onListItemClick(UtubeBasket,pos);
+                    }
+                }
+            });
         }
 
         @Override
@@ -98,7 +106,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //            }
 
             String idUrl = "https://img.youtube.com/vi/" + temVideoId + "/" + "mqdefault.jpg";
-            MLog.d("파싱한 아이디 값 : "+ idUrl);
+            MLog.d("파싱한 아이디 값 : " + idUrl);
             if (temVideoId != null) {
                 Glide.with(itemView.getContext())
                         .load(idUrl)

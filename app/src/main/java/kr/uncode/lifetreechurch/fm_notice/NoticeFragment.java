@@ -1,5 +1,6 @@
 package kr.uncode.lifetreechurch.fm_notice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,13 @@ public class NoticeFragment extends BaseFragment {
     private NoticeConfig noticeConfig;
     FmNoticeBinding binding;
     private NoticeAdapter noticeAdapter;
+    private static String NOTICE_DETAILS_CODE = "MEME";
+    private static String NOTICE_DETAILS_DATE = "JIN";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fm_notice,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fm_notice, container, false);
         return binding.getRoot();
     }
 
@@ -46,9 +50,15 @@ public class NoticeFragment extends BaseFragment {
         noticeAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onListItemClick(List aa, int position) {
-               NoticeModel.Data ee = (NoticeModel.Data)aa.get(position);
-                MLog.d("notice click"+ee);
-                replaceFragment(new NoticeDetailsFragment(ee),true);
+                NoticeModel.Data ee = (NoticeModel.Data) aa.get(position);
+                MLog.d("notice click" + ee);
+
+
+                Intent intent = new Intent(getActivity(), NoticeDetailsActivity.class);
+                intent.putExtra(NOTICE_DETAILS_CODE,ee.content);
+                intent.putExtra(NOTICE_DETAILS_DATE,ee.date);
+                startActivity(intent);
+//                replaceFragment(new NoticeDetailsFragment(ee),true);
             }
         });
     }
@@ -59,7 +69,7 @@ public class NoticeFragment extends BaseFragment {
             @Override
             public void response(NoticeModel response) {
                 MLog.d("hi notice" + response);
-                    noticeAdapter.setData(response.data);
+                noticeAdapter.setData(response.data);
                 setAdapter();
             }
         });

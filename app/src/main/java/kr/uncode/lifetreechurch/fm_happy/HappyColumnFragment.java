@@ -11,11 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import java.util.List;
+
 import kr.uncode.lifetreechurch.Config.HappyConfig;
 import kr.uncode.lifetreechurch.Model.HappyModel;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmHappycolumnBinding;
 import kr.uncode.lifetreechurch.databinding.FmHappyfeedBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
@@ -26,6 +29,8 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class HappyColumnFragment extends BaseFragment {
 
 
+    private static final String HAPPY_TITLE = "MEME";
+    private static final String HAPPY_CON ="JIN";
     private HappyAdapter happyAdapter;
     private HappyConfig happyConfig;
     FmHappyfeedBinding binding;
@@ -35,7 +40,24 @@ public class HappyColumnFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         happyAdapter = new HappyAdapter();
+        happyAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onListItemClick(List aa, int position) {
+
+                HappyModel.Data ee = (HappyModel.Data) aa.get(position);
+
+                String title = ee.title;
+                String contents = ee.content;
+
+
+                Intent intent = new Intent(getActivity(),HappyActivity.class);
+                intent.putExtra(HAPPY_TITLE,title);
+                intent.putExtra(HAPPY_CON,contents);
+                startActivity(intent);
+            }
+        });
     }
+
 
     @Nullable
     @Override

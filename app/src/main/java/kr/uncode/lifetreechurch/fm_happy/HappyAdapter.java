@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch.fm_happy;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,10 @@ private OnItemClickListener mListener = null;
 
 public HappyAdapter() {}
 
+
+public void setOnItemClickListener(OnItemClickListener listener) {
+    this.mListener = listener;
+}
 
 public void setItems(List<HappyModel.Data> happy) {
     happyList = happy;
@@ -61,6 +66,16 @@ public void setItems(List<HappyModel.Data> happy) {
         public ViewHolder(@NonNull FmHappycolumnBinding itemView) {
             super(itemView);
             binding = itemView;
+
+            binding.happyCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition();
+                    if (mListener != null) {
+                        mListener.onListItemClick(happyList,pos);
+                    }
+                }
+            });
         }
         @Override
         protected void clear() {

@@ -15,6 +15,7 @@ import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.WeeklyFm.Weekly_Fm;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmMainBinding;
+import kr.uncode.lifetreechurch.fm_happy.HappyColumnFragment;
 import kr.uncode.lifetreechurch.fm_news.NewMiddleFragment;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
 
@@ -40,11 +41,15 @@ public class InitFragment extends BaseFragment {
     private void menuListener() {
         binding.videoMenu.setOnClickListener(this::videoClick);
         binding.weekly.setOnClickListener(this::weeklyClick);
-        binding.menuColumn.setOnClickListener(this::videoClick);
+        binding.menuColumn.setOnClickListener(this::happyClick);
         binding.newsMenu.setOnClickListener(this::news);
 
         binding.introduceBtn.setOnClickListener(this::videoClick);
         binding.introduceChurchBtn.setOnClickListener(this::videoClick);
+    }
+
+    private void happyClick(View view) {
+        replaceFragment(new HappyColumnFragment(),true);
     }
 
 

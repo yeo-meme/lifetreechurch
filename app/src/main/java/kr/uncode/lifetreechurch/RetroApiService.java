@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch;
 
 import kr.uncode.lifetreechurch.Model.BlogWeekly;
+import kr.uncode.lifetreechurch.Model.HappyModel;
 import kr.uncode.lifetreechurch.Model.NewMemberModel;
 import kr.uncode.lifetreechurch.Model.NoticeModel;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
@@ -38,6 +39,14 @@ public interface RetroApiService {
     })
     @GET("/ttlmc/notice")
     Call<NoticeModel> getNotice();
+
+
+    @Headers({
+            "x-uncode-id:5debc01bc96b921a9f7bff7c",
+            "x-uncode-key:YokmmOcL68okD1dXFPew9trNgULYXlIwYTakIvZ7"
+    })
+    @GET("/ttlmc/column")
+    Call<HappyModel> getHappy();
 }
 
 

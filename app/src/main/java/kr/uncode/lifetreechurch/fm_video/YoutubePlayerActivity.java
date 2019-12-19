@@ -6,12 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
-import java.util.List;
-
-import kr.co.prnd.YouTubePlayerView;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
@@ -28,7 +25,6 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class YoutubePlayerActivity extends BaseActivity {
     private YoutubeResponse.Items youtubeItems;
     ActivityYoutubeBinding binding;
-    private YouTubePlayer.OnInitializedListener listener;
     private YoutubeRecyclerAdapter youtubeRecyclerAdapter;
     private static String YOUTUBE = "YOUTUBE";
 
@@ -44,16 +40,13 @@ public class YoutubePlayerActivity extends BaseActivity {
         MLog.d("youtube player :" +videoId);
 
 
-      binding.youtubePlayerView.play(videoId, new YouTubePlayerView.OnInitializedListener() {
-          @Override
-          public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-              MLog.d("youtube seccess");
-          }
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                youTubePlayer.loadVideo(videoId,0);
+            }
+        });
 
-          @Override
-          public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-          }
-      });
     }
 }

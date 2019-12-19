@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.prnd.YouTubePlayerView;
 import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
@@ -49,7 +47,6 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
-        BaseFragment.YoutubeFm.newInstance();
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_videolist, container, false);
 
         return binding.getRoot();
@@ -119,17 +116,14 @@ public class VideoListFragment extends BaseFragment {
     }
 
     private void secondVideoRun(String secondVideo) {
-        binding.youtubePlayerView.play(secondVideo, new YouTubePlayerView.OnInitializedListener() {
-            @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                MLog.d("youtube success");
-            }
 
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-            }
-        });
+    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+        @Override
+        public void onReady(YouTubePlayer youTubePlayer) {
+            super.onReady(youTubePlayer);
+            youTubePlayer.loadVideo(secondVideo,0);
+        }
+    });
     }
 
     private void setYoutubeData() {

@@ -14,49 +14,53 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:background="@color/toolbar_bg">
+            android:background="@color/toolbar_bg"
+            android:orientation="vertical">
 
             <!-- 가로 레이아이웃 첫줄-->
             <LinearLayout
-                android:backgroundTint="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
                 android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginRight="0.6dp"
-                android:layout_marginBottom="0.6dp"
-                android:id="@+id/sun_morning"
-                android:foreground="?attr/selectableItemBackground"
-                android:background="@color/gallery_color">
-                <TextView
-                    android:layout_width="match_parent"
+
+                <LinearLayout
+                    android:id="@+id/sun_morning"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="주일 오전"
-                    android:gravity="center"
-                    android:fontFamily="@font/scdream1"
-                    android:textSize="40sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="0.6dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:id="@+id/sun_afternoon"
-                android:background="@color/afternoon_bg">
-                <TextView
-                    android:layout_width="match_parent"
+                    android:layout_marginRight="0.6dp"
+                    android:layout_marginBottom="0.6dp"
+                    android:layout_weight="1"
+                    android:background="@color/gallery_color"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/scdream1"
+                        android:gravity="center"
+                        android:text="주일 오전"
+                        android:textSize="40sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sun_afternoon"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="주일 오후"
-                    android:gravity="center"
-                    android:fontFamily="@font/scdream1"
-                    android:textSize="40sp"/>
-            </LinearLayout>
-         <!-- 가로 레이아웃 첫줄 끝-->
+                    android:layout_margin="0.6dp"
+                    android:layout_weight="1"
+                    android:background="@color/afternoon_bg"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/scdream1"
+                        android:gravity="center"
+                        android:text="주일 오후"
+                        android:textSize="40sp" />
+                </LinearLayout>
+                <!-- 가로 레이아웃 첫줄 끝-->
             </LinearLayout>
             <!--세로 레이아웃 끝 2-->
         </LinearLayout>
@@ -64,48 +68,52 @@
         <!--세로 레이아웃 시작 2-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:background="@color/colorPrimaryDark"
             android:layout_height="0dp"
-            android:backgroundTint="@color/white"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:background="@color/colorPrimaryDark"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical">
 
             <!-- 가로 레이아이웃 첫줄-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginRight="0.6dp"
-                    android:foreground="?attr/selectableItemBackground"
                     android:id="@+id/wednesday_worship"
-                    android:background="@color/weekend_bg">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="수요 예배"
-                        android:gravity="center"
-                        android:fontFamily="@font/scdream1"
-                        android:textSize="40sp"/>
-                </LinearLayout>
-                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_marginTop="0.6dp"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="0.6dp"
                     android:layout_weight="1"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:id="@+id/dawn_worship"
-                    android:background="@color/dawn">
+                    android:background="@color/weekend_bg"
+                    android:foreground="?attr/selectableItemBackground">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="새벽 예배"
-                        android:gravity="center"
                         android:fontFamily="@font/scdream1"
-                        android:textSize="40sp"/>
+                        android:gravity="center"
+                        android:text="수요 예배"
+                        android:textSize="40sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dawn_worship"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0.6dp"
+                    android:layout_weight="1"
+                    android:background="@color/dawn"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/scdream1"
+                        android:gravity="center"
+                        android:text="새벽 예배"
+                        android:textSize="40sp" />
                 </LinearLayout>
                 <!-- 가로 레이아웃 첫줄 끝-->
             </LinearLayout>
@@ -118,14 +126,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
 
-            <kr.co.prnd.YouTubePlayerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
@@ -137,26 +144,28 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:background="@color/white">
+
             <Button
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:id="@+id/my_worship"
-                android:fontFamily="@font/scdream3"
-                android:textSize="20sp"
-                android:layout_marginRight="2.5dp"
-                android:background="@color/weekend_bg"
-                android:text="내 설교 보관함"/>
-            <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginRight="2.5dp"
                 android:layout_weight="1"
-                android:id="@+id/recent_view_worship"
-                android:layout_marginLeft="2.5dp"
-                android:fontFamily="@font/scdream3"
-                android:textSize="20sp"
                 android:background="@color/weekend_bg"
-                android:text="최근 본 설교"/>
+                android:fontFamily="@font/scdream3"
+                android:text="내 설교 보관함"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/recent_view_worship"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2.5dp"
+                android:layout_weight="1"
+                android:background="@color/weekend_bg"
+                android:fontFamily="@font/scdream3"
+                android:text="최근 본 설교"
+                android:textSize="20sp" />
         </LinearLayout>
 
     </LinearLayout>

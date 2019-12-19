@@ -8,10 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
@@ -124,35 +120,4 @@ public class BaseFragment extends Fragment {
 
     }
 
-    public static class YoutubeFm extends YouTubePlayerSupportFragment {
-
-        public YoutubeFm() {}
-
-        public static YoutubeFm newInstance(String url) {
-            YoutubeFm f = new YoutubeFm();
-
-            Bundle b = new Bundle();
-            b.putString("url",url);
-            f.init();
-
-            return f;
-        }
-
-        private void init() {
-
-            initialize(MPref.DEVELOPE_KEY, new YouTubePlayer.OnInitializedListener() {
-                @Override
-                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                    if (!wasRestored) {
-                        youTubePlayer.cueVideo("url");
-                    }
-                }
-
-                @Override
-                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-                }
-            });
-        }
-    }
 }

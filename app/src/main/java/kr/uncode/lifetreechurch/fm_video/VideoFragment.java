@@ -10,12 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
-import kr.co.prnd.YouTubePlayerView;
 import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
@@ -29,7 +26,6 @@ import kr.uncode.lifetreechurch.video_bottom_menu.RecentMyVideo;
 
 public class VideoFragment extends BaseFragment {
 
-    private YouTubePlayerView youTubePlayerView;
     private VideoConfig videoConfig;
     FmYoutubeBinding binding;
 
@@ -49,17 +45,14 @@ public class VideoFragment extends BaseFragment {
                     }
                 }
 
-              binding.youtubePlayerView.play(newest, new YouTubePlayerView.OnInitializedListener() {
-                  @Override
-                  public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                      MLog.d("success youtube");
-                  }
+                binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady(YouTubePlayer youTubePlayer) {
+                        super.onReady(youTubePlayer);
 
-                  @Override
-                  public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-
-                  }
-              });
+                        youTubePlayer.loadVideo(newest,0);
+                    }
+                });
             }
         });
     }

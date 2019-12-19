@@ -1,9 +1,7 @@
 package kr.uncode.lifetreechurch.utils;
 
-import android.app.Activity;
 import android.util.Log;
 
-import com.google.android.youtube.player.YouTubeBaseActivity;
 
 import kr.uncode.lifetreechurch.BuildConfig;
 

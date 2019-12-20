@@ -1,5 +1,6 @@
 package kr.uncode.lifetreechurch.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -53,5 +54,23 @@ public class BaseActivity extends AppCompatActivity {
 
     public interface OnBackPressedListener {
         public void onBack();
+    }
+
+    public void progressON(String message) {
+
+        Activity activity = this;
+        if (activity instanceof BaseActivity) {
+            BaseApplication.getInstance().progressON(activity,message);
+        }
+
+
+    }
+
+    public void progressOFF() {
+        Activity activity = this;
+        if (activity instanceof BaseActivity) {
+            BaseApplication.getInstance().progressOFF();
+        }
+
     }
 }

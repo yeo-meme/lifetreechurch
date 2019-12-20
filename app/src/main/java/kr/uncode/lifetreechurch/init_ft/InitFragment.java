@@ -20,6 +20,7 @@ import kr.uncode.lifetreechurch.databinding.FmMainBinding;
 import kr.uncode.lifetreechurch.fm_happy.HappyColumnFragment;
 import kr.uncode.lifetreechurch.fm_news.NewMiddleFragment;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
+import kr.uncode.lifetreechurch.video_bottom_menu.IntroduceChActivity;
 
 public class InitFragment extends BaseFragment {
     private ProgressDialog progressDialog;
@@ -48,10 +49,14 @@ public class InitFragment extends BaseFragment {
 
         binding.introduceBtn.setOnClickListener(this::introduce);
 //        binding.introduceBtn.setOnClickListener(this::videoClick);
-//        binding.introduceChurchBtn.setOnClickListener(this::videoClick);
+        binding.introduceChurchBtn.setOnClickListener(this::introduceChurch);
 
     }
 
+    private void introduceChurch(View view) {
+        Intent intent = new Intent(getActivity(), IntroduceChActivity.class);
+        startActivity(intent);
+    }
     private void introduce(View view) {
         Intent intent = new Intent(getActivity(), IntroduceActivity.class);
         startActivity(intent);

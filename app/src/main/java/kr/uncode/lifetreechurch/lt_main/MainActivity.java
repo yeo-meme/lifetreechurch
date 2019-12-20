@@ -29,10 +29,9 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    public void setTollbarTitle(String title) {}
     private void initPageLoad() {
        replaceFragment(new InitFragment(), false);
     }
 
-    public void setTollbarTitle(String title) {
-    }
 }

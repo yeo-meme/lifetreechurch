@@ -2,6 +2,7 @@ package kr.uncode.lifetreechurch.init_ft;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import kr.uncode.lifetreechurch.IntroduceBottomActivity.IntroduceActivity;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.WeeklyFm.Weekly_Fm;
 import kr.uncode.lifetreechurch.base.BaseFragment;
@@ -44,9 +46,18 @@ public class InitFragment extends BaseFragment {
         binding.menuColumn.setOnClickListener(this::happyClick);
         binding.newsMenu.setOnClickListener(this::news);
 
-        binding.introduceBtn.setOnClickListener(this::videoClick);
-        binding.introduceChurchBtn.setOnClickListener(this::videoClick);
+        binding.introduceBtn.setOnClickListener(this::introduce);
+//        binding.introduceBtn.setOnClickListener(this::videoClick);
+//        binding.introduceChurchBtn.setOnClickListener(this::videoClick);
+
     }
+
+    private void introduce(View view) {
+        Intent intent = new Intent(getActivity(), IntroduceActivity.class);
+        startActivity(intent);
+
+    }
+
 
     private void happyClick(View view) {
         replaceFragment(new HappyColumnFragment(),true);

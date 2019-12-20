@@ -25,6 +25,7 @@
         <activity android:name=".fm_notice.NoticeDetailsActivity"/>
         <activity android:name=".fm_video.YoutubePlayerActivity"/>
         <activity android:name=".fm_happy.HappyActivity"/>
+        <activity android:name=".IntroduceBottomActivity.IntroduceActivity"/>
     </application>
 
 </manifest>

@@ -65,6 +65,8 @@ public class InitFragment extends BaseFragment {
 
 
     private void happyClick(View view) {
+        progressON("Loading...");
+
         replaceFragment(new HappyColumnFragment(),true);
     }
 

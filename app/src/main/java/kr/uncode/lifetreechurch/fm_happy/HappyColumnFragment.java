@@ -40,6 +40,7 @@ public class HappyColumnFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         happyAdapter = new HappyAdapter();
         happyAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -103,6 +104,7 @@ public class HappyColumnFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressOFF();
 //        binding.happyCard.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

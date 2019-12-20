@@ -1,8 +1,11 @@
 package kr.uncode.lifetreechurch.fm_video;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmVideolistBinding;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
+import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
 public class VideoListFragment extends BaseFragment {
     private YoutubeRecyclerAdapter mRecyclerAdapter;
@@ -38,6 +42,8 @@ public class VideoListFragment extends BaseFragment {
     private FmVideolistBinding binding;
 
     private VideoConfig videoConfig;
+
+    private MyVideoStorage myVideoStorage;
 
     //    public YouTubePlayer youTubePlayer;
     private static String YOUTUBE = "YOUTUBE";
@@ -71,6 +77,7 @@ public class VideoListFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
 
+        myVideoStorage = new MyVideoStorage();
         activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
             getVideoId();
@@ -83,9 +90,28 @@ public class VideoListFragment extends BaseFragment {
                 YoutubeResponse.Items items = (YoutubeResponse.Items) aa.get(position);
                 String playId = items.id.videoId;
 
-                Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
-                intent.putExtra(YOUTUBE, playId);
-                startActivity(intent);
+
+
+
+
+                if (playId != null) {
+                    Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
+                    intent.putExtra(YOUTUBE, playId);
+
+//                    myVideoStorage.listener(playId);
+                    startActivity(intent);
+
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPref",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("data",playId);
+                    editor.commit();
+
+//                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+                    String data = sharedPreferences.getString("data","");
+                    MLog.d("preferencec :"+data);
+                }
+
             }
         });
 //        setYoutubeData();

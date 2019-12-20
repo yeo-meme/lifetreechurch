@@ -18,20 +18,14 @@
             android:textAppearance="@font/scdream2"
             android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="더보기 :: 클릭하세요."
-            android:textSize="12sp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:textAppearance="@font/scdream4"/>
 
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@color/happy"
             android:layout_height="wrap_content"
             android:id="@+id/urlRink"
+            android:layout_alignParentBottom="true"
             android:text="더보기"/>
 
 

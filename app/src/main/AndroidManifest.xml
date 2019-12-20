@@ -28,6 +28,7 @@
         <activity android:name=".IntroduceBottomActivity.IntroduceActivity"/>
         <activity android:name=".video_bottom_menu.IntroduceChActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".fm_happy.HappyWebActivity"/>
 
     </application>
 

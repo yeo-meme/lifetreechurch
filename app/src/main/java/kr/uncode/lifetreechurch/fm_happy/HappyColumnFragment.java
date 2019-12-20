@@ -31,6 +31,7 @@ public class HappyColumnFragment extends BaseFragment {
 
     private static final String HAPPY_TITLE = "MEME";
     private static final String HAPPY_CON ="JIN";
+    private static final String HAPPY_URL ="JINMEME";
     private HappyAdapter happyAdapter;
     private HappyConfig happyConfig;
     FmHappyfeedBinding binding;
@@ -48,11 +49,13 @@ public class HappyColumnFragment extends BaseFragment {
 
                 String title = ee.title;
                 String contents = ee.content;
+                String url = ee.url;
 
 
                 Intent intent = new Intent(getActivity(),HappyActivity.class);
                 intent.putExtra(HAPPY_TITLE,title);
                 intent.putExtra(HAPPY_CON,contents);
+                intent.putExtra(HAPPY_URL,url);
                 startActivity(intent);
             }
         });

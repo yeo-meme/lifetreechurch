@@ -2,6 +2,7 @@ package kr.uncode.lifetreechurch.fm_video;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -48,5 +49,19 @@ public class YoutubePlayerActivity extends BaseActivity {
             }
         });
 
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                MLog.d("key 뒤로가기");
+                finish();
+                return true;
+        }
+        return false;
     }
 }

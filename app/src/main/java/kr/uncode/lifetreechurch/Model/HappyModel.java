@@ -21,6 +21,7 @@ public class HappyModel {
         public String title;
         public String content;
         public String date;
+        public String url;
 
         @Override
         public String toString() {

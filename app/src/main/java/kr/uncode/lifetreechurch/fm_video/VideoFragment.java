@@ -30,29 +30,33 @@ public class VideoFragment extends BaseFragment {
     FmYoutubeBinding binding;
 
     private String newest = null;
+
     private void videoDate() {
         videoConfig = new VideoConfig();
         videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
             @Override
             public void response(YoutubeResponse response) {
 
-
-                for (int e = 0; e < response.items.size(); e++) {
-                    YoutubeResponse.Items items = response.items.get(e);
-                    if (e == 0) {
-                        newest = items.id.videoId;
-                        MLog.d("newest :" + newest);
+                if (response != null) {
+                    for (int e = 0; e < response.items.size(); e++) {
+                        YoutubeResponse.Items items = response.items.get(e);
+                        if (e == 0) {
+                            newest = items.id.videoId;
+                            MLog.d("newest :" + newest);
+                        }
                     }
+
+
+                    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                        @Override
+                        public void onReady(YouTubePlayer youTubePlayer) {
+                            super.onReady(youTubePlayer);
+
+                            youTubePlayer.loadVideo(newest, 0);
+                        }
+                    });
                 }
 
-                binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                    @Override
-                    public void onReady(YouTubePlayer youTubePlayer) {
-                        super.onReady(youTubePlayer);
-
-                        youTubePlayer.loadVideo(newest,0);
-                    }
-                });
             }
         });
     }
@@ -93,7 +97,7 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void recentView(View view) {
-        replaceFragment(new RecentMyVideo(), true);
+        replaceFragment(new MyVideoStorage(), true);
 
     }
 
@@ -104,5 +108,11 @@ public class VideoFragment extends BaseFragment {
 
     private void worshipVideoList(View view) {
         replaceFragment(new VideoListFragment(), true);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding.youtubePlayerView.release();
     }
 }

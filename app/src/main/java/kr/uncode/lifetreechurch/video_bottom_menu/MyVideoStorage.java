@@ -24,6 +24,8 @@ import kr.uncode.lifetreechurch.databinding.FmMyvideostorageBinding;
 import kr.uncode.lifetreechurch.fm_video.YoutubePlayerActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MyVideoStorage extends BaseFragment {
 
     private YoutubeRecyclerAdapter mRecyclerAdapter;
@@ -44,11 +46,6 @@ public class MyVideoStorage extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPref",Context.MODE_PRIVATE);
-
-
-        String data = sharedPreferences.getString("data","");
-        MLog.d("dd :"+data);
 
     }
 
@@ -74,7 +71,7 @@ public class MyVideoStorage extends BaseFragment {
     }
 
     private void getPreferences() {
-        pref = getActivity().getSharedPreferences("hihihi",Context.MODE_PRIVATE);
+        pref = getActivity().getSharedPreferences("hihihi", MODE_PRIVATE);
 
         MLog.d("shared" +pref);
     }

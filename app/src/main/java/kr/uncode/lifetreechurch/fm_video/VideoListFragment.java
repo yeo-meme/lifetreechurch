@@ -17,9 +17,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.gson.JsonArray;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.Config.VideoConfig;
@@ -45,10 +54,13 @@ public class VideoListFragment extends BaseFragment {
 
     private MyVideoStorage myVideoStorage;
 
+    private YouTubePlayer myyouTubePlayer;
     //    public YouTubePlayer youTubePlayer;
     private static String YOUTUBE = "YOUTUBE";
     public Activity activity;
+    private ArrayList<String> list = new ArrayList<String>();
 
+    private JSONArray a;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,7 +88,7 @@ public class VideoListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
-
+        a = new JSONArray();
         myVideoStorage = new MyVideoStorage();
         activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
@@ -90,31 +102,134 @@ public class VideoListFragment extends BaseFragment {
                 YoutubeResponse.Items items = (YoutubeResponse.Items) aa.get(position);
                 String playId = items.id.videoId;
 
+                MLog.d("new Click Clik: " + playId);
 
 
+//                initYouTubePlayerView(playId);
+//                secondVideoRun(playId);
+
+//                myyouTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+//                    @Override
+//                    public void onStateChange(YouTubePlayer youTubePlayer, PlayerConstants.PlayerState state) {
+//                        super.onStateChange(youTubePlayer, state);
+//                        if (state == PlayerConstants.PlayerState.PLAYING) {
+//                            myyouTubePlayer.pause();
+//                            MLog.d("youtube pause!!");
+//                        }
+//                    }
+//                });
+
+//                myyouTubePlayer.addListener(new AbstractYouTubePlayerListener() {
+//                    @Override
+//                    public void onReady(YouTubePlayer youTubePlayer) {
+//                        super.onReady(youTubePlayer);
+//                        YouTubePlayerUtils.loadOrCueVideo(
+//                                youTubePlayer,
+//                                getLifecycle(),
+//                                playId, 0f
+//                        );
+//
+//                    }
+//                });
+
+//                youtubeListener(playId);
 
 
                 if (playId != null) {
-                    Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
-                    intent.putExtra(YOUTUBE, playId);
+
+                    Context context;
+                    context = getContext();
+
+                    if (!list.contains(playId)) {
+                        //list = 아이디 객체를 담는 스트링 타입 리스트
+                        list.add(playId);
+                    }
+
+                    MLog.d("list contanin :" + list);
+                    setStringArrayPref(context, "MEME", list);
+//                    Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
+//                    intent.putExtra(YOUTUBE, playId);
 
 //                    myVideoStorage.listener(playId);
-                    startActivity(intent);
-
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPref",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("data",playId);
-                    editor.commit();
+//                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sharedPreferences.edit();
+//                    editor.putString("data", playId);
+//                    editor.commit();
 
 //                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//
+//                    String data = sharedPreferences.getString("data", "");
+//                    MLog.d("preferencec :" + data);
 
-                    String data = sharedPreferences.getString("data","");
-                    MLog.d("preferencec :"+data);
+
+//                    startActivity(intent);
+
                 }
 
             }
         });
 //        setYoutubeData();
+
+
+    }
+
+
+    private void setStringArrayPref(Context context, String key, ArrayList<String> values) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        //value arrayString type
+        //어레이 리스트에 값을 JSON타입으로 변경
+        for (int i = 0; i < values.size(); i++) {
+            //제이슨 어레이리스트에 풋 밸류 밸류는 play ID 리스트  사이즈만큰
+              if
+                a.put(values.get(i));
+                MLog.d("contains check get JSOn" + a );
+        }
+
+        //JSON을 PREPERENCE로
+        // playId리스트가 비워져있니?
+        //프리페어런스에 값넣는 구문
+        if (!values.isEmpty()) {
+            MLog.d("preference true");
+            editor.putString(key, a.toString());
+        } else {
+            MLog.d("preference false");
+            editor.putString(key, null);
+        }
+        editor.apply();
+
+        MLog.d("json Set" + a.length());
+        getStringArrayPref(context, "MEME");
+    }
+
+    private ArrayList<String> getStringArrayPref(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = prefs.getString("MEME", null);
+        ArrayList<String> urls = new ArrayList<String>();
+        if (json != null) {
+            try {
+                JSONArray a = new JSONArray(json);
+                for (int i = 0; i < a.length(); i++) {
+                    String url = a.optString(i);
+                    urls.add(url);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        MLog.d("Json get :" + urls);
+
+        return urls;
+    }
+
+    private void youtubeListener(String videoId) {
+
+//        YouTubePlayerUtils.loadOrCueVideo(
+//                myyouTubePlayer, getLifecycle(),
+//                videoId, 0f
+//        );
+//        MLog.d("new Click Clik: " + videoId);
 
 
     }
@@ -132,7 +247,7 @@ public class VideoListFragment extends BaseFragment {
                         if (a == 1) {
                             String secondVideo = response.items.get(a).id.videoId;
                             MLog.d("second video:" + secondVideo);
-                            secondVideoRun(secondVideo);
+                            initYouTubePlayerView(secondVideo);
                         }
                     }
                     setYoutubeData();
@@ -141,15 +256,23 @@ public class VideoListFragment extends BaseFragment {
         });
     }
 
-    private void secondVideoRun(String secondVideo) {
+    private void initYouTubePlayerView(String secondVideo) {
 
-    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-        @Override
-        public void onReady(YouTubePlayer youTubePlayer) {
-            super.onReady(youTubePlayer);
-            youTubePlayer.loadVideo(secondVideo,0);
-        }
-    });
+        getLifecycle().addObserver(binding.youtubePlayerView);
+
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                YouTubePlayerUtils.loadOrCueVideo(
+                        youTubePlayer,
+                        getLifecycle(),
+                        secondVideo, 0f
+                );
+//                addFullScreenListenerToPlayer();
+                myyouTubePlayer = youTubePlayer;
+            }
+        });
     }
 
     private void setYoutubeData() {
@@ -161,4 +284,9 @@ public class VideoListFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding.youtubePlayerView.release();
+    }
 }

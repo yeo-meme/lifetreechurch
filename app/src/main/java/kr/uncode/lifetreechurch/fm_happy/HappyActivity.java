@@ -56,6 +56,7 @@ public class HappyActivity extends BaseActivity {
     private void onButton(String url) {
         Intent myIntent = new Intent(this, HappyWebActivity.class);
         myIntent.putExtra(WEB_VIEW_HAPPY,url);
+        MLog.d("happy url:"+url);
         startActivity(myIntent);
     }
 }

@@ -29,7 +29,6 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
-import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
@@ -39,16 +38,23 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
-import kr.uncode.lifetreechurch.databinding.FmVideolistBinding;
+import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
-public class VideoListFragment extends BaseFragment {
+public class MorningVideoListFragment extends BaseFragment {
+
+    private static final String MORNING = "MORNING";
+    private static final String AFTERNOON = "AFTERNOON";
+    private static final String WEDNESDAY = "WEDNESDAY";
+    private static final String DAWN = "DAWN";
+
+    private String PAGE_STATUS = null;
     private YoutubeRecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     //    private YouTubePlayerView youTubePlayerViewLayout;
-    private FmVideolistBinding binding;
+    private FmMorningvideolistBinding binding;
 
     private UnCodeVideoConfig unCodeVideoConfig;
 
@@ -61,11 +67,16 @@ public class VideoListFragment extends BaseFragment {
 
     private JSONArray a;
 
+    public void MorningVideoListFragment(String aa) {
+        this.PAGE_STATUS = aa;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
-        binding = DataBindingUtil.inflate(inflater, R.layout.fm_videolist, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
+
         return binding.getRoot();
     }
 

@@ -15,22 +15,26 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 
 import kr.uncode.lifetreechurch.Config.BlogConfig;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
-import kr.uncode.lifetreechurch.Config.VideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
-import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmYoutubeBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
-import kr.uncode.lifetreechurch.video_bottom_menu.RecentMyVideo;
 
 
 public class VideoFragment extends BaseFragment {
 
     private BlogConfig blogConfig;
     FmYoutubeBinding binding;
+
+
+    private String moring = "MORNING";
+    private static final String AFTERNOON = "AFTERNOON";
+    private static final String WEDNESDAY = "WEDNESDAY";
+    private static final String DAWN = "DAWN";
+
 
     private UnCodeVideoConfig unCodeVideoConfig;
     private String newest = null;
@@ -134,7 +138,7 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void worshipVideoList(View view) {
-        replaceFragment(new VideoListFragment(), true);
+        replaceFragment(new MorningVideoListFragment(), true);
     }
 
     @Override

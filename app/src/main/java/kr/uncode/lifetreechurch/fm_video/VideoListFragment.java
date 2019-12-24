@@ -182,7 +182,6 @@ public class VideoListFragment extends BaseFragment {
         //어레이 리스트에 값을 JSON타입으로 변경
         for (int i = 0; i < values.size(); i++) {
             //제이슨 어레이리스트에 풋 밸류 밸류는 play ID 리스트  사이즈만큰
-              if
                 a.put(values.get(i));
                 MLog.d("contains check get JSOn" + a );
         }

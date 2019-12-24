@@ -42,21 +42,21 @@ public class HappyActivity extends BaseActivity {
         MLog.d("cccc"+ content);
         binding.text.setText(content);
 
-        binding.urlRink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (url != null) {
-                    onButton(url);
-                }
-            }
-        });
+//        binding.urlRink.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (url != null) {
+//                    onButton(title,content);
+//                }
+//            }
+//        });
 
     }
 
-    private void onButton(String url) {
+    private void onButton(String title,String contents) {
         Intent myIntent = new Intent(this, HappyWebActivity.class);
-        myIntent.putExtra(WEB_VIEW_HAPPY,url);
-        MLog.d("happy url:"+url);
+        myIntent.putExtra(HAPPY_TITLE,title);
+        myIntent.putExtra(HAPPY_CON,contents);
         startActivity(myIntent);
     }
 }

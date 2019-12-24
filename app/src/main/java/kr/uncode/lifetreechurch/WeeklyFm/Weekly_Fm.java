@@ -3,7 +3,6 @@ package kr.uncode.lifetreechurch.WeeklyFm;
 import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
-import kr.uncode.lifetreechurch.Config.JiNuConfig;
+import kr.uncode.lifetreechurch.Config.UnCodeWeeklyConfig;
 import kr.uncode.lifetreechurch.Model.BlogWeekly;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
@@ -39,7 +38,7 @@ public class Weekly_Fm extends BaseFragment {
     private static final String IMAGE_URL = "WEEKLY_IMAGE";
     private String weekly1Url;
     private String weekly2Url;
-    private JiNuConfig jinuConfig;
+    private UnCodeWeeklyConfig jinuWeeklyConfig;
 
     FmWeeklyBinding binding;
 
@@ -111,8 +110,8 @@ public class Weekly_Fm extends BaseFragment {
     }
 
     private void getJinNu(View view) {
-        jinuConfig = new JiNuConfig();
-        jinuConfig.jiNuList(new ResponseCallback<BlogWeekly>() {
+        jinuWeeklyConfig = new UnCodeWeeklyConfig();
+        jinuWeeklyConfig.jiNuList(new ResponseCallback<BlogWeekly>() {
             @Override
             public void response(BlogWeekly response) {
                 if (response != null) {

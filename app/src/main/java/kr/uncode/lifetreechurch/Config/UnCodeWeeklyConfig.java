@@ -8,10 +8,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JiNuConfig {
+public class UnCodeWeeklyConfig {
     private RetroApiService apiService;
 
-    public JiNuConfig() {
+    public UnCodeWeeklyConfig() {
         apiService = BlogConfig.getInstance().getApiService();
     }
 

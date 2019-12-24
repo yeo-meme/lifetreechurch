@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
@@ -20,7 +21,7 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int CHILD = 1;
     ItemYoutubeListBinding binding;
-    private List<YoutubeResponse.Items> UtubeBasket;
+    private List<UnCodeVideoModel.Data> UtubeBasket;
     public static final int VIEW_TYPE_NOMAL = 1;
     private List<YoutubeVideoModel> mYoutubeVideos;
     DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -53,7 +54,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
         return UtubeBasket.size();
     }
 
-    public void setItems(List<YoutubeResponse.Items> youtubeVideos) {
+    public void setItems(List<UnCodeVideoModel.Data> youtubeVideos) {
         UtubeBasket = youtubeVideos;
         MLog.d("recyclerAdapter setData method :" + UtubeBasket);
         notifyDataSetChanged();
@@ -85,16 +86,20 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
         public void onBind(int position) {
             super.onBind(position);
-            YoutubeResponse.Items.Id videoId = UtubeBasket.get(position).id;
-            temVideoId = videoId.videoId;
+
+
+            String title = UtubeBasket.get(position).title;
+
+//            YoutubeResponse.Items.Id videoId = UtubeBasket.get(position).id;
+//            temVideoId = videoId.videoId;
             MLog.d("YoutubeRecyclerAdap onBind temString :" + temVideoId);
 
-            String temTitle = UtubeBasket.get(position).snippet.title;
-            MLog.d(temTitle);
+//            String temTitle = UtubeBasket.get(position).snippet.title;
+            MLog.d(title);
 
 //            String date = UtubeBasket.get(position).snippet.publishedAt;
 //            binding.youtubeDate.setText(date);
-            binding.youtubeTitle.setText(temTitle);
+            binding.youtubeTitle.setText(title);
 //
 //            final YoutubeVideoModel mYoutubeVideo = mYoutubeVideos.get(position);
 //            ((Activity) itemView.getContext()).getWindowManager()
@@ -105,11 +110,13 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //                binding.textViewTitle.setText(mYoutubeVideo.getTitle());
 //            }
 
-            String idUrl = "https://img.youtube.com/vi/" + temVideoId + "/" + "mqdefault.jpg";
-            MLog.d("파싱한 아이디 값 : " + idUrl);
-            if (temVideoId != null) {
+
+            String thumbnail = UtubeBasket.get(position).thumbnail;
+//            String idUrl = "https://img.youtube.com/vi/" + temVideoId + "/" + "mqdefault.jpg";
+//            MLog.d("파싱한 아이디 값 : " + idUrl);
+            if (thumbnail != null) {
                 Glide.with(itemView.getContext())
-                        .load(idUrl)
+                        .load(thumbnail)
                         .into(binding.youtubeImg);
             }
         }

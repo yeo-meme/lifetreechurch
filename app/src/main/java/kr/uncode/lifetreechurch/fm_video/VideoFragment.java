@@ -13,7 +13,10 @@ import androidx.databinding.DataBindingUtil;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
+import kr.uncode.lifetreechurch.Config.BlogConfig;
+import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Config.VideoConfig;
+import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
@@ -26,39 +29,63 @@ import kr.uncode.lifetreechurch.video_bottom_menu.RecentMyVideo;
 
 public class VideoFragment extends BaseFragment {
 
-    private VideoConfig videoConfig;
+    private BlogConfig blogConfig;
     FmYoutubeBinding binding;
 
+    private UnCodeVideoConfig unCodeVideoConfig;
     private String newest = null;
 
     private void videoDate() {
-        videoConfig = new VideoConfig();
-        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+        unCodeVideoConfig = new UnCodeVideoConfig();
+        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
             @Override
-            public void response(YoutubeResponse response) {
-
+            public void response(UnCodeVideoModel response) {
                 if (response != null) {
-                    for (int e = 0; e < response.items.size(); e++) {
-                        YoutubeResponse.Items items = response.items.get(e);
-                        if (e == 0) {
-                            newest = items.id.videoId;
-                            MLog.d("newest :" + newest);
+                    for (int i = 0; i < response.data.size(); i++) {
+                        UnCodeVideoModel.Data items = response.data.get(i);
+                        if (i == 0) {
+                            newest = items.videoId;
+                            MLog.d("new videoId" + newest);
                         }
                     }
-
 
                     binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                         @Override
                         public void onReady(YouTubePlayer youTubePlayer) {
                             super.onReady(youTubePlayer);
-
                             youTubePlayer.loadVideo(newest, 0);
+
                         }
                     });
                 }
-
             }
         });
+//        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+//            @Override
+//            public void response(YoutubeResponse response) {
+//
+//                if (response != null) {
+//                    for (int e = 0; e < response.items.size(); e++) {
+//                        YoutubeResponse.Items items = response.items.get(e);
+//                        if (e == 0) {
+//                            newest = items.id.videoId;
+//                            MLog.d("newest :" + newest);
+//                        }
+//                    }
+//
+//
+//                    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//                        @Override
+//                        public void onReady(YouTubePlayer youTubePlayer) {
+//                            super.onReady(youTubePlayer);
+//
+//                            youTubePlayer.loadVideo(newest, 0);
+//                        }
+//                    });
+//                }
+//
+//            }
+//        });
     }
 
     @Nullable

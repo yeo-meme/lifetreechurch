@@ -28,7 +28,9 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Config.VideoConfig;
+import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
@@ -48,7 +50,7 @@ public class VideoListFragment extends BaseFragment {
     //    private YouTubePlayerView youTubePlayerViewLayout;
     private FmVideolistBinding binding;
 
-    private VideoConfig videoConfig;
+    private UnCodeVideoConfig unCodeVideoConfig;
 
     private MyVideoStorage myVideoStorage;
 
@@ -261,25 +263,45 @@ public class VideoListFragment extends BaseFragment {
 
 
     private void getVideoId() {
-        videoConfig = new VideoConfig();
-        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+        unCodeVideoConfig = new UnCodeVideoConfig();
+        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
             @Override
-            public void response(YoutubeResponse response) {
+            public void response(UnCodeVideoModel response) {
                 if (response != null) {
-                    MLog.d("youtubeModel Ok!");
-                    mRecyclerAdapter.setItems(response.items);
+                    MLog.d("youtube Model Ok");
+                    mRecyclerAdapter.setItems(response.data);
 
-                    for (int a = 0; a < response.items.size(); a++) {
-                        if (a == 1) {
-                            String secondVideo = response.items.get(a).id.videoId;
-                            MLog.d("second video:" + secondVideo);
+                    for (int a=0;a<response.data.size(); a++) {
+                        if (a ==1) {
+                            String secondVideo = response.data.get(a).videoId;
                             initYouTubePlayerView(secondVideo);
                         }
                     }
-                    setYoutubeData();
                 }
+                setYoutubeData();
+
             }
         });
+//        videoConfig = new VideoConfig();
+//        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+//            @Override
+//            public void response(YoutubeResponse response) {
+//                if (response != null) {
+//                    MLog.d("youtubeModel Ok!");
+//                    mRecyclerAdapter.setItems(response.items);
+//
+//                    for (int a = 0; a < response.items.size(); a++) {
+//                        if (a == 1) {
+//                            String secondVideo = response.items.get(a).id.videoId;
+//                            MLog.d("second video:" + secondVideo);
+//                            initYouTubePlayerView(secondVideo);
+//                        }
+//                    }
+//                }
+//            }
+//        });
+
+
     }
 
     private void initYouTubePlayerView(String secondVideo) {

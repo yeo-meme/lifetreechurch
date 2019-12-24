@@ -8,12 +8,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BlogConfig {
     public static final String SEVER_URL = "https://api.uncode.kr:6000/ttlmc/";
-    private static BlogConfig instance = null;
+    public static BlogConfig instance = null;
 
     private Retrofit retrofit;
     private RetroApiService apiService;
 
-    private BlogConfig() {
+    public BlogConfig() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();

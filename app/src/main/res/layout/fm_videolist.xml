@@ -11,6 +11,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/youtube_player_view"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="testBtn"
+            android:id="@+id/test"/>
+
 
 <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->

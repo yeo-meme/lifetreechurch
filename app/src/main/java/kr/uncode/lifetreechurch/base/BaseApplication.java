@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialog;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import kr.uncode.lifetreechurch.R;
 
 public class BaseApplication extends Application {
@@ -25,6 +27,15 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+
+        Realm.init(this);
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        Realm.setDefaultConfiguration(config);
     }
 
     public void progressON(Activity activity, String message) {

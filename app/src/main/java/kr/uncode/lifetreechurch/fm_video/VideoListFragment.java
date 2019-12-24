@@ -2,13 +2,13 @@ package kr.uncode.lifetreechurch.fm_video;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,14 +16,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.google.gson.JsonArray;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +26,10 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import kr.uncode.lifetreechurch.Config.VideoConfig;
+import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.RecyclerViewDecoration;
@@ -54,33 +52,24 @@ public class VideoListFragment extends BaseFragment {
 
     private MyVideoStorage myVideoStorage;
 
-    private YouTubePlayer myyouTubePlayer;
-    //    public YouTubePlayer youTubePlayer;
+    private YouTubePlayer youTubePlayer;
     private static String YOUTUBE = "YOUTUBE";
     public Activity activity;
     private ArrayList<String> list = new ArrayList<String>();
 
     private JSONArray a;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_videolist, container, false);
-
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        youTubePlayerViewLayout.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//            @Override
-//            public void onReady(YouTubePlayer youTubePlayer) {
-//                super.onReady(youTubePlayer);
-//                String videoId = "f3aI5OUbHKE";
-//                youTubePlayer.loadVideo(videoId, 0);
-//            }
-//        });
     }
 
 
@@ -95,6 +84,13 @@ public class VideoListFragment extends BaseFragment {
             getVideoId();
 
 
+        recyclerClickListener(youTubePlayer);
+//        setYoutubeData();
+
+
+    }
+
+    private void recyclerClickListener(final YouTubePlayer youTubePlayer) {
         mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onListItemClick(List aa, int position) {
@@ -104,6 +100,10 @@ public class VideoListFragment extends BaseFragment {
 
                 MLog.d("new Click Clik: " + playId);
 
+
+                //realm 저장
+//                saveVideo(playId);
+                changingVideo(playId,youTubePlayer);
 
 //                initYouTubePlayerView(playId);
 //                secondVideoRun(playId);
@@ -168,8 +168,45 @@ public class VideoListFragment extends BaseFragment {
 
             }
         });
-//        setYoutubeData();
 
+    }
+
+    private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
+        MLog.d("changing video");
+
+            Toast.makeText(getContext(), "UtubeChanging", Toast.LENGTH_LONG).show();
+            YouTubePlayerUtils.loadOrCueVideo(
+                    youTubePlayer, getLifecycle(),
+                    video, 0f
+            );
+
+
+
+    }
+
+    private void saveVideo(String videoId) {
+        final Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                RealmResults<UserVideo> userVideos = realm.where(UserVideo.class).findAll();
+
+                if (userVideos.size() == 0) {
+                    UserVideo userVideo = realm.createObject(UserVideo.class);
+                    userVideo.setVideoId(videoId);
+                } else {
+                    UserVideo userVideo = new UserVideo();
+                    userVideo.setVideoId(videoId);
+                    realm.copyToRealm(userVideo);
+
+                }
+
+
+                RealmResults<UserVideo> userVideos1 = realm.where(UserVideo.class).findAll();
+                MLog.d("realm get :" + userVideos1);
+            }
+        });
 
     }
 
@@ -182,8 +219,8 @@ public class VideoListFragment extends BaseFragment {
         //어레이 리스트에 값을 JSON타입으로 변경
         for (int i = 0; i < values.size(); i++) {
             //제이슨 어레이리스트에 풋 밸류 밸류는 play ID 리스트  사이즈만큰
-                a.put(values.get(i));
-                MLog.d("contains check get JSOn" + a );
+            a.put(values.get(i));
+            MLog.d("contains check get JSOn" + a);
         }
 
         //JSON을 PREPERENCE로
@@ -222,16 +259,6 @@ public class VideoListFragment extends BaseFragment {
         return urls;
     }
 
-    private void youtubeListener(String videoId) {
-
-//        YouTubePlayerUtils.loadOrCueVideo(
-//                myyouTubePlayer, getLifecycle(),
-//                videoId, 0f
-//        );
-//        MLog.d("new Click Clik: " + videoId);
-
-
-    }
 
     private void getVideoId() {
         videoConfig = new VideoConfig();
@@ -262,17 +289,18 @@ public class VideoListFragment extends BaseFragment {
         binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
-                super.onReady(youTubePlayer);
+//                super.onReady(youTubePlayer);
+                recyclerClickListener(youTubePlayer);
                 YouTubePlayerUtils.loadOrCueVideo(
                         youTubePlayer,
                         getLifecycle(),
                         secondVideo, 0f
                 );
 //                addFullScreenListenerToPlayer();
-                myyouTubePlayer = youTubePlayer;
             }
         });
     }
+
 
     private void setYoutubeData() {
         binding.recyclerViewFeed.setHasFixedSize(true);

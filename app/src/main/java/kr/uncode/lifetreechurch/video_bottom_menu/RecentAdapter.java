@@ -79,6 +79,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
                         .into(binding.thumbnail);
             }
 
+
+
         }
     }
 }

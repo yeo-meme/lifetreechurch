@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
+
 import java.util.List;
 
 import io.realm.Realm;
@@ -38,9 +42,10 @@ public class MyVideoStorage extends BaseFragment {
     private RecentAdapter recentAdapter;
     private SharedPreferences pref;
     private String storageUrl = null;
-
+private YouTubePlayer youTubePlayer;
     private List<UserVideo> userVideoList;
 
+    private String videoId;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,7 +77,6 @@ public class MyVideoStorage extends BaseFragment {
 
         recentAdapter = new RecentAdapter();
 
-
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserVideo> data = realm.where(UserVideo.class).findAll();
 
@@ -80,9 +84,31 @@ public class MyVideoStorage extends BaseFragment {
         List<UserVideo> tem = data;
         recentAdapter.setItems(tem);
 
+        for (int i=0; 0<tem.size(); i++) {
+         videoId = tem.get(i).getVideoId();
+        }
+        initYouTubePlayerView(videoId);
 
     }
 
+    private void initYouTubePlayerView(String secondVideo) {
+
+        getLifecycle().addObserver(binding.youtubePlayerView);
+
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+//                super.onReady(youTubePlayer);
+//                recyclerClickListener(youTubePlayer);
+                YouTubePlayerUtils.loadOrCueVideo(
+                        youTubePlayer,
+                        getLifecycle(),
+                        secondVideo, 0f
+                );
+//                addFullScreenListenerToPlayer();
+            }
+        });
+    }
     public void listener() {
 //        savePreferences();
 

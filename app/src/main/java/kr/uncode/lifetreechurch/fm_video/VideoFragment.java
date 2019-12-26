@@ -136,22 +136,22 @@ public class VideoFragment extends BaseFragment {
 
     private void wednesdayVideoList(View view) {
         String player_state = "수요";
-        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+        replaceFragmentYoutube(new VideoListFragment(),true,player_state);
     }
 
     private void sunAfternoonVideoList(View view) {
         String player_state = "오후";
-        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+        replaceFragmentYoutube(new VideoListFragment(),true,player_state);
     }
 
     private void dawnVideoList(View view) {
         String player_state = "새벽";
-        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+        replaceFragmentYoutube(new VideoListFragment(),true,player_state);
     }
 
     private void morningVideoList(View view) {
         String player_state = "오전";
-        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+        replaceFragmentYoutube(new VideoListFragment(),true,player_state);
     }
 
     private void recentView(View view) {
@@ -169,8 +169,8 @@ public class VideoFragment extends BaseFragment {
      * 주일 오전 예배 유튜브
      */
     private void worshipVideoList(View view) {
-//        replaceFragment(new MorningVideoListFragment(), true);
-        replaceFragmentYoutube(new MorningVideoListFragment(), true,MORNING);
+//        replaceFragment(new VideoListFragment(), true);
+        replaceFragmentYoutube(new VideoListFragment(), true,MORNING);
     }
 
     @Override

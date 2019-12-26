@@ -43,7 +43,7 @@ import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
-public class MorningVideoListFragment extends BaseFragment {
+public class VideoListFragment extends BaseFragment {
 
     private static final String MORNING = "MORNING";
     private static final String AFTERNOON = "AFTERNOON";
@@ -122,13 +122,13 @@ public class MorningVideoListFragment extends BaseFragment {
                 String title = items.title;
                 String imageUrl = items.thumbnail;
 
-                MLog.d("new Click Clik: " + playId+title+imageUrl);
+                MLog.d("new Click Clik: " + playId + title + imageUrl);
 
 
                 //realm 저장
                 //이두개의 메세드의 순서가 바뀌면 에러가남
                 changingVideo(playId, youTubePlayer);
-                saveVideo(title,imageUrl,playId);
+                saveVideo(title, imageUrl, playId);
 
 //                initYouTubePlayerView(playId);
 //                secondVideoRun(playId);
@@ -209,16 +209,16 @@ public class MorningVideoListFragment extends BaseFragment {
 
     }
 
-    private void saveVideo(String title,String image,String videoId) {
+    private void saveVideo(String title, String image, String videoId) {
         final Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                    UserVideo userVideo = realm.createObject(UserVideo.class);
-                    userVideo.setVideoId(videoId);
-                    userVideo.setImage_Url(image);
-                    userVideo.setTitle(title);
-                    MLog.d("saveVideo" + videoId+image+title);
+                UserVideo userVideo = realm.createObject(UserVideo.class);
+                userVideo.setVideoId(videoId);
+                userVideo.setImage_Url(image);
+                userVideo.setTitle(title);
+                MLog.d("saveVideo" + videoId + image + title);
             }
         });
 

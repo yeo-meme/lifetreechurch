@@ -19,13 +19,9 @@ import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
-    public static final int CHILD = 1;
     ItemYoutubeListBinding binding;
     private List<UnCodeVideoModel.Data> UtubeBasket;
-    public static final int VIEW_TYPE_NOMAL = 1;
-    private List<YoutubeVideoModel> mYoutubeVideos;
     DisplayMetrics displayMetrics = new DisplayMetrics();
-    private String temVideoId;
 
     private OnItemClickListener mListener = null;
 
@@ -90,30 +86,10 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
             String title = UtubeBasket.get(position).title;
 
-//            YoutubeResponse.Items.Id videoId = UtubeBasket.get(position).id;
-//            temVideoId = videoId.videoId;
-            MLog.d("YoutubeRecyclerAdap onBind temString :" + temVideoId);
-
-//            String temTitle = UtubeBasket.get(position).snippet.title;
             MLog.d(title);
-
-//            String date = UtubeBasket.get(position).snippet.publishedAt;
-//            binding.youtubeDate.setText(date);
             binding.youtubeTitle.setText(title);
-//
-//            final YoutubeVideoModel mYoutubeVideo = mYoutubeVideos.get(position);
-//            ((Activity) itemView.getContext()).getWindowManager()
-//                    .getDefaultDisplay()
-//                    .getMetrics(displayMetrics);
-//            int width = displayMetrics.widthPixels;
-//            if (mYoutubeVideo.getTitle() != null) {
-//                binding.textViewTitle.setText(mYoutubeVideo.getTitle());
-//            }
-
 
             String thumbnail = UtubeBasket.get(position).thumbnail;
-//            String idUrl = "https://img.youtube.com/vi/" + temVideoId + "/" + "mqdefault.jpg";
-//            MLog.d("파싱한 아이디 값 : " + idUrl);
             if (thumbnail != null) {
                 Glide.with(itemView.getContext())
                         .load(thumbnail)

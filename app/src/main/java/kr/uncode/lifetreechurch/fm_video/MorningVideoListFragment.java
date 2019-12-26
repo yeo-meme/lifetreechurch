@@ -79,7 +79,6 @@ public class MorningVideoListFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 
 
-
         return binding.getRoot();
     }
 
@@ -99,9 +98,9 @@ public class MorningVideoListFragment extends BaseFragment {
         if (activity != null && activity instanceof MainActivity)
 
 
-        savedInstanceState = getArguments();
+            savedInstanceState = getArguments();
         String aa = savedInstanceState.getString("MEME");
-        MLog.d("args"+aa);
+        MLog.d("args" + aa);
         player_state = aa;
 
         getVideoId(player_state);
@@ -118,15 +117,14 @@ public class MorningVideoListFragment extends BaseFragment {
             @Override
             public void onListItemClick(List aa, int position) {
 
-                YoutubeResponse.Items items = (YoutubeResponse.Items) aa.get(position);
-                String playId = items.id.videoId;
-
+                UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
+                String playId = items.videoId;
                 MLog.d("new Click Clik: " + playId);
 
 
                 //realm 저장
 //                saveVideo(playId);
-                changingVideo(playId,youTubePlayer);
+                changingVideo(playId, youTubePlayer);
 
 //                initYouTubePlayerView(playId);
 //                secondVideoRun(playId);
@@ -197,12 +195,10 @@ public class MorningVideoListFragment extends BaseFragment {
     private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
         MLog.d("changing video");
 
-            Toast.makeText(getContext(), "UtubeChanging", Toast.LENGTH_LONG).show();
-            YouTubePlayerUtils.loadOrCueVideo(
-                    youTubePlayer, getLifecycle(),
-                    video, 0f
-            );
-
+        YouTubePlayerUtils.loadOrCueVideo(
+                youTubePlayer, getLifecycle(),
+                video, 0f
+        );
 
 
     }
@@ -288,19 +284,20 @@ public class MorningVideoListFragment extends BaseFragment {
         unCodeVideoConfig.unCodeVideoCategoryList(player_state, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
-                    MLog.d("youtube Model Ok");
+                MLog.d("youtube Model Ok");
 
-                    if (response != null) {
-                        mRecyclerAdapter.setItems(response.data);
+                if (response != null) {
+                    mRecyclerAdapter.setItems(response.data);
 
-                        for (int a=0; a<response.data.size(); a++) {
-                            if (a ==1) {
-                                String secondVideo = response.data.get(a).videoId;
-                                initYouTubePlayerView(secondVideo);
-                            }
+                    for (int a = 0; a < response.data.size(); a++) {
+                        if (a == 1) {
+                            String secondVideo = response.data.get(a).videoId;
+                            initYouTubePlayerView(secondVideo);
                         }
                     }
+                }
                 setYoutubeData();
+                mRecyclerAdapter.notifyDataSetChanged();
 
             }
         });

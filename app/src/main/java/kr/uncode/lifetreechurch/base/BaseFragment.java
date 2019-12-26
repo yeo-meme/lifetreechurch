@@ -72,6 +72,16 @@ public class BaseFragment extends Fragment {
 
 
     /**
+     * 메인 Fragment Youtube 변경메서드
+     */
+
+    public void replaceFragmentYoutube(Fragment fragment, boolean addToBackStack, String key) {
+        Activity activity = getActivity();
+        if (activity instanceof BaseActivity) {
+            ((BaseActivity) activity).replaceFragmentYoutube(R.id.main_container,fragment,addToBackStack,key);
+        }
+    }
+    /**
      * 액티비티 시작 메서드
      *
      * @param cls  클래스

@@ -45,6 +45,18 @@ public class BaseActivity extends AppCompatActivity {
         ft.commit();
     }
 
+
+    public void replaceFragmentYoutube(int containerViewId, Fragment fragment, boolean addToBackStack,String key) {
+        FragmentTransaction ft = fm.beginTransaction();
+        Bundle args = new Bundle();
+        args.putString("MEME",key);
+        fragment.setArguments(args);
+        ft.replace(containerViewId,fragment);
+        if(addToBackStack)ft.addToBackStack(null);
+        ft.commit();
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

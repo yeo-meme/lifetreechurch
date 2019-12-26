@@ -50,7 +50,8 @@ public class MorningVideoListFragment extends BaseFragment {
     private static final String WEDNESDAY = "WEDNESDAY";
     private static final String DAWN = "DAWN";
 
-    private String PAGE_STATUS = null;
+
+    private String player_state = null;
     private YoutubeRecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     //    private YouTubePlayerView youTubePlayerViewLayout;
@@ -67,8 +68,8 @@ public class MorningVideoListFragment extends BaseFragment {
 
     private JSONArray a;
 
-    public void MorningVideoListFragment(String aa) {
-        this.PAGE_STATUS = aa;
+    public void MorningVideoListFragment() {
+
     }
 
     @Nullable
@@ -76,6 +77,11 @@ public class MorningVideoListFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
+
+        Bundle args = getArguments();
+        String aa = args.getString("MEME");
+        MLog.d("args moring"+aa);
+        player_state = aa;
 
         return binding.getRoot();
     }
@@ -275,24 +281,44 @@ public class MorningVideoListFragment extends BaseFragment {
 
     private void getVideoId() {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
+        String key = "새벽";
+        unCodeVideoConfig.unCodeVideoCategoryList(key, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
-                if (response != null) {
                     MLog.d("youtube Model Ok");
-                    mRecyclerAdapter.setItems(response.data);
 
-                    for (int a=0;a<response.data.size(); a++) {
-                        if (a ==1) {
-                            String secondVideo = response.data.get(a).videoId;
-                            initYouTubePlayerView(secondVideo);
+                    if (response != null) {
+                        mRecyclerAdapter.setItems(response.data);
+
+                        for (int a=0; a<response.data.size(); a++) {
+                            if (a ==1) {
+                                String secondVideo = response.data.get(a).videoId;
+                                initYouTubePlayerView(secondVideo);
+                            }
                         }
                     }
-                }
                 setYoutubeData();
 
             }
         });
+//        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
+//            @Override
+//            public void response(UnCodeVideoModel response) {
+//                if (response != null) {
+//                    MLog.d("youtube Model Ok");
+//                    mRecyclerAdapter.setItems(response.data);
+//
+//                    for (int a=0;a<response.data.size(); a++) {
+//                        if (a ==1) {
+//                            String secondVideo = response.data.get(a).videoId;
+//                            initYouTubePlayerView(secondVideo);
+//                        }
+//                    }
+//                }
+//                setYoutubeData();
+//
+//            }
+//        });
 //        videoConfig = new VideoConfig();
 //        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
 //            @Override

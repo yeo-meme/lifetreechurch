@@ -30,7 +30,7 @@ public class VideoFragment extends BaseFragment {
     FmYoutubeBinding binding;
 
 
-    private String moring = "MORNING";
+    private static final String MORNING = "MORNING";
     private static final String AFTERNOON = "AFTERNOON";
     private static final String WEDNESDAY = "WEDNESDAY";
     private static final String DAWN = "DAWN";
@@ -107,6 +107,13 @@ public class VideoFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         menuListener(view);
 
+        Bundle args = getArguments();
+        if (args != null) {
+
+            String name = args.getString("MEME");
+            MLog.d("args test" + name);
+        }
+
         videoDate();
 //        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //            @Override
@@ -137,8 +144,13 @@ public class VideoFragment extends BaseFragment {
 
     }
 
+
+    /**
+     * 주일 오전 예배 유튜브
+     */
     private void worshipVideoList(View view) {
-        replaceFragment(new MorningVideoListFragment(), true);
+//        replaceFragment(new MorningVideoListFragment(), true);
+        replaceFragmentYoutube(new MorningVideoListFragment(), true,MORNING);
     }
 
     @Override

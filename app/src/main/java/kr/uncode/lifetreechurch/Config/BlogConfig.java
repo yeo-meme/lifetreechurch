@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BlogConfig {
-    public static final String SEVER_URL = "https://api.uncode.kr:6000/ttlmc/";
+    public static final String SEVER_URL = "https://api.uncode.kr:6000/";
     public static BlogConfig instance = null;
 
     private Retrofit retrofit;

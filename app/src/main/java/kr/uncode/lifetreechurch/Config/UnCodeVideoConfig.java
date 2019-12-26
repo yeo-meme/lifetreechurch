@@ -21,6 +21,27 @@ public class UnCodeVideoConfig {
     }
 
 
+    public void unCodeVideoCategoryList(String key, final ResponseCallback<UnCodeVideoModel> callback) {
+        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(key,1);
+        MLog.d("key :" +key);
+        task.enqueue(new Callback<UnCodeVideoModel>() {
+            @Override
+            public void onResponse(Call<UnCodeVideoModel> call, Response<UnCodeVideoModel> response) {
+
+                if (response.isSuccessful()) {
+                    callback.response(response.body());
+                    MLog.d("reponse key"+response.body().toString());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UnCodeVideoModel> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void unCodeVideoList (final ResponseCallback<UnCodeVideoModel> callback) {
         final Call<UnCodeVideoModel> task = apiService.unCodeVideoList("주일오전",0);
         task.enqueue(new Callback<UnCodeVideoModel>() {

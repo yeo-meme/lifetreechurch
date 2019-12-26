@@ -58,7 +58,7 @@ public interface RetroApiService {
     })
     @POST("/ttlmc/videos")
     @FormUrlEncoded
-    Call<UnCodeVideoModel> unCodeVideoList(@Field("text") String text, @Field("page") Integer page);
+    Call<UnCodeVideoModel> unCodeVideoList(@Field("text")String text, @Field("page") Integer page);
 
 
 

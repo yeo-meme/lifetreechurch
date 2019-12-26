@@ -86,7 +86,8 @@ public class InitFragment extends BaseFragment {
     private void videoClick(View view) {
 //        alert();
 
-        replaceFragment(new VideoFragment(),true);
+        replaceFragmentYoutube(new VideoFragment(),true,"Morning");
+//        replaceFragment(new VideoFragment(),true);
     }
 
     private void weeklyClick(View view) {

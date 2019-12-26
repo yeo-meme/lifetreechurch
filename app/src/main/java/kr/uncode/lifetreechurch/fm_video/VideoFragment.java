@@ -126,12 +126,32 @@ public class VideoFragment extends BaseFragment {
     }
 
     private void menuListener(View v) {
-        binding.sunMorning.setOnClickListener(this::worshipVideoList);
-        binding.dawnWorship.setOnClickListener(this::worshipVideoList);
-        binding.sunAfternoon.setOnClickListener(this::worshipVideoList);
-        binding.wednesdayWorship.setOnClickListener(this::worshipVideoList);
+        binding.sunMorning.setOnClickListener(this::morningVideoList);
+        binding.dawnWorship.setOnClickListener(this::dawnVideoList);
+        binding.sunAfternoon.setOnClickListener(this::sunAfternoonVideoList);
+        binding.wednesdayWorship.setOnClickListener(this::wednesdayVideoList);
         binding.recentViewWorship.setOnClickListener(this::myWorshipVideo);
         binding.myWorship.setOnClickListener(this::recentView);
+    }
+
+    private void wednesdayVideoList(View view) {
+        String player_state = "수요";
+        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+    }
+
+    private void sunAfternoonVideoList(View view) {
+        String player_state = "오후";
+        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+    }
+
+    private void dawnVideoList(View view) {
+        String player_state = "새벽";
+        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
+    }
+
+    private void morningVideoList(View view) {
+        String player_state = "오전";
+        replaceFragmentYoutube(new MorningVideoListFragment(),true,player_state);
     }
 
     private void recentView(View view) {

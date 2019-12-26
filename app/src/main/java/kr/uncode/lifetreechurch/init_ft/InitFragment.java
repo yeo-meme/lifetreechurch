@@ -86,7 +86,8 @@ public class InitFragment extends BaseFragment {
     private void videoClick(View view) {
 //        alert();
 
-        replaceFragmentYoutube(new VideoFragment(),true,"Morning");
+        String player_state = "주일오전";
+        replaceFragmentYoutube(new VideoFragment(),true,player_state);
 //        replaceFragment(new VideoFragment(),true);
     }
 

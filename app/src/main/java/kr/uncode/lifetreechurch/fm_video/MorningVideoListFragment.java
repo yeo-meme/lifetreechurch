@@ -78,10 +78,7 @@ public class MorningVideoListFragment extends BaseFragment {
 //데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 
-        Bundle args = getArguments();
-        String aa = args.getString("MEME");
-        MLog.d("args moring"+aa);
-        player_state = aa;
+
 
         return binding.getRoot();
     }
@@ -100,7 +97,14 @@ public class MorningVideoListFragment extends BaseFragment {
         myVideoStorage = new MyVideoStorage();
         activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
-            getVideoId();
+
+
+        savedInstanceState = getArguments();
+        String aa = savedInstanceState.getString("MEME");
+        MLog.d("args"+aa);
+        player_state = aa;
+
+        getVideoId(player_state);
 
 
         recyclerClickListener(youTubePlayer);
@@ -279,10 +283,9 @@ public class MorningVideoListFragment extends BaseFragment {
     }
 
 
-    private void getVideoId() {
+    private void getVideoId(String player_state) {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        String key = "새벽";
-        unCodeVideoConfig.unCodeVideoCategoryList(key, new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoCategoryList(player_state, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                     MLog.d("youtube Model Ok");

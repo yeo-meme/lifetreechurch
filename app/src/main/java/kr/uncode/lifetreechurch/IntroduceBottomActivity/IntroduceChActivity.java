@@ -1,4 +1,4 @@
-package kr.uncode.lifetreechurch.video_bottom_menu;
+package kr.uncode.lifetreechurch.IntroduceBottomActivity;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;

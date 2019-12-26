@@ -119,12 +119,16 @@ public class MorningVideoListFragment extends BaseFragment {
 
                 UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
                 String playId = items.videoId;
-                MLog.d("new Click Clik: " + playId);
+                String title = items.title;
+                String imageUrl = items.thumbnail;
+
+                MLog.d("new Click Clik: " + playId+title+imageUrl);
 
 
                 //realm 저장
-//                saveVideo(playId);
+                //이두개의 메세드의 순서가 바뀌면 에러가남
                 changingVideo(playId, youTubePlayer);
+                saveVideo(title,imageUrl,playId);
 
 //                initYouTubePlayerView(playId);
 //                secondVideoRun(playId);
@@ -195,35 +199,26 @@ public class MorningVideoListFragment extends BaseFragment {
     private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
         MLog.d("changing video");
 
-        YouTubePlayerUtils.loadOrCueVideo(
-                youTubePlayer, getLifecycle(),
-                video, 0f
-        );
+        if (video != null) {
+            YouTubePlayerUtils.loadOrCueVideo(
+                    youTubePlayer, getLifecycle(),
+                    video, 0f
+            );
+        }
 
 
     }
 
-    private void saveVideo(String videoId) {
+    private void saveVideo(String title,String image,String videoId) {
         final Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
-                RealmResults<UserVideo> userVideos = realm.where(UserVideo.class).findAll();
-
-                if (userVideos.size() == 0) {
                     UserVideo userVideo = realm.createObject(UserVideo.class);
                     userVideo.setVideoId(videoId);
-                } else {
-                    UserVideo userVideo = new UserVideo();
-                    userVideo.setVideoId(videoId);
-                    realm.copyToRealm(userVideo);
-
-                }
-
-
-                RealmResults<UserVideo> userVideos1 = realm.where(UserVideo.class).findAll();
-                MLog.d("realm get :" + userVideos1);
+                    userVideo.setImage_Url(image);
+                    userVideo.setTitle(title);
+                    MLog.d("saveVideo" + videoId+image+title);
             }
         });
 

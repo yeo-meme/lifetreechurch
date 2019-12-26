@@ -26,7 +26,7 @@
         <activity android:name=".fm_video.YoutubePlayerActivity"/>
         <activity android:name=".fm_happy.HappyActivity"/>
         <activity android:name=".IntroduceBottomActivity.IntroduceActivity"/>
-        <activity android:name=".video_bottom_menu.IntroduceChActivity"
+        <activity android:name=".IntroduceBottomActivity.IntroduceChActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".fm_happy.HappyWebActivity"/>
 

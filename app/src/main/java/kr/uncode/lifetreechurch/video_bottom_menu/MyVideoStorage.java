@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,10 +16,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
 import java.util.List;
@@ -48,14 +52,16 @@ public class MyVideoStorage extends BaseFragment {
     private YouTubePlayer youTubePlayer;
     private List<UserVideo> userVideoList;
 
+    private YouTubePlayerUtils youTubePlayerUtils;
+    private String youTubePlayId;
     public String videoId;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
-        setYoutubeData();
         setHasOptionsMenu(true);
+        Toast.makeText(getContext(),"new Fragment",Toast.LENGTH_LONG).show();
 //        binding.delete.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -70,7 +76,12 @@ public class MyVideoStorage extends BaseFragment {
 //                });
 //            }
 //        });
-
+        if (youTubePlayId != null) {
+            initYouTubePlayerView(youTubePlayId);
+        } else {
+            Toast.makeText(getContext(), "보관함이비워져 있습니다.", Toast.LENGTH_LONG).show();
+        }
+        setYoutubeData();
         return binding.getRoot();
 
     }
@@ -85,10 +96,6 @@ public class MyVideoStorage extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        recentAdapter = new RecentAdapter();
-
-        toolbarMenuButtonController(true);
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserVideo> data = realm.where(UserVideo.class).findAll();
 
@@ -96,64 +103,56 @@ public class MyVideoStorage extends BaseFragment {
         List<UserVideo> tem = data;
         MLog.d("userVideo 2:" + tem);
 
+        for (int i = 0; i < tem.size(); i++) {
+            videoId = tem.get(i).getVideoId();
+            MLog.d("userVideo 3:" + videoId);
+            if (i ==0) {
+                youTubePlayId = videoId;
+            }
+        }
+
+        recentAdapter = new RecentAdapter();
         recentAdapter.setItems(tem);
 
 
-            for (int i = 0; i < tem.size(); i++) {
-                videoId = tem.get(i).getVideoId();
-                MLog.d("userVideo 3:" + videoId);
-        }
-        if (videoId != null) {
-//                    initYouTubePlayerView(videoId);
-        } else {
-            Toast.makeText(getContext(), "보관함이비워져 있습니다.", Toast.LENGTH_LONG).show();
 
-        }
+        toolbarMenuButtonController(true);
+
+
+
+
 
     }
 
-//    private void initYouTubePlayerView(String secondVideo) {
-//
-//
-//        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//            @Override
-//            public void onReady(YouTubePlayer youTubePlayer) {
-//                super.onReady(youTubePlayer);
-//                youTubePlayer.loadVideo(secondVideo, 0);
-//
-//            }
-//        });
 
+    public void refresh() {
 
-//        getLifecycle().addObserver(binding.youtubePlayerView);
-//
-//        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//            @Override
-//            public void onReady(YouTubePlayer youTubePlayer) {
-//                super.onReady(youTubePlayer);
-////                recyclerClickListener(youTubePlayer);
-//                YouTubePlayerUtils.loadOrCueVideo(
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.detach(this).attach(this).commit();
+        Toast.makeText(getContext(),"new Fragment",Toast.LENGTH_LONG).show();
+    }
+
+    private void initYouTubePlayerView(String secondVideo) {
+        getLifecycle().addObserver(binding.youtubePlayerView);
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+
+                youTubePlayer.loadVideo(secondVideo,0f);
+//                recyclerClickListener(youTubePlayer);
+//                youTubePlayerUtils.loadOrCueVideo(
 //                        youTubePlayer,
 //                        getLifecycle(),
 //                        secondVideo, 0f
 //                );
-////                addFullScreenListenerToPlayer();
-//            }
-//        });
-//    }
-
-    public void listener() {
-//        savePreferences();
-
-
-//        binding.myStorage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                savePreferences();
-//            }
-//        });
-
+//                addFullScreenListenerToPlayer();
+            }
+        });
     }
+
+
 
     private void setYoutubeData() {
         binding.recyclerViewFeed.setHasFixedSize(true);
@@ -164,16 +163,5 @@ public class MyVideoStorage extends BaseFragment {
     }
 
 
-    private void savePreferences() {
 
-
-//        SharedPreferences.Editor editor= pref.edit();
-//        getPreferences();
-    }
-
-    private void getPreferences() {
-        pref = getActivity().getSharedPreferences("hihihi", MODE_PRIVATE);
-
-        MLog.d("shared" + pref);
-    }
 }

@@ -53,30 +53,32 @@
         <!-- 가로 리사이클러뷰 시작-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:background="@color/weekend_bg">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewFeed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <!-- 가로 리사이클러뷰 끝-->
-
-        <!--영상 재생 영역 시작 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/r"
-            android:background="@color/youtube_color">
-
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFeed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
+        <!-- 가로 리사이클러뷰 끝-->
+
+        <!--영상 재생 영역 시작 -->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/r"-->
+<!--            android:background="@color/youtube_color">-->
+
+<!--    -->
+
+<!--        </LinearLayout>-->
         <!--영상 재생 영역 끝 -->
 
 

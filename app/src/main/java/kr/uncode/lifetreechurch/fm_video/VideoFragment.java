@@ -13,6 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 
+import org.json.JSONException;
+
 import kr.uncode.lifetreechurch.Config.BlogConfig;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
@@ -39,29 +41,36 @@ public class VideoFragment extends BaseFragment {
     private UnCodeVideoConfig unCodeVideoConfig;
     private String newest = null;
 
+
+    /**
+     * retrofit 유튜브 unCodeApi 요청
+     */
     private void videoDate() {
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
-                if (response != null) {
-                    for (int i = 0; i < response.data.size(); i++) {
-                        UnCodeVideoModel.Data items = response.data.get(i);
-                        if (i == 0) {
-                            newest = items.videoId;
-                            MLog.d("new videoId" + newest);
+
+                    if (response != null) {
+                        for (int i = 0; i < response.data.size(); i++) {
+                            UnCodeVideoModel.Data items = response.data.get(i);
+                            if (i == 0) {
+                                newest = items.videoId;
+                                MLog.d("new videoId" + newest);
+                            }
                         }
+
+                        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                            @Override
+                            public void onReady(YouTubePlayer youTubePlayer) {
+                                super.onReady(youTubePlayer);
+                                youTubePlayer.loadVideo(newest, 0);
+
+                            }
+                        });
                     }
 
-                    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                        @Override
-                        public void onReady(YouTubePlayer youTubePlayer) {
-                            super.onReady(youTubePlayer);
-                            youTubePlayer.loadVideo(newest, 0);
 
-                        }
-                    });
-                }
             }
         });
 //        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
@@ -96,9 +105,6 @@ public class VideoFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_youtube, container, false);
-
-//        View view = inflater.inflate(R.layout.fm_youtube,container,false);
-
         return binding.getRoot();
     }
 
@@ -114,6 +120,7 @@ public class VideoFragment extends BaseFragment {
             MLog.d("args test" + name);
         }
 
+        //유튜브 게시를 위해Retrofit 요청
         videoDate();
 //        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //            @Override

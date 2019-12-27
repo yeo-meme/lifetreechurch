@@ -1,5 +1,7 @@
 package kr.uncode.lifetreechurch.Config;
 
+import java.util.concurrent.TimeUnit;
+
 import kr.uncode.lifetreechurch.RetroApiService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -9,14 +11,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BlogConfig {
     public static final String SEVER_URL = "https://api.uncode.kr:6000/";
     public static BlogConfig instance = null;
-
     private Retrofit retrofit;
     private RetroApiService apiService;
 
     public BlogConfig() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor)
+                .writeTimeout(5,TimeUnit.MINUTES)
+                .readTimeout(5,TimeUnit.MINUTES)
+                .build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(SEVER_URL)
@@ -35,5 +39,7 @@ public class BlogConfig {
         return instance;
     }
 
-    public RetroApiService getApiService() {return apiService; }
+    public RetroApiService getApiService() {
+        return apiService;
+    }
 }

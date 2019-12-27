@@ -21,7 +21,6 @@ public class RetrofitConfig {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
                 .addInterceptor(interceptor).build();
 
         retrofit = new Retrofit.Builder()

@@ -5,14 +5,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,11 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
-import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
@@ -45,40 +44,48 @@ import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
 public class VideoListFragment extends BaseFragment {
 
-    private static final String MORNING = "MORNING";
-    private static final String AFTERNOON = "AFTERNOON";
-    private static final String WEDNESDAY = "WEDNESDAY";
-    private static final String DAWN = "DAWN";
+//    private static final String MORNING = "MORNING";
+//    private static final String AFTERNOON = "AFTERNOON";
+//    private static final String WEDNESDAY = "WEDNESDAY";
+//    private static final String DAWN = "DAWN";
 
+    // 유튜브 객체
+    private YouTubePlayer youTubePlayer;
+    private YouTubePlayerUtils youTubePlayerUtils;
 
+    //사용자 카테고리 분류 value
     private String player_state = null;
+
+    //어댑터 셋
     private YoutubeRecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     //    private YouTubePlayerView youTubePlayerViewLayout;
-    private FmMorningvideolistBinding binding;
 
+    //바인딩
+    FmMorningvideolistBinding binding;
+
+    //게시되는 유튜브 아이디 저장 값
+    private String secondVideo = null;
+
+    //Config 객처
     private UnCodeVideoConfig unCodeVideoConfig;
 
     private MyVideoStorage myVideoStorage;
 
-    private YouTubePlayer youTubePlayer;
-    private static String YOUTUBE = "YOUTUBE";
+    //액티비티 객체
     public Activity activity;
+
+
     private ArrayList<String> list = new ArrayList<String>();
 
     private JSONArray a;
 
-    public void MorningVideoListFragment() {
-
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//데이터바인딩 유튜트 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
+        //데이터바인딩 유튜브 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
-
-
         return binding.getRoot();
     }
 
@@ -91,21 +98,33 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //리사이클러뷰
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
+
+        //JSON
         a = new JSONArray();
         myVideoStorage = new MyVideoStorage();
         activity = getActivity();
         if (activity != null && activity instanceof MainActivity)
 
 
-            savedInstanceState = getArguments();
+         //JSON 객체 받아오기
+         savedInstanceState = getArguments();
         String aa = savedInstanceState.getString("MEME");
         MLog.d("args" + aa);
+
+        //사용자 카테고리 밸류 값 프래그먼트에서 전달받기
         player_state = aa;
 
+        //그값으로 Retrofit 요청 파라미터 같이 던짐
+        /**
+         * 유튜브 게시
+         */
         getVideoId(player_state);
 
 
+        //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
         recyclerClickListener(youTubePlayer);
 //        setYoutubeData();
 
@@ -117,6 +136,7 @@ public class VideoListFragment extends BaseFragment {
             @Override
             public void onListItemClick(List aa, int position) {
 
+                //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
                 UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
                 String playId = items.videoId;
                 String title = items.title;
@@ -125,82 +145,23 @@ public class VideoListFragment extends BaseFragment {
                 MLog.d("new Click Clik: " + playId + title + imageUrl);
 
 
-                //realm 저장
+
                 //이두개의 메세드의 순서가 바뀌면 에러가남
                 changingVideo(playId, youTubePlayer);
+                //realm 저장
                 saveVideo(title, imageUrl, playId);
-
-//                initYouTubePlayerView(playId);
-//                secondVideoRun(playId);
-
-//                myyouTubePlayer.addListener(new AbstractYouTubePlayerListener() {
-//                    @Override
-//                    public void onStateChange(YouTubePlayer youTubePlayer, PlayerConstants.PlayerState state) {
-//                        super.onStateChange(youTubePlayer, state);
-//                        if (state == PlayerConstants.PlayerState.PLAYING) {
-//                            myyouTubePlayer.pause();
-//                            MLog.d("youtube pause!!");
-//                        }
-//                    }
-//                });
-
-//                myyouTubePlayer.addListener(new AbstractYouTubePlayerListener() {
-//                    @Override
-//                    public void onReady(YouTubePlayer youTubePlayer) {
-//                        super.onReady(youTubePlayer);
-//                        YouTubePlayerUtils.loadOrCueVideo(
-//                                youTubePlayer,
-//                                getLifecycle(),
-//                                playId, 0f
-//                        );
-//
-//                    }
-//                });
-
-//                youtubeListener(playId);
-
-
-                if (playId != null) {
-
-                    Context context;
-                    context = getContext();
-
-                    if (!list.contains(playId)) {
-                        //list = 아이디 객체를 담는 스트링 타입 리스트
-                        list.add(playId);
-                    }
-
-                    MLog.d("list contanin :" + list);
-                    setStringArrayPref(context, "MEME", list);
-//                    Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
-//                    intent.putExtra(YOUTUBE, playId);
-
-//                    myVideoStorage.listener(playId);
-//                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putString("data", playId);
-//                    editor.commit();
-
-//                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//
-//                    String data = sharedPreferences.getString("data", "");
-//                    MLog.d("preferencec :" + data);
-
-
-//                    startActivity(intent);
-
-                }
-
             }
         });
 
     }
 
+
+    //클릭하면 동영상 바꾸기
     private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
         MLog.d("changing video");
 
-        if (video != null) {
-            YouTubePlayerUtils.loadOrCueVideo(
+        if (video != null && youTubePlayer != null) {
+            youTubePlayerUtils.loadOrCueVideo(
                     youTubePlayer, getLifecycle(),
                     video, 0f
             );
@@ -223,6 +184,7 @@ public class VideoListFragment extends BaseFragment {
         });
 
     }
+
 
 
     private void setStringArrayPref(Context context, String key, ArrayList<String> values) {
@@ -274,6 +236,10 @@ public class VideoListFragment extends BaseFragment {
     }
 
 
+    /**
+     *
+     * @param player_state 카테고리 분류 Retrofit 요청 파라미터
+     */
     private void getVideoId(String player_state) {
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoCategoryList(player_state, new ResponseCallback<UnCodeVideoModel>() {
@@ -286,13 +252,14 @@ public class VideoListFragment extends BaseFragment {
 
                     for (int a = 0; a < response.data.size(); a++) {
                         if (a == 1) {
-                            String secondVideo = response.data.get(a).videoId;
-                            initYouTubePlayerView(secondVideo);
+                            secondVideo = response.data.get(a).videoId;
                         }
                     }
+                    initYouTubePlayerView(secondVideo);
+
                 }
                 setYoutubeData();
-                mRecyclerAdapter.notifyDataSetChanged();
+//                mRecyclerAdapter.notifyDataSetChanged();
 
             }
         });

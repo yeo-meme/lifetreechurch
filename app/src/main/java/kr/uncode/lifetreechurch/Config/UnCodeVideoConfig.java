@@ -1,9 +1,14 @@
 package kr.uncode.lifetreechurch.Config;
 
+import android.widget.Toast;
+
+import java.io.IOException;
+
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.RetroApiService;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,6 +21,7 @@ public class UnCodeVideoConfig {
 
     private RetroApiService apiService;
 
+    private MainActivity mainActivity;
     public UnCodeVideoConfig() {
         apiService = BlogConfig.getInstance().getApiService();
     }
@@ -33,10 +39,23 @@ public class UnCodeVideoConfig {
                     MLog.d("reponse key"+response.body().toString());
 
                 }
+
+
+
+
             }
 
             @Override
             public void onFailure(Call<UnCodeVideoModel> call, Throwable t) {
+                callback.response(null);
+
+                try {
+                    t.getCause();
+                    MLog.d("errorResponse"+"" +  t.getCause());
+                } catch (Exception e) {
+                    Toast.makeText(mainActivity.getApplicationContext(),"서버응답이 없습니다,네트워크환경을 확인해주세요",Toast.LENGTH_LONG).show();
+                }
+
 
             }
         });

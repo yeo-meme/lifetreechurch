@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -53,23 +55,31 @@ public class MyVideoStorage extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setYoutubeData();
-        binding.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        final RealmResults<UserVideo> keyresult = realm.where(UserVideo.class).findAll();
-                        keyresult.deleteAllFromRealm();
-
-                    }
-                });
-            }
-        });
+        setHasOptionsMenu(true);
+//        binding.delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Realm realm = Realm.getDefaultInstance();
+//                realm.executeTransaction(new Realm.Transaction() {
+//                    @Override
+//                    public void execute(Realm realm) {
+//                        final RealmResults<UserVideo> keyresult = realm.where(UserVideo.class).findAll();
+//                        keyresult.deleteAllFromRealm();
+//
+//                    }
+//                });
+//            }
+//        });
 
         return binding.getRoot();
 
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.mene_storage,menu);
     }
 
     @Override

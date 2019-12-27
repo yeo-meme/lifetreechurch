@@ -41,6 +41,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
                 android:visibility="gone"
+                android:onClick="showPopup"
                 android:layout_centerVertical="true"/>
 
         </RelativeLayout>

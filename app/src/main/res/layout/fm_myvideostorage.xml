@@ -8,45 +8,45 @@
         android:orientation="vertical">
 
         <!-- 상단 글자 레이아웃-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/weekend_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/weekend_bg"-->
+<!--            android:gravity="center_vertical"-->
+<!--            android:orientation="horizontal">-->
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="내가 담은 설교는" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:text="내가 담은 설교는" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="3" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="개" />
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="개" />-->
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+<!--            <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1" />-->
 
-            <Button
-                android:id="@+id/delete"
-                android:background="@color/weekend_bg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
-                android:gravity="center"
-                android:text="보관함 전체삭제" />
+<!--            <Button-->
+<!--                android:id="@+id/delete"-->
+<!--                android:background="@color/weekend_bg"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:gravity="center"-->
+<!--                android:text="보관함 전체삭제" />-->
 
-        </LinearLayout>
+<!--        </LinearLayout>-->
         <!-- 상단 글자 레이아웃 끝-->
 
 

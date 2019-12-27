@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -162,11 +163,10 @@ public class VideoFragment extends BaseFragment {
     }
 
 
-    //영상 기록
     private void recentView(View view) {
-        replaceFragment(new MyVideoStorage(), true);
+//        replaceFragment(new MyVideoStorage(), true);
 
-
+        Toast.makeText(getContext(),"업데이트 예정입니다~",Toast.LENGTH_LONG).show();
     }
 
     //내가담은 비디오

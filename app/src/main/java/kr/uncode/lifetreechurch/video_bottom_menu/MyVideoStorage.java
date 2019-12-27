@@ -61,25 +61,12 @@ public class MyVideoStorage extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setHasOptionsMenu(true);
-        Toast.makeText(getContext(),"new Fragment",Toast.LENGTH_LONG).show();
-//        binding.delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Realm realm = Realm.getDefaultInstance();
-//                realm.executeTransaction(new Realm.Transaction() {
-//                    @Override
-//                    public void execute(Realm realm) {
-//                        final RealmResults<UserVideo> keyresult = realm.where(UserVideo.class).findAll();
-//                        keyresult.deleteAllFromRealm();
-//
-//                    }
-//                });
-//            }
-//        });
+        Toast.makeText(getContext(), "new Fragment", Toast.LENGTH_LONG).show();
         if (youTubePlayId != null) {
             initYouTubePlayerView(youTubePlayId);
         } else {
             Toast.makeText(getContext(), "보관함이비워져 있습니다.", Toast.LENGTH_LONG).show();
+            binding.youtubePlayerView.release();
         }
         setYoutubeData();
         return binding.getRoot();
@@ -90,7 +77,7 @@ public class MyVideoStorage extends BaseFragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.mene_storage,menu);
+        inflater.inflate(R.menu.mene_storage, menu);
     }
 
     @Override
@@ -106,7 +93,7 @@ public class MyVideoStorage extends BaseFragment {
         for (int i = 0; i < tem.size(); i++) {
             videoId = tem.get(i).getVideoId();
             MLog.d("userVideo 3:" + videoId);
-            if (i ==0) {
+            if (i == 0) {
                 youTubePlayId = videoId;
             }
         }
@@ -115,23 +102,11 @@ public class MyVideoStorage extends BaseFragment {
         recentAdapter.setItems(tem);
 
 
-
         toolbarMenuButtonController(true);
 
 
-
-
-
     }
 
-
-    public void refresh() {
-
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.detach(this).attach(this).commit();
-        Toast.makeText(getContext(),"new Fragment",Toast.LENGTH_LONG).show();
-    }
 
     private void initYouTubePlayerView(String secondVideo) {
         getLifecycle().addObserver(binding.youtubePlayerView);
@@ -140,18 +115,17 @@ public class MyVideoStorage extends BaseFragment {
             public void onReady(YouTubePlayer youTubePlayer) {
                 super.onReady(youTubePlayer);
 
-                youTubePlayer.loadVideo(secondVideo,0f);
+//                youTubePlayer.loadVideo(secondVideo,0f);
 //                recyclerClickListener(youTubePlayer);
-//                youTubePlayerUtils.loadOrCueVideo(
-//                        youTubePlayer,
-//                        getLifecycle(),
-//                        secondVideo, 0f
-//                );
+                youTubePlayerUtils.loadOrCueVideo(
+                        youTubePlayer,
+                        getLifecycle(),
+                        secondVideo, 0f
+                );
 //                addFullScreenListenerToPlayer();
             }
         });
     }
-
 
 
     private void setYoutubeData() {
@@ -161,7 +135,6 @@ public class MyVideoStorage extends BaseFragment {
 //        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration());
         binding.recyclerViewFeed.setAdapter(recentAdapter);
     }
-
 
 
 }

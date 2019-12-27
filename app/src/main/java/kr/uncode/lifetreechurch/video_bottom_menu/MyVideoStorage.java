@@ -53,7 +53,6 @@ public class MyVideoStorage extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setYoutubeData();
-        toolbarMenuButtonController(true);
         binding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +78,7 @@ public class MyVideoStorage extends BaseFragment {
 
         recentAdapter = new RecentAdapter();
 
+        toolbarMenuButtonController(true);
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserVideo> data = realm.where(UserVideo.class).findAll();
 

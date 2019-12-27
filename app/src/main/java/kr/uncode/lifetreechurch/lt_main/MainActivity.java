@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity {
 
     public void toolbarMenuButtonController(boolean isShowMenuButton) {
 
-//        if (isShowMenuButton) {binding.mainRightButton.setVisibility(View.VISIBLE);}
+        if (isShowMenuButton) {binding.mainRightButton.setVisibility(View.VISIBLE);}
     }
 
 }

@@ -37,11 +37,11 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
         holder.onBind(position);
     }
 
+
     @Override
     public int getItemCount() {
-        return userVideos.size();
+        return userVideos == null ? 0 : userVideos.size();
     }
-
 
     public void setItems(List<UserVideo> temList) {
         userVideos = temList;

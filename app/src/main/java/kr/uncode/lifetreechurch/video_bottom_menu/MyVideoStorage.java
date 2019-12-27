@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -42,16 +43,17 @@ public class MyVideoStorage extends BaseFragment {
     private RecentAdapter recentAdapter;
     private SharedPreferences pref;
     private String storageUrl = null;
-private YouTubePlayer youTubePlayer;
+    private YouTubePlayer youTubePlayer;
     private List<UserVideo> userVideoList;
 
-    private String videoId;
+    public String videoId;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setYoutubeData();
-
+        toolbarMenuButtonController(true);
         binding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,35 +82,56 @@ private YouTubePlayer youTubePlayer;
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserVideo> data = realm.where(UserVideo.class).findAll();
 
-        MLog.d("userVideo" + data);
+        MLog.d("userVideo 1:" + data);
         List<UserVideo> tem = data;
+        MLog.d("userVideo 2:" + tem);
+
         recentAdapter.setItems(tem);
 
-        for (int i=0; 0<tem.size(); i++) {
-         videoId = tem.get(i).getVideoId();
+
+            for (int i = 0; i < tem.size(); i++) {
+                videoId = tem.get(i).getVideoId();
+                MLog.d("userVideo 3:" + videoId);
         }
-        initYouTubePlayerView(videoId);
+        if (videoId != null) {
+//                    initYouTubePlayerView(videoId);
+        } else {
+            Toast.makeText(getContext(), "보관함이비워져 있습니다.", Toast.LENGTH_LONG).show();
+
+        }
 
     }
 
-    private void initYouTubePlayerView(String secondVideo) {
-
-        getLifecycle().addObserver(binding.youtubePlayerView);
-
-        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(YouTubePlayer youTubePlayer) {
+//    private void initYouTubePlayerView(String secondVideo) {
+//
+//
+//        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//            @Override
+//            public void onReady(YouTubePlayer youTubePlayer) {
 //                super.onReady(youTubePlayer);
-//                recyclerClickListener(youTubePlayer);
-                YouTubePlayerUtils.loadOrCueVideo(
-                        youTubePlayer,
-                        getLifecycle(),
-                        secondVideo, 0f
-                );
-//                addFullScreenListenerToPlayer();
-            }
-        });
-    }
+//                youTubePlayer.loadVideo(secondVideo, 0);
+//
+//            }
+//        });
+
+
+//        getLifecycle().addObserver(binding.youtubePlayerView);
+//
+//        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//            @Override
+//            public void onReady(YouTubePlayer youTubePlayer) {
+//                super.onReady(youTubePlayer);
+////                recyclerClickListener(youTubePlayer);
+//                YouTubePlayerUtils.loadOrCueVideo(
+//                        youTubePlayer,
+//                        getLifecycle(),
+//                        secondVideo, 0f
+//                );
+////                addFullScreenListenerToPlayer();
+//            }
+//        });
+//    }
+
     public void listener() {
 //        savePreferences();
 
@@ -126,13 +149,12 @@ private YouTubePlayer youTubePlayer;
         binding.recyclerViewFeed.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.recyclerViewFeed.setLayoutManager(layoutManager);
-        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration(2));
+//        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration());
         binding.recyclerViewFeed.setAdapter(recentAdapter);
     }
 
 
     private void savePreferences() {
-
 
 
 //        SharedPreferences.Editor editor= pref.edit();
@@ -142,6 +164,6 @@ private YouTubePlayer youTubePlayer;
     private void getPreferences() {
         pref = getActivity().getSharedPreferences("hihihi", MODE_PRIVATE);
 
-        MLog.d("shared" +pref);
+        MLog.d("shared" + pref);
     }
 }

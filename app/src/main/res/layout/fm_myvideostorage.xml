@@ -65,7 +65,7 @@
         <!-- 가로 리사이클러뷰 끝-->
 
         <!--영상 재생 영역 시작 -->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/r"
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </RelativeLayout>
+        </LinearLayout>
         <!--영상 재생 영역 끝 -->
 
 

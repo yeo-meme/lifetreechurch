@@ -154,11 +154,15 @@ public class VideoFragment extends BaseFragment {
         replaceFragmentYoutube(new VideoListFragment(),true,player_state);
     }
 
+
+    //영상 기록
     private void recentView(View view) {
         replaceFragment(new MyVideoStorage(), true);
 
+
     }
 
+    //내가담은 비디오
     private void myWorshipVideo(View view) {
         replaceFragment(new MyVideoStorage(), true);
 

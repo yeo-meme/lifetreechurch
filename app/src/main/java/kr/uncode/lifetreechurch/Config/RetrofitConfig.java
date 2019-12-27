@@ -1,5 +1,7 @@
 package kr.uncode.lifetreechurch.Config;
 
+import java.util.concurrent.TimeUnit;
+
 import kr.uncode.lifetreechurch.RetroApiService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -18,7 +20,9 @@ public class RetrofitConfig {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(interceptor).build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER_URL)

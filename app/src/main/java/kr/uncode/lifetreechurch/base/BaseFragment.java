@@ -102,7 +102,7 @@ public class BaseFragment extends Fragment {
         Activity activity = getActivity();
         if (activity instanceof MainActivity) {
             MainActivity parentActivity = (MainActivity) activity;
-//            parentActivity.toolbarMenuButtonController(isShowMenuButton);
+            parentActivity.toolbarMenuButtonController(isShowMenuButton);
         }
     }
 

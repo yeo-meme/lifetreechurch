@@ -28,13 +28,13 @@ public class UnCodeVideoConfig {
 
 
     public void unCodeVideoCategoryList(String key, final ResponseCallback<UnCodeVideoModel> callback) {
-        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(key,1);
+        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(key,0);
         MLog.d("key :" +key);
         task.enqueue(new Callback<UnCodeVideoModel>() {
             @Override
             public void onResponse(Call<UnCodeVideoModel> call, Response<UnCodeVideoModel> response) {
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body()!=null) {
                     callback.response(response.body());
                     MLog.d("reponse key"+response.body().toString());
 

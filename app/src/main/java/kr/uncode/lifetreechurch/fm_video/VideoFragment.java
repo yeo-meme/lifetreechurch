@@ -65,7 +65,7 @@ public class VideoFragment extends BaseFragment {
                             @Override
                             public void onReady(YouTubePlayer youTubePlayer) {
                                 super.onReady(youTubePlayer);
-                                youTubePlayer.loadVideo(newest, 0);
+                                youTubePlayer.cueVideo(newest, 0);
 
                             }
                         });

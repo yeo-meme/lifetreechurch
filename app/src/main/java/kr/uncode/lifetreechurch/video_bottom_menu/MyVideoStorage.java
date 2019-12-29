@@ -61,7 +61,6 @@ public class MyVideoStorage extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setHasOptionsMenu(true);
-        Toast.makeText(getContext(), "new Fragment", Toast.LENGTH_LONG).show();
         if (youTubePlayId != null) {
             initYouTubePlayerView(youTubePlayId);
         } else {
@@ -115,13 +114,15 @@ public class MyVideoStorage extends BaseFragment {
             public void onReady(YouTubePlayer youTubePlayer) {
                 super.onReady(youTubePlayer);
 
+
+//                youTubePlayer.cueVideo(secondVideo,0f);
 //                youTubePlayer.loadVideo(secondVideo,0f);
 //                recyclerClickListener(youTubePlayer);
-                youTubePlayerUtils.loadOrCueVideo(
-                        youTubePlayer,
-                        getLifecycle(),
-                        secondVideo, 0f
-                );
+//                youTubePlayerUtils.loadOrCueVideo(
+//                        youTubePlayer,
+//                        getLifecycle(),
+//                        secondVideo, 0f
+//                );
 //                addFullScreenListenerToPlayer();
             }
         });

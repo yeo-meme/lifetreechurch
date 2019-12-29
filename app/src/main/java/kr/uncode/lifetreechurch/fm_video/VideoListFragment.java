@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
 import org.json.JSONArray;
@@ -160,6 +163,7 @@ public class VideoListFragment extends BaseFragment {
     private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
         MLog.d("changing video");
 
+//        binding.youtubePlayerView.setEnableAutomaticInitialization();to
         if (video != null && youTubePlayer != null) {
             youTubePlayerUtils.loadOrCueVideo(
                     youTubePlayer, getLifecycle(),
@@ -253,6 +257,8 @@ public class VideoListFragment extends BaseFragment {
                     for (int a = 0; a < response.data.size(); a++) {
                         if (a == 1) {
                             secondVideo = response.data.get(a).videoId;
+                            MLog.d("youtube Model Ok"+secondVideo);
+
                         }
                     }
                     initYouTubePlayerView(secondVideo);
@@ -305,21 +311,29 @@ public class VideoListFragment extends BaseFragment {
 
     private void initYouTubePlayerView(String secondVideo) {
 
-        getLifecycle().addObserver(binding.youtubePlayerView);
+//        getLifecycle().addObserver(binding.youtubePlayerView);
 
-        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(YouTubePlayer youTubePlayer) {
+        try {
+            binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(YouTubePlayer youTubePlayer) {
 //                super.onReady(youTubePlayer);
-                recyclerClickListener(youTubePlayer);
-                YouTubePlayerUtils.loadOrCueVideo(
-                        youTubePlayer,
-                        getLifecycle(),
-                        secondVideo, 0f
-                );
+
+                    recyclerClickListener(youTubePlayer);
+
+                    youTubePlayer.cueVideo(secondVideo, 0f);
+//                    YouTubePlayerUtils.loadOrCueVideo(
+//                            youTubePlayer,
+//                            getLifecycle(),
+//                            secondVideo, 0f
+//                    );
 //                addFullScreenListenerToPlayer();
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(),"netwok 상태확인 요망",Toast.LENGTH_LONG).show();
+        }
+
     }
 
 

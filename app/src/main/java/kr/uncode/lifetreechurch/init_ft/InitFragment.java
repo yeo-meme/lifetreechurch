@@ -21,6 +21,7 @@ import kr.uncode.lifetreechurch.fm_happy.HappyColumnFragment;
 import kr.uncode.lifetreechurch.fm_news.NewMiddleFragment;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
 import kr.uncode.lifetreechurch.IntroduceBottomActivity.IntroduceChActivity;
+import kr.uncode.lifetreechurch.fm_video.VideoListFragment;
 
 public class InitFragment extends BaseFragment {
     private ProgressDialog progressDialog;
@@ -86,8 +87,8 @@ public class InitFragment extends BaseFragment {
     private void videoClick(View view) {
 //        alert();
 
-        String player_state = "주일오전";
-        replaceFragmentYoutube(new VideoFragment(),true,player_state);
+//        String player_state = "주일오전";
+        replaceFragment(new VideoListFragment(),true);
 //        replaceFragment(new VideoFragment(),true);
     }
 

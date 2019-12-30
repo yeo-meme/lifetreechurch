@@ -27,42 +27,42 @@ public class UnCodeVideoConfig {
     }
 
 
-    public void unCodeVideoCategoryList(String key, final ResponseCallback<UnCodeVideoModel> callback) {
-        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(key,0);
-        MLog.d("key :" +key);
-        task.enqueue(new Callback<UnCodeVideoModel>() {
-            @Override
-            public void onResponse(Call<UnCodeVideoModel> call, Response<UnCodeVideoModel> response) {
-
-                if (response.isSuccessful() && response.body()!=null) {
-                    callback.response(response.body());
-                    MLog.d("reponse key"+response.body().toString());
-
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<UnCodeVideoModel> call, Throwable t) {
-                callback.response(null);
-
-                try {
-                    t.getCause();
-                    MLog.d("errorResponse"+"" +  t.getCause());
-                } catch (Exception e) {
-                    Toast.makeText(mainActivity.getApplicationContext(),"서버응답이 없습니다,네트워크환경을 확인해주세요",Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-        });
-    }
+//    public void unCodeVideoCategoryList(String key, final ResponseCallback<UnCodeVideoModel> callback) {
+//        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(key,0);
+//        MLog.d("key :" +key);
+//        task.enqueue(new Callback<UnCodeVideoModel>() {
+//            @Override
+//            public void onResponse(Call<UnCodeVideoModel> call, Response<UnCodeVideoModel> response) {
+//
+//                if (response.isSuccessful() && response.body()!=null) {
+//                    callback.response(response.body());
+//                    MLog.d("reponse key"+response.body().toString());
+//
+//                }
+//
+//
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<UnCodeVideoModel> call, Throwable t) {
+//                callback.response(null);
+//
+//                try {
+//                    t.getCause();
+//                    MLog.d("errorResponse"+"" +  t.getCause());
+//                } catch (Exception e) {
+//                    Toast.makeText(mainActivity.getApplicationContext(),"서버응답이 없습니다,네트워크환경을 확인해주세요",Toast.LENGTH_LONG).show();
+//                }
+//
+//
+//            }
+//        });
+//    }
 
     public void unCodeVideoList (final ResponseCallback<UnCodeVideoModel> callback) {
-        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList("주일오전",0);
+        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(0);
         task.enqueue(new Callback<UnCodeVideoModel>() {
             @Override
             public void onResponse(Call<UnCodeVideoModel> call, Response<UnCodeVideoModel> response) {

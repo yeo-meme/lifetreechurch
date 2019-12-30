@@ -65,7 +65,7 @@ public class MyVideoStorage extends BaseFragment {
             initYouTubePlayerView(youTubePlayId);
         } else {
             Toast.makeText(getContext(), "보관함이비워져 있습니다.", Toast.LENGTH_LONG).show();
-            binding.youtubePlayerView.release();
+//            binding.youtubePlayerView.release();
         }
         setYoutubeData();
         return binding.getRoot();

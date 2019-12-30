@@ -105,26 +105,26 @@ public class VideoListFragment extends BaseFragment {
         //리사이클러뷰
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
 
-        //JSON
-        a = new JSONArray();
-        myVideoStorage = new MyVideoStorage();
-        activity = getActivity();
-        if (activity != null && activity instanceof MainActivity)
-
-
-         //JSON 객체 받아오기
-         savedInstanceState = getArguments();
-        String aa = savedInstanceState.getString("MEME");
-        MLog.d("args" + aa);
+        //realmJSON 내가본 비디오 보관
+//        a = new JSONArray();
+//        myVideoStorage = new MyVideoStorage();
+//        activity = getActivity();
+//        if (activity != null && activity instanceof MainActivity)
+//
+//
+//         //JSON 객체 받아오기
+//         savedInstanceState = getArguments();
+//        String aa = savedInstanceState.getString("MEME");
+//        MLog.d("args" + aa);
 
         //사용자 카테고리 밸류 값 프래그먼트에서 전달받기
-        player_state = aa;
+//        player_state = aa;
 
         //그값으로 Retrofit 요청 파라미터 같이 던짐
         /**
          * 유튜브 게시
          */
-        getVideoId(player_state);
+        getVideoId();
 
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
@@ -242,11 +242,10 @@ public class VideoListFragment extends BaseFragment {
 
     /**
      *
-     * @param player_state 카테고리 분류 Retrofit 요청 파라미터
      */
-    private void getVideoId(String player_state) {
+    private void getVideoId() {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoCategoryList(player_state, new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoList( new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");

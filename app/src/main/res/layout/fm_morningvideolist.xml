@@ -244,6 +244,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:text="전체보기"
+                android:id="@+id/actionButton"
                 style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 app:icon="@drawable/ic_dehaze_black_24dp"
                 app:layout_anchorGravity="bottom|right|end" />

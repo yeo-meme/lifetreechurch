@@ -105,6 +105,13 @@ public class BaseFragment extends Fragment {
             parentActivity.toolbarMenuButtonController(isShowMenuButton);
         }
     }
+    public void videoListTopMenuShowController(boolean isShowMenuButton) {
+        Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            MainActivity parentActivity = (MainActivity) activity;
+            parentActivity.videoListTopMenuShow(isShowMenuButton);
+        }
+    }
 
     public void progressON() {
         Activity activity = getActivity();

@@ -5,23 +5,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
 import org.json.JSONArray;
@@ -41,7 +39,6 @@ import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
-import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
@@ -51,6 +48,9 @@ public class VideoListFragment extends BaseFragment {
 //    private static final String AFTERNOON = "AFTERNOON";
 //    private static final String WEDNESDAY = "WEDNESDAY";
 //    private static final String DAWN = "DAWN";
+
+    private Boolean isFabOpen = false;
+    private Animation fab_open, fab_close;
 
     // 유튜브 객체
     private YouTubePlayer youTubePlayer;
@@ -88,19 +88,48 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //데이터바인딩 유튜브 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
+        videoListTopMenuShowController(true);
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
+        binding.testBtn.setOnClickListener(this::viewShow);
         return binding.getRoot();
     }
+
+    private void viewShow(View view) {
+
+        binding.checkboxArea.setVisibility(View.VISIBLE);
+        anim();
+    }
+
+
+    public void anim() {
+
+        if (isFabOpen) {
+            binding.checkboxArea.startAnimation(fab_close);
+            binding.checkboxArea.setVisibility(View.GONE);
+            isFabOpen = false;
+        } else {
+            binding.checkboxArea.startAnimation(fab_open);
+            binding.checkboxArea.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
+        }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.testBtn.setOnClickListener(this::viewShow);
+
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
 
         //리사이클러뷰
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
@@ -148,7 +177,6 @@ public class VideoListFragment extends BaseFragment {
                 MLog.d("new Click Clik: " + playId + title + imageUrl);
 
 
-
                 //이두개의 메세드의 순서가 바뀌면 에러가남
                 changingVideo(playId, youTubePlayer);
                 //realm 저장
@@ -188,7 +216,6 @@ public class VideoListFragment extends BaseFragment {
         });
 
     }
-
 
 
     private void setStringArrayPref(Context context, String key, ArrayList<String> values) {
@@ -245,7 +272,7 @@ public class VideoListFragment extends BaseFragment {
      */
     private void getVideoId() {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoList( new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");
@@ -256,7 +283,7 @@ public class VideoListFragment extends BaseFragment {
                     for (int a = 0; a < response.data.size(); a++) {
                         if (a == 1) {
                             secondVideo = response.data.get(a).videoId;
-                            MLog.d("youtube Model Ok"+secondVideo);
+                            MLog.d("youtube Model Ok" + secondVideo);
 
                         }
                     }
@@ -330,7 +357,7 @@ public class VideoListFragment extends BaseFragment {
                 }
             });
         } catch (Exception e) {
-            Toast.makeText(getContext(),"netwok 상태확인 요망",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "netwok 상태확인 요망", Toast.LENGTH_LONG).show();
         }
 
     }

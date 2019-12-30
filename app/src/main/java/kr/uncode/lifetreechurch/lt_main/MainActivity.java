@@ -67,9 +67,15 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
         inflater.inflate(R.menu.mene_storage, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(this::onMenuItemClick);
         popupMenu.show();
-
     }
 
+    public void videoListTopMenuShow(boolean isShow) {
+
+        if (isShow) {
+            binding.videoMenu.setVisibility(View.VISIBLE);
+            binding.toolbar.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {

@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch.lt_main;
 
 import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +34,10 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
 
         initPageLoad();
     }

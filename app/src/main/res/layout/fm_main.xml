@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -146,29 +147,31 @@
         android:layout_weight="0.3"
         android:foreground="?attr/selectableItemBackground"
         android:orientation="horizontal">
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/toolbar_bg"
             android:textStyle="bold"
+            app:backgroundTint="@color/toolbar_bg"
             android:text="교역자 소개"
             android:textSize="24sp"
             android:textColor="@color/white"
             android:fontFamily="@font/scdream3"
             android:id="@+id/introduce_btn"/>
         <View
-            android:layout_width="0.6dp"
+            android:layout_width="3dp"
             android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:background="#ffffff"/>
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="24sp"
+            app:backgroundTint="@color/toolbar_bg"
             android:foreground="?attr/selectableItemBackground"
             android:fontFamily="@font/scdream3"
             android:background="@color/toolbar_bg"

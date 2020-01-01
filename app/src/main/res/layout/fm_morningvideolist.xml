@@ -8,11 +8,6 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="horizontal">-->
-
 
         <!--액션바-->
         <LinearLayout
@@ -22,7 +17,7 @@
             android:gravity="center">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/testBtn"
+                android:id="@+id/categoryButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_dehaze_black_24dp"
@@ -34,12 +29,7 @@
                 app:hoveredFocusedTranslationZ="60dp"
                 app:pressedTranslationZ="60dp" />
 
-            <!--                <CheckBox-->
-            <!--                    android:id="@+id/checkBoxMorning"-->
-            <!--                    android:layout_width="35dp"-->
-            <!--                    android:layout_height="35dp"-->
-            <!--                    android:background="?android:attr/listChoiceIndicatorMultiple"-->
-            <!--                    android:button="@null" />-->
+
         </LinearLayout>
 
 
@@ -49,29 +39,26 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="50dp"
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:orientation="horizontal">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="주일오전"
                     android:textAppearance="@font/scdream4"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
-                <CheckBox
+                <RadioButton
                     android:id="@+id/checkBoxMorning"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="?android:attr/listChoiceIndicatorMultiple"
                     android:button="@null" />
 
@@ -80,138 +67,56 @@
                     android:layout_height="wrap_content"
                     android:text="주일오후"
                     android:textAppearance="@font/scdream4"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
-                <CheckBox
+                <RadioButton
                     android:id="@+id/checkBoxAfter"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="?android:attr/listChoiceIndicatorMultiple"
                     android:button="@null" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/checkboxArea2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="주일오전"
+                    android:text="수요예배"
                     android:textAppearance="@font/scdream4"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
-                <CheckBox
+                <RadioButton
                     android:id="@+id/checkBoxDawn"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="?android:attr/listChoiceIndicatorMultiple"
                     android:button="@null" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="주일오후"
+                    android:text="새벽예배"
                     android:textAppearance="@font/scdream4"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
-                <CheckBox
+                <RadioButton
                     android:id="@+id/checkBoxWend"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="?android:attr/listChoiceIndicatorMultiple"
                     android:button="@null" />
 
-            </LinearLayout>
+            </RadioGroup>
+
 
         </LinearLayout>
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="?attr/actionBarSize"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:gravity="center">-->
-
-        <!--                <TextView-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:text="주일오전"-->
-        <!--                    android:textAppearance="@font/scdream4"-->
-        <!--                    android:textSize="14sp" />-->
-
-        <!--                <CheckBox-->
-        <!--                    android:id="@+id/checkBoxAfter"-->
-        <!--                    android:layout_width="35dp"-->
-        <!--                    android:layout_height="35dp"-->
-        <!--                    android:background="?android:attr/listChoiceIndicatorMultiple"-->
-        <!--                    android:button="@null" />-->
-
-        <!--            </LinearLayout>-->
-        <!--        </LinearLayout>-->
-
-        <!--        <LinearLayout-->
-        <!--            android:id="@+id/videoMenu"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="?attr/actionBarSize"-->
-        <!--            android:gravity="center"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:visibility="visible">-->
 
 
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="?attr/actionBarSize"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:gravity="center">-->
-
-        <!--                <TextView-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:text="주일오전"-->
-        <!--                    android:textAppearance="@font/scdream4"-->
-        <!--                    android:textSize="14sp" />-->
-
-        <!--                <CheckBox-->
-        <!--                    android:id="@+id/checkBoxWend"-->
-        <!--                    android:layout_width="35dp"-->
-        <!--                    android:layout_height="35dp"-->
-        <!--                    android:background="?android:attr/listChoiceIndicatorMultiple"-->
-        <!--                    android:button="@null" />-->
-        <!--            </LinearLayout>-->
-
-        <!--            <LinearLayout-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="?attr/actionBarSize"-->
-        <!--                android:layout_marginRight="10dp"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:gravity="center">-->
-
-        <!--                <TextView-->
-        <!--                    android:layout_width="wrap_content"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:text="주일오전"-->
-        <!--                    android:textAppearance="@font/scdream4"-->
-        <!--                    android:textSize="14sp" />-->
-
-        <!--                <CheckBox-->
-        <!--                    android:id="@+id/checkBoxDawn"-->
-        <!--                    android:layout_width="35dp"-->
-        <!--                    android:layout_height="35dp"-->
-        <!--                    android:background="?android:attr/listChoiceIndicatorMultiple"-->
-        <!--                    android:button="@null" />-->
-
-        <!--            </LinearLayout>-->
-        <!--        </LinearLayout>-->
-
+        <!--유튜브-->
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtube_player_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-
+        <!--리사이클러뷰와 플로팅 버튼 ARea-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -221,68 +126,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <!--        <LinearLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="0dp"-->
-            <!--            android:layout_weight="1"-->
-            <!--            android:background="@color/weekend_bg">-->
-            <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-            <!--                android:id="@+id/floating_all_button"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_alignParentRight="true"-->
-            <!--                android:layout_alignParentBottom="true"-->
-            <!--                app:hoveredFocusedTranslationZ="60dp"-->
-            <!--                app:pressedTranslationZ="60dp"-->
-            <!--                app:backgroundTint="@color/happyColumn"-->
-            <!--                android:layout_margin="30dp"-->
-            <!--                app:fabSize="normal" />-->
 
-
+            <!--전체보기 버튼-->
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/allList_button"
+                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="20dp"
                 android:text="전체보기"
-                android:id="@+id/actionButton"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                app:icon="@drawable/ic_dehaze_black_24dp"
-                app:layout_anchorGravity="bottom|right|end" />
-
+                android:visibility="gone"
+                app:icon="@drawable/ic_dehaze_black_24dp" />
 
 
         </RelativeLayout>
-        <!--        </LinearLayout>-->
-
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            android:layout_gravity="center_vertical"-->
-        <!--            android:layout_weight="0.2"-->
-        <!--            android:gravity="center_vertical"-->
-        <!--            android:orientation="horizontal">-->
-
-        <!--            <EditText-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_weight="1" />-->
-
-        <!--            <Button-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:text="검색" />-->
-
-
-        <!--        </LinearLayout>-->
-
-        <!--        <TextView-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:fontFamily="@font/scdream4"-->
-        <!--            android:gravity="right"-->
-        <!--            android:text="내 보관함에 저장합니다"-->
-        <!--            android:layout_marginBottom="20dp"/>-->
-
 
     </LinearLayout>
 </layout>

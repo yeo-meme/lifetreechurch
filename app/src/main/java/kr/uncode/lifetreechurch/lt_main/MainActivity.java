@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.status_bar));
         }
 
         initPageLoad();

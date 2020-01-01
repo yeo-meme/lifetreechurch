@@ -93,7 +93,7 @@ public class VideoListFragment extends BaseFragment {
         videoListTopMenuShowController(true);
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
-        binding.testBtn.setOnClickListener(this::viewShow);
+        binding.categoryButton.setOnClickListener(this::viewShow);
         return binding.getRoot();
     }
 
@@ -103,6 +103,9 @@ public class VideoListFragment extends BaseFragment {
         anim();
     }
 
+    private void onRadioButtonClicked(View view) {
+        MLog.d("categoty click");
+    }
 
     public void anim() {
 
@@ -120,7 +123,8 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.testBtn.setOnClickListener(this::viewShow);
+        binding.categoryButton.setOnClickListener(this::viewShow);
+        onRadioButtonClicked(view);
 
     }
 
@@ -161,7 +165,6 @@ public class VideoListFragment extends BaseFragment {
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
         recyclerClickListener(youTubePlayer);
 //        setYoutubeData();
-
 
     }
 

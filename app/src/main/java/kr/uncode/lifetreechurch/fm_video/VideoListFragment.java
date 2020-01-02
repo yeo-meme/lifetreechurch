@@ -81,9 +81,12 @@ public class VideoListFragment extends BaseFragment {
 
     private JSONArray a;
 
-    private int currentPage = 0;
+    private Integer currentPage = 0;
 
     boolean lastitemVisibleFlag = false;
+
+    private List<UnCodeVideoModel> addItems;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -121,16 +124,23 @@ public class VideoListFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.categoryButton.setOnClickListener(this::viewShow);
-
 //        radioGroup(view);
         categoryChanger(view);
         scroll();
         allList_get(view);
     }
 
-    private void scroll() {
 
+    /**
+     * 리사이클러뷰 페이징 처리 _ 마지막 position 듣기
+     */
+    private void scroll() {
         binding.recyclerViewFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -138,19 +148,94 @@ public class VideoListFragment extends BaseFragment {
                 LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(binding.recyclerViewFeed.getLayoutManager());
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+                int firstVisible = layoutManager.findFirstCompletelyVisibleItemPosition();
 
-                if (lastVisible >= totalItemCount -1) {
-                MLog.d("마지막 ");
+//                if (firstVisible == totalItemCount) {
+//                    MLog.d("first");
+//                    currentPage -=1;
+//                    getVideoId(currentPage);
+//
+//                }
+
+                if (lastVisible >= totalItemCount - 1) {
+                    MLog.d("마지막 ");
+
+                    progressON("Loading...");
+
+                    currentPage += 1;
+                    switch (binding.radio.getCheckedRadioButtonId()) {
+                        case R.id.checkBoxMorning : {
+                            addVideoCategory("오전",currentPage);
+//                           getVideoCategroyId("오전",currentPage);
+                           progressOFF();
+                           break;
+                        }
+                        case R.id.checkBoxAfter: {
+                            getVideoCategroyId("오후",currentPage);
+                            progressOFF();
+                            break;
+                        }
+
+                        case R.id.checkBoxWend: {
+                            getVideoCategroyId("수요",currentPage);
+                            progressOFF();
+
+                            break;
+                        }
+                        case R.id.checkBoxDawn: {
+                            getVideoCategroyId("새벽",currentPage);
+                            progressOFF();
+
+                            break;
+                        }
+                        default:
+                            getVideoId(currentPage);
+                            progressOFF();
+
+                            break;
+                    }
+//                    binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//                        @Override
+//                        public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+//                            switch (checkId) {
+//                                case R.id.checkBoxMorning: {
+//                                    getVideoCategroyId("오전", currentPage);
+//                                    break;
+//                                }
+//
+//                                case R.id.checkBoxAfter: {
+//                                    getVideoCategroyId("오후",currentPage);
+//                                    break;
+//                                }
+//
+//                                case R.id.checkBoxWend: {
+//                                    getVideoCategroyId("수요",currentPage);
+//                                    break;
+//                                }
+//
+//                                case R.id.checkBoxDawn: {
+//                                    getVideoCategroyId("새벽",currentPage);
+//                                    break;
+//                                }
+//                                default:
+//                                    getVideoId(currentPage);
+//                            }
+//
+//                        }
+//                    });
+                }
 
 
-
-                currentPage += 1;
-
-                getVideoId(currentPage);}
             }
         });
     }
 
+
+    /**
+     * 카테고리 메뉴에서 사용자가 전체보기 눌렀을때 전체 유튜브 리스트를 불러오기
+     *
+     * @param view
+     */
     private void allList_get(View view) {
         binding.allListButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +248,12 @@ public class VideoListFragment extends BaseFragment {
         });
     }
 
+
+    /**
+     * 사용자 카테고리 체크 체인져 _ 해당 카테고리 별로 유튜브 카테고리 검색
+     *
+     * @param view
+     */
     private void categoryChanger(View view) {
 
         binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -171,7 +262,8 @@ public class VideoListFragment extends BaseFragment {
                 switch (ch) {
                     case R.id.checkBoxMorning: {
                         String categoryId = "오전";
-                        getVideoCategroyId(categoryId,currentPage);
+                        currentPage = 0;
+                        getVideoCategroyId(categoryId, currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
                         hideCategoryArea();
 
@@ -180,7 +272,8 @@ public class VideoListFragment extends BaseFragment {
 
                     case R.id.checkBoxAfter: {
                         String categoryId = "오후";
-                        getVideoCategroyId(categoryId,currentPage);
+                        currentPage = 0;
+                        getVideoCategroyId(categoryId, currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
                         hideCategoryArea();
 
@@ -189,7 +282,8 @@ public class VideoListFragment extends BaseFragment {
 
                     case R.id.checkBoxWend: {
                         String categoryId = "수요";
-                        getVideoCategroyId(categoryId,currentPage);
+                        currentPage = 0;
+                        getVideoCategroyId(categoryId, currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
                         hideCategoryArea();
 
@@ -198,29 +292,25 @@ public class VideoListFragment extends BaseFragment {
 
                     case R.id.checkBoxDawn: {
                         String categoryId = "새벽";
-                        getVideoCategroyId(categoryId,currentPage);
+                        currentPage = 0;
+                        getVideoCategroyId(categoryId, currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
 
                         hideCategoryArea();
                         break;
                     }
+
+
                 }
             }
         });
-//        binding.checkBoxMorning.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getContext(), "오전체크", Toast.LENGTH_SHORT).show();
-//
-//                int rb = binding.radio.getCheckedRadioButtonId();
-//
-//
-//
-//            }
-//        });
 
     }
 
+
+    /**
+     * 카테고리 숨기기 딜레이
+     */
     private void hideCategoryArea() {
 
         new Handler().postDelayed(new Runnable() {
@@ -240,28 +330,13 @@ public class VideoListFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
 
 
+        // 카테고리 오픈 클로즈 애니메이션 적용
         fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
 
         //리사이클러뷰
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
 
-        //realmJSON 내가본 비디오 보관
-//        a = new JSONArray();
-//        myVideoStorage = new MyVideoStorage();
-//        activity = getActivity();
-//        if (activity != null && activity instanceof MainActivity)
-//
-//
-//         //JSON 객체 받아오기
-//         savedInstanceState = getArguments();
-//        String aa = savedInstanceState.getString("MEME");
-//        MLog.d("args" + aa);
-
-        //사용자 카테고리 밸류 값 프래그먼트에서 전달받기
-//        player_state = aa;
-
-        //그값으로 Retrofit 요청 파라미터 같이 던짐
         /**
          * 유튜브 게시
          */
@@ -270,10 +345,15 @@ public class VideoListFragment extends BaseFragment {
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
         recyclerClickListener(youTubePlayer);
-//        setYoutubeData();
 
     }
 
+
+    /**
+     * 리사이클러뷰에서 아이템 클릭이 일어났을때 듣고 있는 리스너
+     *
+     * @param youTubePlayer
+     */
     private void recyclerClickListener(final YouTubePlayer youTubePlayer) {
         mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -313,6 +393,14 @@ public class VideoListFragment extends BaseFragment {
 
     }
 
+
+    /**
+     * 최근 봤던 비디오 리얼엠에 저장하기
+     *
+     * @param title   유튜브 제목
+     * @param image   유튜브 썸네일
+     * @param videoId 유튜브 비디오 아이디
+     */
     private void saveVideo(String title, String image, String videoId) {
         final Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
@@ -329,6 +417,13 @@ public class VideoListFragment extends BaseFragment {
     }
 
 
+    /**
+     * 프리페어런스 봤던 아이디 저장하기 -- 사용하지 않음 realm으로 사용중 코드 정리 안되서 아직 안지웠음
+     *
+     * @param context
+     * @param key
+     * @return
+     */
     private void setStringArrayPref(Context context, String key, ArrayList<String> values) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
@@ -354,9 +449,18 @@ public class VideoListFragment extends BaseFragment {
         editor.apply();
 
         MLog.d("json Set" + a.length());
-        getStringArrayPref(context, "MEME");
+        //프리페어런스 = 현재는realm사용
+//        getStringArrayPref(context, "MEME");
     }
 
+
+    /**
+     * 프리페어런스 봤던 아이디 저장하기 -- 사용하지 않음 realm으로 사용중 코드 정리 안되서 아직 안지웠음
+     *
+     * @param context
+     * @param key
+     * @return
+     */
     private ArrayList<String> getStringArrayPref(Context context, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String json = prefs.getString("MEME", null);
@@ -378,9 +482,38 @@ public class VideoListFragment extends BaseFragment {
     }
 
 
-    private void getVideoCategroyId(String categoryId,Integer currentPage) {
+    private void addVideoCategory(String categoryId,Integer currentPage) {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoCategoryList(categoryId,currentPage, new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoCategoryList(categoryId, currentPage, new ResponseCallback<UnCodeVideoModel>() {
+            @Override
+            public void response(UnCodeVideoModel response) {
+
+
+                if (response != null) {
+                    for (int a = 0; a > response.data.size(); a++) {
+                        if (a == 0) {
+                            secondVideo = response.data.get(a).videoId;
+                            MLog.d("youtube Model Ok!! category ID : " + secondVideo);
+                        }
+
+                    }
+                    initYouTubePlayerView(secondVideo);
+                    setYoutubeData();
+                }
+
+            }
+        });
+    }
+    /**
+     * 카테고리별 유튜브 영상 긁어오기
+     *
+     * @param categoryId  = 카테고리 키워드
+     * @param currentPage = 카테고리 페이지 Number
+     */
+
+    private void getVideoCategroyId(String categoryId, Integer currentPage) {
+        unCodeVideoConfig = new UnCodeVideoConfig();
+        unCodeVideoConfig.unCodeVideoCategoryList(categoryId, currentPage, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");
@@ -396,9 +529,9 @@ public class VideoListFragment extends BaseFragment {
 
                         }
                     }
+                    initYouTubePlayerView(secondVideo);
+                    setYoutubeData();
                 }
-                initYouTubePlayerView(secondVideo);
-                setYoutubeData();
 
             }
         });
@@ -406,11 +539,11 @@ public class VideoListFragment extends BaseFragment {
     }
 
     /**
-     *
+     * 전체 보기
      */
     private void getVideoId(Integer currentPage) {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoList(currentPage,new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoList(currentPage, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");

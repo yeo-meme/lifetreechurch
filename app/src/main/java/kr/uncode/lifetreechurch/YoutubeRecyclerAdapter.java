@@ -56,6 +56,13 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
         notifyDataSetChanged();
     }
 
+    public void addItem(UnCodeVideoModel.Data youtube) {
+        this.UtubeBasket.add(youtube);
+        MLog.d("UtubeBasket addItem :"+ UtubeBasket);
+        notifyDataSetChanged();
+
+    }
+
     public class ViewHolder extends BaseViewHolder {
 
         ItemYoutubeListBinding binding;

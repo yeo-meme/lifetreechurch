@@ -46,61 +46,61 @@ public class VideoFragment extends BaseFragment {
     /**
      * retrofit 유튜브 unCodeApi 요청
      */
-    private void videoDate() {
-        unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
-            @Override
-            public void response(UnCodeVideoModel response) {
-
-                    if (response != null) {
-                        for (int i = 0; i < response.data.size(); i++) {
-                            UnCodeVideoModel.Data items = response.data.get(i);
-                            if (i == 0) {
-                                newest = items.videoId;
-                                MLog.d("new videoId" + newest);
-                            }
-                        }
-
-                        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                            @Override
-                            public void onReady(YouTubePlayer youTubePlayer) {
-                                super.onReady(youTubePlayer);
-                                youTubePlayer.cueVideo(newest, 0);
-
-                            }
-                        });
-                    }
-
-
-            }
-        });
-//        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+//    private void videoDate() {
+//        unCodeVideoConfig = new UnCodeVideoConfig();
+//        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
 //            @Override
-//            public void response(YoutubeResponse response) {
+//            public void response(UnCodeVideoModel response) {
 //
-//                if (response != null) {
-//                    for (int e = 0; e < response.items.size(); e++) {
-//                        YoutubeResponse.Items items = response.items.get(e);
-//                        if (e == 0) {
-//                            newest = items.id.videoId;
-//                            MLog.d("newest :" + newest);
+//                    if (response != null) {
+//                        for (int i = 0; i < response.data.size(); i++) {
+//                            UnCodeVideoModel.Data items = response.data.get(i);
+//                            if (i == 0) {
+//                                newest = items.videoId;
+//                                MLog.d("new videoId" + newest);
+//                            }
 //                        }
+//
+//                        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//                            @Override
+//                            public void onReady(YouTubePlayer youTubePlayer) {
+//                                super.onReady(youTubePlayer);
+//                                youTubePlayer.cueVideo(newest, 0);
+//
+//                            }
+//                        });
 //                    }
 //
 //
-//                    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//                        @Override
-//                        public void onReady(YouTubePlayer youTubePlayer) {
-//                            super.onReady(youTubePlayer);
-//
-//                            youTubePlayer.loadVideo(newest, 0);
-//                        }
-//                    });
-//                }
-//
 //            }
 //        });
-    }
+////        videoConfig.videoList(new ResponseCallback<YoutubeResponse>() {
+////            @Override
+////            public void response(YoutubeResponse response) {
+////
+////                if (response != null) {
+////                    for (int e = 0; e < response.items.size(); e++) {
+////                        YoutubeResponse.Items items = response.items.get(e);
+////                        if (e == 0) {
+////                            newest = items.id.videoId;
+////                            MLog.d("newest :" + newest);
+////                        }
+////                    }
+////
+////
+////                    binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+////                        @Override
+////                        public void onReady(YouTubePlayer youTubePlayer) {
+////                            super.onReady(youTubePlayer);
+////
+////                            youTubePlayer.loadVideo(newest, 0);
+////                        }
+////                    });
+////                }
+////
+////            }
+////        });
+//    }
 
     @Nullable
     @Override
@@ -122,7 +122,7 @@ public class VideoFragment extends BaseFragment {
         }
 
         //유튜브 게시를 위해Retrofit 요청
-        videoDate();
+//        videoDate();
 //        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //            @Override
 //            public void onReady(YouTubePlayer youTubePlayer) {

@@ -64,6 +64,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
             super(itemView);
             binding = itemView;
 
+
             binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

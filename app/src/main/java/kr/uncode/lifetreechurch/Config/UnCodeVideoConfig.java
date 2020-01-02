@@ -27,8 +27,8 @@ public class UnCodeVideoConfig {
     }
 
 
-    public void unCodeVideoCategoryList(String key, final ResponseCallback<UnCodeVideoModel> callback) {
-        final Call<UnCodeVideoModel> task = apiService.unCodeCategoryVideoList(key,0);
+    public void unCodeVideoCategoryList(String key,Integer pageNum, final ResponseCallback<UnCodeVideoModel> callback) {
+        final Call<UnCodeVideoModel> task = apiService.unCodeCategoryVideoList(key,pageNum);
         MLog.d("key :" +key);
         task.enqueue(new Callback<UnCodeVideoModel>() {
             @Override
@@ -61,8 +61,9 @@ public class UnCodeVideoConfig {
         });
     }
 
-    public void unCodeVideoList (final ResponseCallback<UnCodeVideoModel> callback) {
-        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(0);
+
+    public void unCodeVideoList (Integer pageNum,final ResponseCallback<UnCodeVideoModel> callback) {
+        final Call<UnCodeVideoModel> task = apiService.unCodeVideoList(pageNum);
         task.enqueue(new Callback<UnCodeVideoModel>() {
             @Override
             public void onResponse(Call<UnCodeVideoModel> call, Response<UnCodeVideoModel> response) {

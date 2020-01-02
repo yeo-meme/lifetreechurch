@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.NumberPicker;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -44,15 +46,9 @@ import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-
 
 public class VideoListFragment extends BaseFragment {
 
-//    private static final String MORNING = "MORNING";
-//    private static final String AFTERNOON = "AFTERNOON";
-//    private static final String WEDNESDAY = "WEDNESDAY";
-//    private static final String DAWN = "DAWN";
 
     private Boolean isFabOpen = false;
     private Animation fab_open, fab_close;
@@ -78,17 +74,16 @@ public class VideoListFragment extends BaseFragment {
     //Config 객처
     private UnCodeVideoConfig unCodeVideoConfig;
 
-    private MyVideoStorage myVideoStorage;
 
     //액티비티 객체
     public Activity activity;
 
 
-    private ArrayList<String> list = new ArrayList<String>();
-
     private JSONArray a;
 
+    private int currentPage = 0;
 
+    boolean lastitemVisibleFlag = false;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,16 +121,41 @@ public class VideoListFragment extends BaseFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.categoryButton.setOnClickListener(this::viewShow);
+
 //        radioGroup(view);
         categoryChanger(view);
+        scroll();
         allList_get(view);
+    }
+
+    private void scroll() {
+
+        binding.recyclerViewFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(binding.recyclerViewFeed.getLayoutManager());
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if (lastVisible >= totalItemCount -1) {
+                MLog.d("마지막 ");
+
+
+
+                currentPage += 1;
+
+                getVideoId(currentPage);}
+            }
+        });
     }
 
     private void allList_get(View view) {
         binding.allListButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getVideoId();
+                getVideoId(currentPage);
                 binding.radio.clearCheck();
                 binding.allListButton.setVisibility(View.GONE);
                 binding.checkboxArea.setVisibility(View.VISIBLE);
@@ -151,7 +171,7 @@ public class VideoListFragment extends BaseFragment {
                 switch (ch) {
                     case R.id.checkBoxMorning: {
                         String categoryId = "오전";
-                        getVideoCategroyId(categoryId);
+                        getVideoCategroyId(categoryId,currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
                         hideCategoryArea();
 
@@ -160,7 +180,7 @@ public class VideoListFragment extends BaseFragment {
 
                     case R.id.checkBoxAfter: {
                         String categoryId = "오후";
-                        getVideoCategroyId(categoryId);
+                        getVideoCategroyId(categoryId,currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
                         hideCategoryArea();
 
@@ -169,7 +189,7 @@ public class VideoListFragment extends BaseFragment {
 
                     case R.id.checkBoxWend: {
                         String categoryId = "수요";
-                        getVideoCategroyId(categoryId);
+                        getVideoCategroyId(categoryId,currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
                         hideCategoryArea();
 
@@ -178,7 +198,7 @@ public class VideoListFragment extends BaseFragment {
 
                     case R.id.checkBoxDawn: {
                         String categoryId = "새벽";
-                        getVideoCategroyId(categoryId);
+                        getVideoCategroyId(categoryId,currentPage);
                         binding.allListButton.setVisibility(View.VISIBLE);
 
                         hideCategoryArea();
@@ -210,7 +230,7 @@ public class VideoListFragment extends BaseFragment {
                 isFabOpen = false;
 
             }
-        },1000);
+        }, 1000);
 
     }
 
@@ -245,7 +265,7 @@ public class VideoListFragment extends BaseFragment {
         /**
          * 유튜브 게시
          */
-        getVideoId();
+        getVideoId(currentPage);
 
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
@@ -358,9 +378,9 @@ public class VideoListFragment extends BaseFragment {
     }
 
 
-    private void getVideoCategroyId(String categoryId) {
+    private void getVideoCategroyId(String categoryId,Integer currentPage) {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoCategoryList(categoryId, new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoCategoryList(categoryId,currentPage, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");
@@ -388,9 +408,9 @@ public class VideoListFragment extends BaseFragment {
     /**
      *
      */
-    private void getVideoId() {
+    private void getVideoId(Integer currentPage) {
         unCodeVideoConfig = new UnCodeVideoConfig();
-        unCodeVideoConfig.unCodeVideoList(new ResponseCallback<UnCodeVideoModel>() {
+        unCodeVideoConfig.unCodeVideoList(currentPage,new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");

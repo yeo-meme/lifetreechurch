@@ -61,6 +61,15 @@ public interface RetroApiService {
     Call<UnCodeVideoModel> unCodeVideoList( @Field("page") Integer page);
 
 
+    @Headers({
+            "x-uncode-id:5debc01bc96b921a9f7bff7c",
+            "x-uncode-key:YokmmOcL68okD1dXFPew9trNgULYXlIwYTakIvZ7"
+    })
+    @POST("/ttlmc/videos")
+    @FormUrlEncoded
+    Call<UnCodeVideoModel> unCodeCategoryVideoList(@Field("text") String test, @Field("page")Integer page);
+
+
 
 }
 

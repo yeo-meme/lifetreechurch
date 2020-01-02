@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +43,7 @@ import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
+
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 
@@ -98,7 +101,6 @@ public class VideoListFragment extends BaseFragment {
     }
 
     private void viewShow(View view) {
-
         binding.checkboxArea.setVisibility(View.VISIBLE);
         anim();
     }
@@ -118,13 +120,97 @@ public class VideoListFragment extends BaseFragment {
             binding.checkboxArea.setVisibility(View.VISIBLE);
             isFabOpen = true;
         }
-        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.categoryButton.setOnClickListener(this::viewShow);
-        onRadioButtonClicked(view);
+//        radioGroup(view);
+        categoryChanger(view);
+        allList_get(view);
+    }
+
+    private void allList_get(View view) {
+        binding.allListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getVideoId();
+                binding.radio.clearCheck();
+                binding.allListButton.setVisibility(View.GONE);
+                binding.checkboxArea.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void categoryChanger(View view) {
+
+        binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int ch) {
+                switch (ch) {
+                    case R.id.checkBoxMorning: {
+                        String categoryId = "오전";
+                        getVideoCategroyId(categoryId);
+                        binding.allListButton.setVisibility(View.VISIBLE);
+                        hideCategoryArea();
+
+                        break;
+                    }
+
+                    case R.id.checkBoxAfter: {
+                        String categoryId = "오후";
+                        getVideoCategroyId(categoryId);
+                        binding.allListButton.setVisibility(View.VISIBLE);
+                        hideCategoryArea();
+
+                        break;
+                    }
+
+                    case R.id.checkBoxWend: {
+                        String categoryId = "수요";
+                        getVideoCategroyId(categoryId);
+                        binding.allListButton.setVisibility(View.VISIBLE);
+                        hideCategoryArea();
+
+                        break;
+                    }
+
+                    case R.id.checkBoxDawn: {
+                        String categoryId = "새벽";
+                        getVideoCategroyId(categoryId);
+                        binding.allListButton.setVisibility(View.VISIBLE);
+
+                        hideCategoryArea();
+                        break;
+                    }
+                }
+            }
+        });
+//        binding.checkBoxMorning.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getContext(), "오전체크", Toast.LENGTH_SHORT).show();
+//
+//                int rb = binding.radio.getCheckedRadioButtonId();
+//
+//
+//
+//            }
+//        });
+
+    }
+
+    private void hideCategoryArea() {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                binding.checkboxArea.setVisibility(View.GONE);
+                isFabOpen = false;
+
+            }
+        },1000);
 
     }
 
@@ -271,6 +357,33 @@ public class VideoListFragment extends BaseFragment {
         return urls;
     }
 
+
+    private void getVideoCategroyId(String categoryId) {
+        unCodeVideoConfig = new UnCodeVideoConfig();
+        unCodeVideoConfig.unCodeVideoCategoryList(categoryId, new ResponseCallback<UnCodeVideoModel>() {
+            @Override
+            public void response(UnCodeVideoModel response) {
+                MLog.d("youtube Model Ok");
+
+
+                if (response != null) {
+                    mRecyclerAdapter.setItems(response.data);
+
+                    for (int a = 0; a > response.data.size(); a++) {
+                        if (a == 0) {
+                            secondVideo = response.data.get(a).videoId;
+                            MLog.d("youtube Model Ok!! category ID : " + secondVideo);
+
+                        }
+                    }
+                }
+                initYouTubePlayerView(secondVideo);
+                setYoutubeData();
+
+            }
+        });
+
+    }
 
     /**
      *

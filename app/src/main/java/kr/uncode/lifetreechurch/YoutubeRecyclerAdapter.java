@@ -29,6 +29,9 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public YoutubeRecyclerAdapter() {
     }
 
+    public void clearItem() {
+        this.UtubeBasket.clear();
+    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;

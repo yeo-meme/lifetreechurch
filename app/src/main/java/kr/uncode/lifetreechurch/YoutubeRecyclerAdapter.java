@@ -4,6 +4,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +44,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         holder.onBind(position);
+
     }
 
     @Override
@@ -58,10 +60,12 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     public void addItem(UnCodeVideoModel.Data youtube) {
         this.UtubeBasket.add(youtube);
-        MLog.d("UtubeBasket addItem :"+ UtubeBasket);
-        notifyDataSetChanged();
+        MLog.d("UtubeBasket addItem :" + UtubeBasket);
+//        notifyDataSetChanged();'
+
 
     }
+
 
     public class ViewHolder extends BaseViewHolder {
 
@@ -78,7 +82,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
                     int pos = getAdapterPosition();
                     MLog.d("youtube card Click");
                     if (mListener != null) {
-                        mListener.onListItemClick(UtubeBasket,pos);
+                        mListener.onListItemClick(UtubeBasket, pos);
                     }
                 }
             });
@@ -92,16 +96,20 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
             super.onBind(position);
 
 
-            String title = UtubeBasket.get(position).title;
+            if (UtubeBasket != null) {
+                String title = UtubeBasket.get(position).title;
 
-            MLog.d(title);
-            binding.youtubeTitle.setText(title);
+                MLog.d(title);
+                binding.youtubeTitle.setText(title);
 
-            String thumbnail = UtubeBasket.get(position).thumbnail;
-            if (thumbnail != null) {
-                Glide.with(itemView.getContext())
-                        .load(thumbnail)
-                        .into(binding.youtubeImg);
+                String thumbnail = UtubeBasket.get(position).thumbnail;
+                if (thumbnail != null) {
+                    Glide.with(itemView.getContext())
+                            .load(thumbnail)
+                            .into(binding.youtubeImg);
+                } else {
+                }
+
             }
         }
     }

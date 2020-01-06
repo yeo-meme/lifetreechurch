@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.BaseViewHolder;
@@ -21,21 +22,23 @@ public class YoutubeViewHolder extends BaseViewHolder {
 
     private OnItemClickListener mListener = null;
 
-    private List<UnCodeVideoModel.Data> utubeBasket;
+    private List<Object> VIDEO_LIST = new ArrayList<>();
+    private UnCodeVideoModel.Data unCodeList;
 
     ItemYoutubeListBinding binding;
 
-    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList) {
+    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<Object> fromAdapter) {
         super(itemView);
         binding = itemView;
-        this.utubeBasket = getUtubeList;
+        VIDEO_LIST = fromAdapter;
+
 
         binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = getAdapterPosition();
                 if (mListener != null) {
-                    mListener.onListItemClick(utubeBasket, pos);
+                    mListener.onListItemClick(VIDEO_LIST, pos);
                 }
             }
         });
@@ -47,11 +50,17 @@ public class YoutubeViewHolder extends BaseViewHolder {
 
     public void onBind(int position) {
         super.onBind(position);
-        if (utubeBasket != null) {
-            String title = utubeBasket.get(position).title;
+//        final UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) VIDEO_LIST.get(position);
+
+//        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
+
+        YoutubeRecyclerAdapter.Item items = new YoutubeRecyclerAdapter.Item();
+
+        if (items != null) {
+            String title = items.unCodeList.get(position).title;
             MLog.d(title);
             binding.youtubeTitle.setText(title);
-            String thumbnail = utubeBasket.get(position).thumbnail;
+            String thumbnail = items.unCodeList.get(position).thumbnail;
             if (thumbnail != null) {
                 Glide.with(itemView.getContext())
                         .load(thumbnail)

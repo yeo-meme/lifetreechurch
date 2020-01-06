@@ -86,7 +86,7 @@ public class VideoListFragment extends BaseFragment {
 
     private Integer totalItemCount = 10;
 
-    private UnCodeVideoModel.Data dataModel;
+    private List<UnCodeVideoModel.Data> dataModel;
 
 
     public List<Object> VIDEO_LIST_ITEMS = new ArrayList<>();
@@ -547,8 +547,6 @@ public class VideoListFragment extends BaseFragment {
 //                        mRecyclerAdapter.addItem(data);
 //                        binding.recyclerViewFeed.smoothScrollToPosition(response.data.size()-1);
 
-                        dataModel = response.data.get(a);
-                        MLog.d("어댑터 dataModel" + dataModel);
 
 //                        for (int a = 0; a > response.data.size(); a++) {
                         if (a == 0) {
@@ -560,7 +558,7 @@ public class VideoListFragment extends BaseFragment {
 
                         //유튜브 비디오 아이디 넣고 게시하기
                         initYouTubePlayerView(secondVideo);
-                        setYoutubeData();
+//                        setYoutubeData();
 
                     }
 //                    mRecyclerAdapter.addItem(dataModel);
@@ -587,12 +585,15 @@ public class VideoListFragment extends BaseFragment {
                 //첫번째 영상을 꺼내기 위해 향상포문 인덱스 알기
                 int index = 0;
                 if (response != null) {
-
+                    VIDEO_LIST_ITEMS.addAll(response.data);
+                    mRecyclerAdapter.addItem(VIDEO_LIST_ITEMS);
+                    binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
                     //향상 포문으로 모델타입으로 retrofit 리절트를 셋해주기
                     for (int e =0; e < response.data.size(); e++) {
 //                        binding.recyclerViewFeed.smoothScrollToPosition(response.data.size()-1);
                         dataModel = response.data.get(e);
 
+                        YoutubeRecyclerAdapter.Item item = new YoutubeRecyclerAdapter.Item(dataModel);
 //                        for (int a = 0; a > response.data.size(); a++) {
                         if (e == 0) {
                             secondVideo = response.data.get(index).videoId;
@@ -603,7 +604,7 @@ public class VideoListFragment extends BaseFragment {
 
 
 //                        mRecyclerAdapter.addItem(dataModel);
-                        MLog.d("어댑터 add Item data :" + dataModel);
+//                        MLog.d("어댑터 add Item data :" + dataModel);
 
                         //유튜브 비디오 아이디 넣고 게시하기
                         initYouTubePlayerView(secondVideo);
@@ -633,7 +634,10 @@ public class VideoListFragment extends BaseFragment {
 
 
                 if (response != null) {
-                    mRecyclerAdapter.setItems(response.data);
+
+                    VIDEO_LIST_ITEMS.addAll(response.data);
+                    mRecyclerAdapter.setItems(VIDEO_LIST_ITEMS);
+//                    mRecyclerAdapter.setItems(response.data);
 
                     for (int a = 0; a > response.data.size(); a++) {
                         if (a == 0) {
@@ -662,8 +666,10 @@ public class VideoListFragment extends BaseFragment {
                 MLog.d("youtube Model Ok");
 
                 if (response != null) {
-                    mRecyclerAdapter.setItems(response.data);
+                    VIDEO_LIST_ITEMS.addAll(response.data);
+                    mRecyclerAdapter.setItems(VIDEO_LIST_ITEMS);
 
+                    //게시할 첫번째 비디오 ID 가져오기
                     for (int a = 0; a < response.data.size(); a++) {
                         if (a == 1) {
                             secondVideo = response.data.get(a).videoId;

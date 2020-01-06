@@ -1,4 +1,4 @@
-package kr.uncode.lifetreechurch;
+package kr.uncode.lifetreechurch.fm_video;
 
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import kr.uncode.lifetreechurch.BaseViewHolder;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
@@ -20,6 +21,7 @@ import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+
     ItemYoutubeListBinding binding;
     private List<UnCodeVideoModel.Data> UtubeBasket;
     DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -41,7 +43,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new ViewHolder(binding);
+        return new YoutubeViewHolder(binding,UtubeBasket);
     }
 
     @Override
@@ -70,52 +72,6 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
 
-    public class ViewHolder extends BaseViewHolder {
-
-        ItemYoutubeListBinding binding;
-
-        public ViewHolder(@NonNull ItemYoutubeListBinding itemView) {
-            super(itemView);
-            binding = itemView;
-
-
-            binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int pos = getAdapterPosition();
-                    MLog.d("youtube card Click");
-                    if (mListener != null) {
-                        mListener.onListItemClick(UtubeBasket, pos);
-                    }
-                }
-            });
-        }
-
-        @Override
-        protected void clear() {
-        }
-
-        public void onBind(int position) {
-            super.onBind(position);
-
-
-            if (UtubeBasket != null) {
-                String title = UtubeBasket.get(position).title;
-
-                MLog.d(title);
-                binding.youtubeTitle.setText(title);
-
-                String thumbnail = UtubeBasket.get(position).thumbnail;
-                if (thumbnail != null) {
-                    Glide.with(itemView.getContext())
-                            .load(thumbnail)
-                            .into(binding.youtubeImg);
-                } else {
-                }
-
-            }
-        }
-    }
 
 
 }

@@ -12,11 +12,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 
 import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
-import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
-import kr.uncode.lifetreechurch.YoutubeVideoModel;
 import kr.uncode.lifetreechurch.base.BaseActivity;
-import kr.uncode.lifetreechurch.base.BaseFragment;
-import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.ActivityYoutubeBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 

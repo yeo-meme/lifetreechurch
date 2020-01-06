@@ -37,7 +37,6 @@ import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
-import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;

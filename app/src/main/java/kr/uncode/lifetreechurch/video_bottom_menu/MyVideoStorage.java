@@ -1,11 +1,7 @@
 package kr.uncode.lifetreechurch.video_bottom_menu;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,13 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
 import java.util.List;
@@ -30,17 +23,10 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import kr.uncode.lifetreechurch.Model.UserVideo;
-import kr.uncode.lifetreechurch.Model.YoutubeResponse;
 import kr.uncode.lifetreechurch.R;
-import kr.uncode.lifetreechurch.RecyclerViewDecoration;
-import kr.uncode.lifetreechurch.YoutubeRecyclerAdapter;
 import kr.uncode.lifetreechurch.base.BaseFragment;
-import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMyvideostorageBinding;
-import kr.uncode.lifetreechurch.fm_video.YoutubePlayerActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MyVideoStorage extends BaseFragment {
 

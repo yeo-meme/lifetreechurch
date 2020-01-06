@@ -82,10 +82,14 @@ public class VideoListFragment extends BaseFragment {
 
     boolean lastitemVisibleFlag = false;
 
-    private List<UnCodeVideoModel> addItems;
+    private List<UnCodeVideoModel> unCodeModelList;
 
     private Integer totalItemCount = 10;
 
+    private UnCodeVideoModel.Data dataModel;
+
+
+    public List<Object> VIDEO_LIST_ITEMS = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,6 +98,7 @@ public class VideoListFragment extends BaseFragment {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
         binding.categoryButton.setOnClickListener(this::viewShow);
+
         return binding.getRoot();
     }
 
@@ -122,7 +127,9 @@ public class VideoListFragment extends BaseFragment {
         binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
         categoryChanger(view);
-        scroll();
+        scrollChanger();
+
+        //카테고리중 플로팅버튼 전체보기
         allList_get(view);
     }
 
@@ -131,19 +138,25 @@ public class VideoListFragment extends BaseFragment {
      * 리사이클러뷰 페이징 처리 _ 마지막 position 듣기
      * 현재 스크롤되고 있는 이벤트에 대해서 받아볼 수 있음
      */
-    private void scroll() {
+    private void scrollChanger() {
         binding.recyclerViewFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+
                 LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(binding.recyclerViewFeed.getLayoutManager());
                 //어댑터가 들고 있는 총 아이템의 갯수
 //                int totalItemCount = layoutManager.getItemCount();
 
                 //어댑터가 알고 있는 마지막 아이템 인덱스 반환
                 int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
+
+
                 MLog.d("lastVisible :" + lastVisible);
+
+
                 // 9
                 if (lastVisible >= totalItemCount - 3) {
                     MLog.d("마지막 ");
@@ -155,9 +168,10 @@ public class VideoListFragment extends BaseFragment {
 
                     switch (binding.radio.getCheckedRadioButtonId()) {
                         case R.id.checkBoxMorning: {
-                            MLog.d("마지막 인덱스 상태  오전 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
+                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
+                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
 
+                            MLog.d("어댑터 currentPage :" + currentPage);
                             addVideoCategory("오전", currentPage);
 //                           getVideoCategroyId("오전",currentPage);
 
@@ -167,8 +181,10 @@ public class VideoListFragment extends BaseFragment {
                             break;
                         }
                         case R.id.checkBoxAfter: {
-                            MLog.d("마지막 인덱스 상태 오후 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 오후" + totalItemCount);
+                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
+                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
+
+                            MLog.d("어댑터 currentPage :" + currentPage);
                             addVideoCategory("오후", currentPage);
                             delayedRecyclerNotice(lastVisible);
 
@@ -177,8 +193,11 @@ public class VideoListFragment extends BaseFragment {
                         }
 
                         case R.id.checkBoxWend: {
-                            MLog.d("마지막 인덱스 상태 수요 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 수요" + totalItemCount);
+                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
+                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
+
+                            MLog.d("어댑터 currentPage :" + currentPage);
+
                             addVideoCategory("수요", currentPage);
                             delayedRecyclerNotice(lastVisible);
 
@@ -187,8 +206,11 @@ public class VideoListFragment extends BaseFragment {
                             break;
                         }
                         case R.id.checkBoxDawn: {
-                            MLog.d("마지막 인덱스 상태 새벽 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 새벽" + totalItemCount);
+                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
+                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
+
+                            MLog.d("어댑터 currentPage :" + currentPage);
+
                             addVideoCategory("새벽", currentPage);
                             delayedRecyclerNotice(lastVisible);
 
@@ -197,6 +219,7 @@ public class VideoListFragment extends BaseFragment {
                             break;
                         }
                         default:
+
 
                             addVideoAll(currentPage);
                             delayedRecyclerNotice(lastVisible);
@@ -267,7 +290,7 @@ public class VideoListFragment extends BaseFragment {
 
 //                        addVideoCategory(categoryId, currentPage);
                         //첫 탭시 로드
-                            getVideoCategroyId(categoryId, currentPage);
+                        getVideoCategroyId(categoryId, currentPage);
 
                         //전체 보기 비디오 보이기
                         binding.allListButton.setVisibility(View.VISIBLE);
@@ -298,6 +321,7 @@ public class VideoListFragment extends BaseFragment {
                     case R.id.checkBoxWend: {
                         String categoryId = "수요";
                         MLog.d("사용자 changer 수요");
+                        mRecyclerAdapter.clearItem();
 
                         currentPage = 0;
                         totalItemCount = 10;
@@ -313,6 +337,7 @@ public class VideoListFragment extends BaseFragment {
                     case R.id.checkBoxDawn: {
                         String categoryId = "새벽";
                         MLog.d("사용자 changer 새벽");
+                        mRecyclerAdapter.clearItem();
 
                         currentPage = 0;
                         totalItemCount = 10;
@@ -514,14 +539,19 @@ public class VideoListFragment extends BaseFragment {
                 //첫번째 영상을 꺼내기 위해 향상포문 인덱스 알기
                 int index = 0;
                 if (response != null) {
-
+                    VIDEO_LIST_ITEMS.addAll(response.data);
+                    mRecyclerAdapter.setDataListItem(VIDEO_LIST_ITEMS);
+                    MLog.d("VIDEO_LIST_ITEMS :" + VIDEO_LIST_ITEMS);
                     //향상 포문으로 모델타입으로 retrofit 리절트를 셋해주기
-                    for (UnCodeVideoModel.Data data : response.data) {
-                        mRecyclerAdapter.addItem(data);
+                    for (int a =0; a<response.data.size(); a++) {
+//                        mRecyclerAdapter.addItem(data);
 //                        binding.recyclerViewFeed.smoothScrollToPosition(response.data.size()-1);
 
+                        dataModel = response.data.get(a);
+                        MLog.d("어댑터 dataModel" + dataModel);
+
 //                        for (int a = 0; a > response.data.size(); a++) {
-                        if (index == 0) {
+                        if (a == 0) {
                             secondVideo = response.data.get(index).videoId;
                             MLog.d("youtube Model Ok!! category ID : " + secondVideo);
 //                            }
@@ -533,6 +563,7 @@ public class VideoListFragment extends BaseFragment {
                         setYoutubeData();
 
                     }
+//                    mRecyclerAdapter.addItem(dataModel);
                 }
             }
         });
@@ -553,30 +584,33 @@ public class VideoListFragment extends BaseFragment {
         unCodeVideoConfig.unCodeVideoCategoryList(categoryId, currentPage, new ResponseCallback<UnCodeVideoModel>() {
             @Override
             public void response(UnCodeVideoModel response) {
-
                 //첫번째 영상을 꺼내기 위해 향상포문 인덱스 알기
                 int index = 0;
                 if (response != null) {
 
                     //향상 포문으로 모델타입으로 retrofit 리절트를 셋해주기
-                    for (UnCodeVideoModel.Data data : response.data) {
-                        mRecyclerAdapter.addItem(data);
-                        MLog.d("addData" + data);
+                    for (int e =0; e < response.data.size(); e++) {
 //                        binding.recyclerViewFeed.smoothScrollToPosition(response.data.size()-1);
+                        dataModel = response.data.get(e);
 
 //                        for (int a = 0; a > response.data.size(); a++) {
-                        if (index == 0) {
+                        if (e == 0) {
                             secondVideo = response.data.get(index).videoId;
                             MLog.d("youtube Model Ok!! category ID : " + secondVideo);
 //                            }
 
                         }
 
+
+//                        mRecyclerAdapter.addItem(dataModel);
+                        MLog.d("어댑터 add Item data :" + dataModel);
+
                         //유튜브 비디오 아이디 넣고 게시하기
                         initYouTubePlayerView(secondVideo);
                         setYoutubeData();
 
                     }
+
                 }
 
             }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.BaseViewHolder;
@@ -25,12 +26,22 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     ItemYoutubeListBinding binding;
     private List<UnCodeVideoModel.Data> UtubeBasket;
     DisplayMetrics displayMetrics = new DisplayMetrics();
+    public List<Object> VIDEO_LIST_ITEMS = new ArrayList<>();
 
     private OnItemClickListener mListener = null;
 
     public YoutubeRecyclerAdapter() {
     }
 
+
+    public void setDataListItem(List<Object> items) {
+        if (items != null) {
+            VIDEO_LIST_ITEMS = items;
+            MLog.d("test 어댑터 VIDEO_LIST_ITEMS " + VIDEO_LIST_ITEMS);
+            notifyDataSetChanged();
+        }
+
+    }
     public void clearItem() {
         this.UtubeBasket.clear();
     }
@@ -64,9 +75,17 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     public void addItem(UnCodeVideoModel.Data youtube) {
-        this.UtubeBasket.add(youtube);
-        MLog.d("UtubeBasket addItem :" + UtubeBasket);
-//        notifyDataSetChanged();'
+
+        try {
+            UtubeBasket = (List<UnCodeVideoModel.Data>) youtube;
+            MLog.d("UtubeBasket addItem :" + UtubeBasket);
+            MLog.d("UtubeBasket addItem  youtube:" + youtube);
+            notifyDataSetChanged();
+            MLog.d("어댑터 total :" +UtubeBasket);
+        } catch (Exception e) {
+
+        }
+
 
 
     }

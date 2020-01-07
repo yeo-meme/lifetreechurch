@@ -1,237 +1,253 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!-- 플로팅버튼 리니어시작-->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:gravity="right"
+
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <!--첫번째 플로팅 버튼-->
+
+        <data>
+            <variable
+                name="passedText"
+                type="String"/>
+        </data>
+
+        <!-- 플로팅버튼 리니어시작-->
         <LinearLayout
-            android:id="@+id/morning"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:id="@+id/morning_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="주일오전"
-                    android:textSize="16sp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/morning_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/white"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_add_alert_black_24dp" />
-
-        </LinearLayout>
-        <!--두번째 플로팅 버튼-->
-        <LinearLayout
-            android:id="@+id/after"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:id="@+id/after_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="주일오후"
-                    android:textSize="16sp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/after_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/white"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_add_alert_black_24dp" />
-
-        </LinearLayout>
-        <!--세번째 플로팅 버튼-->
-        <LinearLayout
-            android:id="@+id/dawn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:id="@+id/dawn_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="새벽예배"
-                    android:textSize="16sp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/dawn_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/white"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_add_alert_black_24dp" />
-
-        </LinearLayout>
-        <!--네번째 플로팅 버튼-->
-        <LinearLayout
-            android:id="@+id/wed"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:id="@+id/wed_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="수요예배"
-                    android:textSize="16sp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/wed_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/white"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_add_alert_black_24dp" />
-
-        </LinearLayout>
-        <!--첫번째 플로팅 버튼-->
-        <LinearLayout
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:id="@+id/fab1_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="최근본목록"
-                    android:textSize="16sp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab1_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:backgroundTint="@color/white"
-                app:elevation="0dp"
-                app:fabSize="mini"
-                app:srcCompat="@drawable/ic_add_alert_black_24dp" />
-
-        </LinearLayout>
-        <!-- 플로팅버튼 전체보기 버튼 시작-->
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/categoryButton"
-            android:layout_gravity="right"
-            android:gravity="center_vertical">
-
-            <androidx.cardview.widget.CardView
+            android:layout_gravity="bottom|right"
+            android:gravity="right"
+            android:orientation="vertical">
+            <!--첫번째 플로팅 버튼-->
+            <LinearLayout
+                android:id="@+id/morning"
                 android:layout_width="wrap_content"
-                android:backgroundTint="@color/dawn"
-                android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true">
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/fabAll_text"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/morning_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="주일오전"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/morning_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="전체보기"
-                    android:layout_margin="5dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
+                    app:backgroundTint="@color/white"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
 
-            </androidx.cardview.widget.CardView>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/allList_button"
+            </LinearLayout>
+            <!--두번째 플로팅 버튼-->
+            <LinearLayout
+                android:id="@+id/after"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:elevation="0dp"
-                android:text="전체보기"
-                android:visibility="visible"
-                app:fabSize="mini"
-                app:backgroundTint="@color/selected_dot"
-                app:srcCompat="@drawable/ic_clear_allwhite_24dp" />
-        </LinearLayout>
-        <!--플로팅버튼 전체보기 끝 리니어-->
-    </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:orientation="horizontal">
 
-</LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/after_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="주일오후"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/after_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/white"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+
+            </LinearLayout>
+            <!--세번째 플로팅 버튼-->
+            <LinearLayout
+                android:id="@+id/dawn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/dawn_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="새벽예배"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/dawn_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/white"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+
+            </LinearLayout>
+            <!--네번째 플로팅 버튼-->
+            <LinearLayout
+                android:id="@+id/wed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/wed_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="수요예배"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/wed_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/white"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+
+            </LinearLayout>
+            <!--첫번째 플로팅 버튼-->
+            <LinearLayout
+                android:id="@+id/fab1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/fab1_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="최근본목록"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab1_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="@color/white"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+
+            </LinearLayout>
+            <!-- 플로팅버튼 전체보기 버튼 시작-->
+            <LinearLayout
+                android:id="@+id/categoryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/dawn"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/fabAll_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:text="전체보기"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/allList_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="전체보기"
+                    android:visibility="visible"
+                    app:backgroundTint="@color/selected_dot"
+                    app:elevation="0dp"
+                    app:fabSize="mini"
+                    app:srcCompat="@drawable/ic_clear_allwhite_24dp" />
+            </LinearLayout>
+            <!--플로팅버튼 전체보기 끝 리니어-->
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

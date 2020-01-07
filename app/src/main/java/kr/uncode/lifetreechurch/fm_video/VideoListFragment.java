@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
@@ -46,6 +48,8 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class VideoListFragment extends BaseFragment {
 
 
+    private boolean fabExpanded = false;
+    
     private Boolean isFabOpen = false;
     private Animation fab_open, fab_close;
 
@@ -85,7 +89,7 @@ public class VideoListFragment extends BaseFragment {
     private List<UnCodeVideoModel> addItems;
 
     private Integer totalItemCount = 10;
-
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -122,8 +126,39 @@ public class VideoListFragment extends BaseFragment {
 //        binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
 //        categoryChanger(view);
+        fabEx();
         scrollChanger();
 //        allList_get(view);
+    }
+
+    private void fabEx() {
+        binding.allListButton.categoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fabExpanded == true) {
+                    if (fabExpanded == true) {}
+                    closeSubMenusFab();
+                } else {
+                    openSubMenuFab();
+                }
+            }
+        });
+    }
+
+    private void openSubMenuFab() {
+        binding.allListButton.morning.setVisibility(View.VISIBLE);
+        binding.allListButton.after.setVisibility(View.VISIBLE);
+        binding.allListButton.dawn.setVisibility(View.VISIBLE);
+        binding.allListButton.after.setVisibility(View.VISIBLE);
+
+        fabExpanded = true;
+    }
+
+    private void closeSubMenusFab() {
+        binding.allListButton.morning.setVisibility(View.GONE);
+        binding.allListButton.after.setVisibility(View.GONE);
+        binding.allListButton.dawn.setVisibility(View.GONE);
+        binding.allListButton.after.setVisibility(View.GONE);
     }
 
 

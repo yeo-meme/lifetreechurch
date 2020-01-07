@@ -20,15 +20,19 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class YoutubeViewHolder extends BaseViewHolder {
 
     private OnItemClickListener mListener = null;
-
     private List<UnCodeVideoModel.Data> utubeBasket;
-
     ItemYoutubeListBinding binding;
 
-    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList) {
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList,OnItemClickListener listener) {
         super(itemView);
         binding = itemView;
         this.utubeBasket = getUtubeList;
+        this.mListener = listener;
 
         binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +44,9 @@ public class YoutubeViewHolder extends BaseViewHolder {
             }
         });
     }
+
+
+
 
     @Override
     protected void clear() {

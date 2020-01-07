@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.BaseViewHolder;
@@ -23,7 +24,9 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     ItemYoutubeListBinding binding;
-    private List<UnCodeVideoModel.Data> UtubeBasket;
+//    private List<UnCodeVideoModel.Data> UtubeBasket;
+
+    private List<UnCodeVideoModel.Data> list = new ArrayList<>();
     DisplayMetrics displayMetrics = new DisplayMetrics();
 
     private OnItemClickListener mListener = null;
@@ -32,7 +35,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
     public void clearItem() {
-        this.UtubeBasket.clear();
+        this.list.clear();
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -43,7 +46,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new YoutubeViewHolder(binding,UtubeBasket);
+        return new YoutubeViewHolder(binding,list,mListener);
     }
 
     @Override
@@ -54,18 +57,17 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     @Override
     public int getItemCount() {
-        return UtubeBasket == null ? 0 : UtubeBasket.size();
+        return list == null ? 0 : list.size();
     }
 
     public void setItems(List<UnCodeVideoModel.Data> youtubeVideos) {
-        UtubeBasket = youtubeVideos;
-        MLog.d("recyclerAdapter setData method :" + UtubeBasket);
+        list = youtubeVideos;
+        MLog.d("recyclerAdapter setData method :" + list);
         notifyDataSetChanged();
     }
 
-    public void addItem(UnCodeVideoModel.Data youtube) {
-        this.UtubeBasket.add(youtube);
-        MLog.d("UtubeBasket addItem :" + UtubeBasket);
+    public boolean addItem(UnCodeVideoModel.Data youtube) {
+        return list.add(youtube);
 //        notifyDataSetChanged();'
 
 

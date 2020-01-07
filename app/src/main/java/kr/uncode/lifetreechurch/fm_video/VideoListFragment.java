@@ -122,7 +122,7 @@ public class VideoListFragment extends BaseFragment {
         binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
         categoryChanger(view);
-        scroll();
+        scrollChanger();
         allList_get(view);
     }
 
@@ -131,7 +131,7 @@ public class VideoListFragment extends BaseFragment {
      * 리사이클러뷰 페이징 처리 _ 마지막 position 듣기
      * 현재 스크롤되고 있는 이벤트에 대해서 받아볼 수 있음
      */
-    private void scroll() {
+    private void scrollChanger() {
         binding.recyclerViewFeed.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -144,7 +144,8 @@ public class VideoListFragment extends BaseFragment {
                 //어댑터가 알고 있는 마지막 아이템 인덱스 반환
                 int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
                 MLog.d("lastVisible :" + lastVisible);
-                // 9
+
+
                 if (lastVisible >= totalItemCount - 3) {
                     MLog.d("마지막 ");
 
@@ -155,9 +156,8 @@ public class VideoListFragment extends BaseFragment {
 
                     switch (binding.radio.getCheckedRadioButtonId()) {
                         case R.id.checkBoxMorning: {
-                            MLog.d("마지막 인덱스 상태  오전 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
-
+                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
+                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
                             addVideoCategory("오전", currentPage);
 //                           getVideoCategroyId("오전",currentPage);
 
@@ -249,7 +249,6 @@ public class VideoListFragment extends BaseFragment {
      * @param view
      */
     private void categoryChanger(View view) {
-
         binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int ch) {
@@ -267,7 +266,7 @@ public class VideoListFragment extends BaseFragment {
 
 //                        addVideoCategory(categoryId, currentPage);
                         //첫 탭시 로드
-                            getVideoCategroyId(categoryId, currentPage);
+                         getVideoCategroyId(categoryId, currentPage);
 
                         //전체 보기 비디오 보이기
                         binding.allListButton.setVisibility(View.VISIBLE);
@@ -406,12 +405,12 @@ public class VideoListFragment extends BaseFragment {
     private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
         MLog.d("changing video");
 
+        MLog.d("changing video"+ video);
 //        binding.youtubePlayerView.setEnableAutomaticInitialization();to
         if (video != null && youTubePlayer != null) {
-            youTubePlayerUtils.loadOrCueVideo(
-                    youTubePlayer, getLifecycle(),
-                    video, 0f
-            );
+//            recyclerClickListener(youTubePlayer);
+            youTubePlayer.cueVideo(video, 0f);
+            
         }
 
 
@@ -530,7 +529,10 @@ public class VideoListFragment extends BaseFragment {
 
                         //유튜브 비디오 아이디 넣고 게시하기
                         initYouTubePlayerView(secondVideo);
-                        setYoutubeData();
+//                        setYoutubeData();
+                        mRecyclerAdapter.notifyDataSetChanged();
+                        binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
+
 
                     }
                 }
@@ -569,14 +571,16 @@ public class VideoListFragment extends BaseFragment {
                             secondVideo = response.data.get(index).videoId;
                             MLog.d("youtube Model Ok!! category ID : " + secondVideo);
 //                            }
+                            //유튜브 비디오 아이디 넣고 게시하기
+                            initYouTubePlayerView(secondVideo);
 
                         }
 
-                        //유튜브 비디오 아이디 넣고 게시하기
-                        initYouTubePlayerView(secondVideo);
-                        setYoutubeData();
+
 
                     }
+                    setYoutubeData();
+                    mRecyclerAdapter.notifyDataSetChanged();
                 }
 
             }

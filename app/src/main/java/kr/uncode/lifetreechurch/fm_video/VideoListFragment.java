@@ -93,37 +93,37 @@ public class VideoListFragment extends BaseFragment {
         videoListTopMenuShowController(true);
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
-        binding.categoryButton.setOnClickListener(this::viewShow);
+//        binding.categoryButton.setOnClickListener(this::viewShow);
         return binding.getRoot();
     }
 
-    private void viewShow(View view) {
-        binding.checkboxArea.setVisibility(View.VISIBLE);
-        anim();
-    }
+//    private void viewShow(View view) {
+//        binding.checkboxArea.setVisibility(View.VISIBLE);
+//        anim();
+//    }
 
 
-    public void anim() {
-
-        if (isFabOpen) {
-            binding.checkboxArea.startAnimation(fab_close);
-            binding.checkboxArea.setVisibility(View.GONE);
-            isFabOpen = false;
-        } else {
-            binding.checkboxArea.startAnimation(fab_open);
-            binding.checkboxArea.setVisibility(View.VISIBLE);
-            isFabOpen = true;
-        }
-    }
+//    public void anim() {
+//
+//        if (isFabOpen) {
+//            binding.checkboxArea.startAnimation(fab_close);
+//            binding.checkboxArea.setVisibility(View.GONE);
+//            isFabOpen = false;
+//        } else {
+//            binding.checkboxArea.startAnimation(fab_open);
+//            binding.checkboxArea.setVisibility(View.VISIBLE);
+//            isFabOpen = true;
+//        }
+//    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.categoryButton.setOnClickListener(this::viewShow);
+//        binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
-        categoryChanger(view);
+//        categoryChanger(view);
         scrollChanger();
-        allList_get(view);
+//        allList_get(view);
     }
 
 
@@ -154,56 +154,56 @@ public class VideoListFragment extends BaseFragment {
                     progressON("Loading...");
                     currentPage += 1;
 
-                    switch (binding.radio.getCheckedRadioButtonId()) {
-                        case R.id.checkBoxMorning: {
-                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
-                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
-                            addVideoCategory("오전", currentPage);
-//                           getVideoCategroyId("오전",currentPage);
-
-                            delayedRecyclerNotice(lastVisible);
-
-                            progressOFF();
-                            break;
-                        }
-                        case R.id.checkBoxAfter: {
-                            MLog.d("마지막 인덱스 상태 오후 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 오후" + totalItemCount);
-                            addVideoCategory("오후", currentPage);
-                            delayedRecyclerNotice(lastVisible);
-
-                            progressOFF();
-                            break;
-                        }
-
-                        case R.id.checkBoxWend: {
-                            MLog.d("마지막 인덱스 상태 수요 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 수요" + totalItemCount);
-                            addVideoCategory("수요", currentPage);
-                            delayedRecyclerNotice(lastVisible);
-
-                            progressOFF();
-
-                            break;
-                        }
-                        case R.id.checkBoxDawn: {
-                            MLog.d("마지막 인덱스 상태 새벽 :" + lastVisible);
-                            MLog.d("totalItemCount : 10 :증가 현재 값은 새벽" + totalItemCount);
-                            addVideoCategory("새벽", currentPage);
-                            delayedRecyclerNotice(lastVisible);
-
-                            progressOFF();
-
-                            break;
-                        }
-                        default:
-
-                            addVideoAll(currentPage);
-                            delayedRecyclerNotice(lastVisible);
-                            progressOFF();
-
-                            break;
-                    }
+//                    switch (binding.radio.getCheckedRadioButtonId()) {
+//                        case R.id.checkBoxMorning: {
+//                            MLog.d("어댑터 마지막 인덱스 상태  오전 :" + lastVisible);
+//                            MLog.d("어댑터 totalItemCount : 10 :증가 현재 값은 오전" + totalItemCount);
+//                            addVideoCategory("오전", currentPage);
+////                           getVideoCategroyId("오전",currentPage);
+//
+//                            delayedRecyclerNotice(lastVisible);
+//
+//                            progressOFF();
+//                            break;
+//                        }
+//                        case R.id.checkBoxAfter: {
+//                            MLog.d("마지막 인덱스 상태 오후 :" + lastVisible);
+//                            MLog.d("totalItemCount : 10 :증가 현재 값은 오후" + totalItemCount);
+//                            addVideoCategory("오후", currentPage);
+//                            delayedRecyclerNotice(lastVisible);
+//
+//                            progressOFF();
+//                            break;
+//                        }
+//
+//                        case R.id.checkBoxWend: {
+//                            MLog.d("마지막 인덱스 상태 수요 :" + lastVisible);
+//                            MLog.d("totalItemCount : 10 :증가 현재 값은 수요" + totalItemCount);
+//                            addVideoCategory("수요", currentPage);
+//                            delayedRecyclerNotice(lastVisible);
+//
+//                            progressOFF();
+//
+//                            break;
+//                        }
+//                        case R.id.checkBoxDawn: {
+//                            MLog.d("마지막 인덱스 상태 새벽 :" + lastVisible);
+//                            MLog.d("totalItemCount : 10 :증가 현재 값은 새벽" + totalItemCount);
+//                            addVideoCategory("새벽", currentPage);
+//                            delayedRecyclerNotice(lastVisible);
+//
+//                            progressOFF();
+//
+//                            break;
+//                        }
+//                        default:
+//
+//                            addVideoAll(currentPage);
+//                            delayedRecyclerNotice(lastVisible);
+//                            progressOFF();
+//
+//                            break;
+//                    }
                 }
             }
         });
@@ -231,15 +231,15 @@ public class VideoListFragment extends BaseFragment {
      * @param view
      */
     private void allList_get(View view) {
-        binding.allListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getVideoId(currentPage);
-                binding.radio.clearCheck();
-                binding.allListButton.setVisibility(View.GONE);
-                binding.checkboxArea.setVisibility(View.VISIBLE);
-            }
-        });
+//        binding.allListButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getVideoId(currentPage);
+//                binding.radio.clearCheck();
+////                binding.allListButton.setVisibility(View.GONE);
+//                binding.checkboxArea.setVisibility(View.VISIBLE);
+//            }
+//        });
     }
 
 
@@ -248,87 +248,87 @@ public class VideoListFragment extends BaseFragment {
      *
      * @param view
      */
-    private void categoryChanger(View view) {
-        binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int ch) {
-                switch (ch) {
-                    case R.id.checkBoxMorning: {
-                        //탭별 카테고리 키워드
-                        String categoryId = "오전";
-                        MLog.d("사용자 changer 오전");
-                        //탭별 페이징 넘버 기본값
-                        mRecyclerAdapter.clearItem();
-                        currentPage = 0;
-                        //페이징 라스트 경우 초기화 값
-                        totalItemCount = 10;
-                        // 스크롤 라스트 감지
-
-//                        addVideoCategory(categoryId, currentPage);
-                        //첫 탭시 로드
-                         getVideoCategroyId(categoryId, currentPage);
-
-                        //전체 보기 비디오 보이기
-                        binding.allListButton.setVisibility(View.VISIBLE);
-                        //카테고리 자동 숨기기
-                        hideCategoryArea();
-
-                        break;
-                    }
-
-                    case R.id.checkBoxAfter: {
-                        String categoryId = "오후";
-                        MLog.d("사용자 changer 오후");
-                        mRecyclerAdapter.clearItem();
-
-                        currentPage = 0;
-                        totalItemCount = 10;
-
-
-//                        addVideoCategory(categoryId,currentPage);
-
-                        getVideoCategroyId(categoryId, currentPage);
-                        binding.allListButton.setVisibility(View.VISIBLE);
-                        hideCategoryArea();
-
-                        break;
-                    }
-
-                    case R.id.checkBoxWend: {
-                        String categoryId = "수요";
-                        MLog.d("사용자 changer 수요");
-
-                        currentPage = 0;
-                        totalItemCount = 10;
-
-//                        addVideoCategory(categoryId,currentPage);
-                        getVideoCategroyId(categoryId, currentPage);
-                        binding.allListButton.setVisibility(View.VISIBLE);
-                        hideCategoryArea();
-
-                        break;
-                    }
-
-                    case R.id.checkBoxDawn: {
-                        String categoryId = "새벽";
-                        MLog.d("사용자 changer 새벽");
-
-                        currentPage = 0;
-                        totalItemCount = 10;
-                        getVideoCategroyId(categoryId, currentPage);
+//    private void categoryChanger(View view) {
+//        binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int ch) {
+//                switch (ch) {
+//                    case R.id.checkBoxMorning: {
+//                        //탭별 카테고리 키워드
+//                        String categoryId = "오전";
+//                        MLog.d("사용자 changer 오전");
+//                        //탭별 페이징 넘버 기본값
+//                        mRecyclerAdapter.clearItem();
+//                        currentPage = 0;
+//                        //페이징 라스트 경우 초기화 값
+//                        totalItemCount = 10;
+//                        // 스크롤 라스트 감지
+//
+////                        addVideoCategory(categoryId, currentPage);
+//                        //첫 탭시 로드
+//                         getVideoCategroyId(categoryId, currentPage);
+//
+//                        //전체 보기 비디오 보이기
+////                        binding.allListButton.setVisibility(View.VISIBLE);
+//                        //카테고리 자동 숨기기
+//                        hideCategoryArea();
+//
+//                        break;
+//                    }
+//
+//                    case R.id.checkBoxAfter: {
+//                        String categoryId = "오후";
+//                        MLog.d("사용자 changer 오후");
+//                        mRecyclerAdapter.clearItem();
+//
+//                        currentPage = 0;
+//                        totalItemCount = 10;
+//
+//
+////                        addVideoCategory(categoryId,currentPage);
+//
 //                        getVideoCategroyId(categoryId, currentPage);
-                        binding.allListButton.setVisibility(View.VISIBLE);
-
-                        hideCategoryArea();
-                        break;
-                    }
-
-
-                }
-            }
-        });
-
-    }
+//                        binding.allListButton.setVisibility(View.VISIBLE);
+//                        hideCategoryArea();
+//
+//                        break;
+//                    }
+//
+//                    case R.id.checkBoxWend: {
+//                        String categoryId = "수요";
+//                        MLog.d("사용자 changer 수요");
+//
+//                        currentPage = 0;
+//                        totalItemCount = 10;
+//
+////                        addVideoCategory(categoryId,currentPage);
+//                        getVideoCategroyId(categoryId, currentPage);
+//                        binding.allListButton.setVisibility(View.VISIBLE);
+//                        hideCategoryArea();
+//
+//                        break;
+//                    }
+//
+//                    case R.id.checkBoxDawn: {
+//                        String categoryId = "새벽";
+//                        MLog.d("사용자 changer 새벽");
+//
+//                        currentPage = 0;
+//                        totalItemCount = 10;
+//                        getVideoCategroyId(categoryId, currentPage);
+////                        getVideoCategroyId(categoryId, currentPage);
+//                        binding.allListButton.setVisibility(View.VISIBLE);
+//
+//                        hideCategoryArea();
+//                        break;
+//                    }
+//
+//
+//                }
+//            }
+//        });
+//
+//    }
 
 
     /**
@@ -336,14 +336,14 @@ public class VideoListFragment extends BaseFragment {
      */
     private void hideCategoryArea() {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                binding.checkboxArea.setVisibility(View.GONE);
-                isFabOpen = false;
-
-            }
-        }, 1000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                binding.checkboxArea.setVisibility(View.GONE);
+//                isFabOpen = false;
+//
+//            }
+//        }, 1000);
 
     }
 
@@ -410,7 +410,7 @@ public class VideoListFragment extends BaseFragment {
         if (video != null && youTubePlayer != null) {
 //            recyclerClickListener(youTubePlayer);
             youTubePlayer.cueVideo(video, 0f);
-            
+
         }
 
 

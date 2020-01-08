@@ -90,9 +90,18 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //    }
 
     public void addItem(List<UnCodeVideoModel.Data> youtube) {
-        list = youtube;
-        MLog.d("addItem" + list);
-        notifyDataSetChanged();
+
+        if (youtube != null) {
+            for (int i = 0; i < youtube.size(); i++) {
+                try {
+                    list.add(youtube.get(i));
+                } catch (Exception e) {
+                    MLog.d(e.getMessage());
+                }
+            }
+            MLog.d("morning video All" + list);
+            notifyDataSetChanged();
+        }
 
     }
 

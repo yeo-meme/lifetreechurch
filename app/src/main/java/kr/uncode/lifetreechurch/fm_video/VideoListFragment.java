@@ -47,9 +47,6 @@ public class VideoListFragment extends BaseFragment {
     private YouTubePlayer youTubePlayer;
     private YouTubePlayerUtils youTubePlayerUtils;
 
-    //사용자 카테고리 분류 value
-    private String player_state = null;
-
     //어댑터 셋
     private YoutubeRecyclerAdapter mRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -67,21 +64,18 @@ public class VideoListFragment extends BaseFragment {
 
 
     //액티비티 객체
-    public Activity activity;
-
-
-    private Integer lastVisible;
-    private JSONArray a;
 
     private Integer currentPage = 0;
-
-    boolean lastitemVisibleFlag = false;
 
     private List<UnCodeVideoModel.Data> unCodeModelList = new ArrayList<>();
 
     private Integer totalItemCount = 10;
 
-    private List<UnCodeVideoModel.Data> dataModel;
+
+    private boolean moring_check = false;
+    private boolean after_check = false;
+    private boolean wed_check = false;
+    private boolean dwan_check = false;
 
     @Nullable
     @Override
@@ -174,8 +168,7 @@ public class VideoListFragment extends BaseFragment {
 //                    binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
                     MLog.d("allAll result :" + response.data);
 
-                    unCodeModelList.addAll(response.data);
-                    mRecyclerAdapter.addItem(unCodeModelList);
+                    mRecyclerAdapter.addItem(response.data);
                     MLog.d("unCodeModeList add :" + unCodeModelList);
 
                     binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
@@ -201,10 +194,39 @@ public class VideoListFragment extends BaseFragment {
                 int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
 
+
                 if (lastVisibleItemPosition >= totalItemCount - 1) {
-                    MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
-                    addVideoAll(currentPage);
-                    MLog.d("마지막 totalItemCount: " + totalItemCount);
+
+                    if (moring_check == true) {
+                        MLog.d("오전in");
+                        String morning  = "오전";
+                        addVideoCategory(morning,currentPage);
+                        MLog.d("마지막 totalItemCount: " + totalItemCount);
+                        MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
+                    }
+                    if (after_check == true) {
+                        String after = "오후";
+                        addVideoCategory(after,currentPage);
+                        MLog.d("마지막 totalItemCount: " + totalItemCount);
+                        MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
+                    }
+
+                    if (wed_check == true) {
+                        String wed = "수요";
+                        addVideoCategory(wed,currentPage);
+                        MLog.d("마지막 totalItemCount: " + totalItemCount);
+                        MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
+                    }
+
+                    if(dwan_check ==true) {
+                        String dawn = "새벽";
+                        addVideoCategory(dawn,currentPage);
+                        MLog.d("마지막 totalItemCount: " + totalItemCount);
+                        MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
+                    }
+//                    MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
+//                    addVideoAll(currentPage);
+//                    MLog.d("마지막 totalItemCount: " + totalItemCount);
 
 
                     totalItemCount += 10;
@@ -254,6 +276,10 @@ public class VideoListFragment extends BaseFragment {
                 mRecyclerAdapter.clearItem();
                 currentPage = 0;
                 totalItemCount = 10;
+                moring_check = true;
+                after_check = false;
+                wed_check = false;
+                dwan_check = false;
                 getVideoCategroyId(categoryId, currentPage);
 
                 closeSubMenusFab();
@@ -264,6 +290,10 @@ public class VideoListFragment extends BaseFragment {
             public void onClick(View view) {
                 String categoryId = "오후";
                 mRecyclerAdapter.clearItem();
+                moring_check = false;
+                after_check = true;
+                wed_check = false;
+                dwan_check = false;
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
@@ -277,6 +307,10 @@ public class VideoListFragment extends BaseFragment {
             public void onClick(View view) {
                 String categoryId = "새벽";
                 mRecyclerAdapter.clearItem();
+                moring_check = false;
+                after_check = false;
+                wed_check = false;
+                dwan_check = true;
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
@@ -289,6 +323,10 @@ public class VideoListFragment extends BaseFragment {
             public void onClick(View view) {
                 String categoryId = "수요";
                 mRecyclerAdapter.clearItem();
+                moring_check = false;
+                after_check = false;
+                wed_check = true;
+                dwan_check = false;
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);

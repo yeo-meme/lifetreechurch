@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:gravity="right"
+            android:id="@+id/allMenuButton"
             android:orientation="vertical">
             <!--첫번째 플로팅 버튼-->
             <LinearLayout

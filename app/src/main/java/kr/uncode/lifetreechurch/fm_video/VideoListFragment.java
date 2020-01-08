@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -96,22 +97,21 @@ public class VideoListFragment extends BaseFragment {
 
 //    private void viewShow(View view) {
 //        binding.checkboxArea.setVisibility(View.VISIBLE);
-//        anim();
 //    }
 
 
-//    public void anim() {
-//
-//        if (isFabOpen) {
-//            binding.checkboxArea.startAnimation(fab_close);
-//            binding.checkboxArea.setVisibility(View.GONE);
-//            isFabOpen = false;
-//        } else {
-//            binding.checkboxArea.startAnimation(fab_open);
-//            binding.checkboxArea.setVisibility(View.VISIBLE);
-//            isFabOpen = true;
-//        }
-//    }
+    public void anim() {
+
+        if (fabExpanded) {
+            binding.allListButton.allMenuButton.startAnimation(fab_close);
+            binding.allListButton.allMenuButton.setVisibility(View.GONE);
+            isFabOpen = false;
+        } else {
+            binding.allListButton.allMenuButton.startAnimation(fab_open);
+            binding.allListButton.allMenuButton.setVisibility(View.VISIBLE);
+            isFabOpen = true;
+        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -120,6 +120,8 @@ public class VideoListFragment extends BaseFragment {
 //        radioGroup(view);
 //        categoryChanger(view);
         fabEx();
+        anim();
+
 //        scrollChanger();
 //        allList_get(view);
     }
@@ -161,7 +163,7 @@ public class VideoListFragment extends BaseFragment {
     }
 
 
-//
+    //
 //
 //    /**
 //     * 리사이클러뷰 페이징 처리 _ 마지막 position 듣기
@@ -536,8 +538,8 @@ public class VideoListFragment extends BaseFragment {
 
 
         // 카테고리 오픈 클로즈 애니메이션 적용
-//        fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
-//        fab_close = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
+        fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
 
         //리사이클러뷰
         mRecyclerAdapter = new YoutubeRecyclerAdapter();
@@ -828,9 +830,10 @@ public class VideoListFragment extends BaseFragment {
 //
 //    }
 //
-//    /**
-//     * 전체 보기
-//     */
+
+    /**
+     * 전체 보기
+     */
     private void getVideoId(Integer currentPage) {
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoList(currentPage, new ResponseCallback<UnCodeVideoModel>() {
@@ -839,7 +842,7 @@ public class VideoListFragment extends BaseFragment {
                 MLog.d("youtube Model Ok");
 
                 if (response != null) {
-                    mRecyclerAdapter.setItems(unCodeModelList);
+                    mRecyclerAdapter.setItems(response.data);
 
                     //게시할 첫번째 비디오 ID 가져오기
                     for (int a = 0; a < response.data.size(); a++) {

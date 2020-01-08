@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kr.uncode.lifetreechurch.BaseViewHolder;
@@ -20,7 +21,7 @@ import kr.uncode.lifetreechurch.utils.MLog;
 public class YoutubeViewHolder extends BaseViewHolder {
 
     private OnItemClickListener mListener = null;
-    private List<UnCodeVideoModel.Data> utubeBasket;
+    private List<UnCodeVideoModel.Data> utubeBasket = new ArrayList<>();
     ItemYoutubeListBinding binding;
 
 
@@ -28,11 +29,10 @@ public class YoutubeViewHolder extends BaseViewHolder {
         this.mListener = listener;
     }
 
-    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList,OnItemClickListener listener) {
+    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList) {
         super(itemView);
         binding = itemView;
         this.utubeBasket = getUtubeList;
-        this.mListener = listener;
     }
 
 
@@ -64,18 +64,28 @@ public class YoutubeViewHolder extends BaseViewHolder {
 
 //        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
 
-        YoutubeRecyclerAdapter.Item items = new YoutubeRecyclerAdapter.Item();
-
-        if (items != null) {
-            String title = items.unCodeList.get(position).title;
-            MLog.d(title);
+        if (utubeBasket != null) {
+            String title = utubeBasket.get(position).title;
             binding.youtubeTitle.setText(title);
-            String thumbnail = items.unCodeList.get(position).thumbnail;
+
+            String thumbnail = utubeBasket.get(position).thumbnail;
             if (thumbnail != null) {
                 Glide.with(itemView.getContext())
                         .load(thumbnail)
                         .into(binding.youtubeImg);
             }
         }
+
+//        if (items != null) {
+//            String title = items.unCodeList.get(position).title;
+//            MLog.d(title);
+//            binding.youtubeTitle.setText(title);
+//            String thumbnail = items.unCodeList.get(position).thumbnail;
+//            if (thumbnail != null) {
+//                Glide.with(itemView.getContext())
+//                        .load(thumbnail)
+//                        .into(binding.youtubeImg);
+//            }
+//        }
     }
 }

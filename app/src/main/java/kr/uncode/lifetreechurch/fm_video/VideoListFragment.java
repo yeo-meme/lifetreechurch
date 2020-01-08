@@ -31,7 +31,6 @@ import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
-import kr.uncode.lifetreechurch.databinding.FmDawnvideolistBinding;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
@@ -118,7 +117,7 @@ public class VideoListFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
-//        categoryChanger(view);
+        categoryChanger(view);
         fabEx();
         anim();
 
@@ -131,8 +130,6 @@ public class VideoListFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (fabExpanded == true) {
-                    if (fabExpanded == true) {
-                    }
                     closeSubMenusFab();
                 } else {
                     openSubMenuFab();
@@ -352,54 +349,105 @@ public class VideoListFragment extends BaseFragment {
 ////        });
 //    }
 //
-//
-//    /**
-//     * 사용자 카테고리 체크 체인져 _ 해당 카테고리 별로 유튜브 카테고리 검색
-//     *
-//     * @param view
-//     */
-//<<<<<<< HEAD
-////    private void categoryChanger(View view) {
-////        binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-////            @Override
-////            public void onCheckedChanged(RadioGroup radioGroup, int ch) {
-////                switch (ch) {
-////                    case R.id.checkBoxMorning: {
-////                        //탭별 카테고리 키워드
-////                        String categoryId = "오전";
-////                        MLog.d("사용자 changer 오전");
-////                        //탭별 페이징 넘버 기본값
-////                        mRecyclerAdapter.clearItem();
-////                        currentPage = 0;
-////                        //페이징 라스트 경우 초기화 값
-////                        totalItemCount = 10;
-////                        // 스크롤 라스트 감지
-////
-//////                        addVideoCategory(categoryId, currentPage);
-////                        //첫 탭시 로드
-////                         getVideoCategroyId(categoryId, currentPage);
-////
-////                        //전체 보기 비디오 보이기
-//////                        binding.allListButton.setVisibility(View.VISIBLE);
-////                        //카테고리 자동 숨기기
-////                        hideCategoryArea();
-////
-////                        break;
-////                    }
-////
-////                    case R.id.checkBoxAfter: {
-////                        String categoryId = "오후";
-////                        MLog.d("사용자 changer 오후");
-////                        mRecyclerAdapter.clearItem();
-////
-////                        currentPage = 0;
-////                        totalItemCount = 10;
-////
-////
-//////                        addVideoCategory(categoryId,currentPage);
-////
-//=======
+
+    /**
+     * 사용자 카테고리 체크 체인져 _ 해당 카테고리 별로 유튜브 카테고리 검색
+     *
+     * @param view
+     */
 //    private void categoryChanger(View view) {
+//        binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int ch) {
+//                switch (ch) {
+//                    case R.id.checkBoxMorning: {
+//                        //탭별 카테고리 키워드
+//                        String categoryId = "오전";
+//                        MLog.d("사용자 changer 오전");
+//                        //탭별 페이징 넘버 기본값
+//                        mRecyclerAdapter.clearItem();
+//                        currentPage = 0;
+//                        //페이징 라스트 경우 초기화 값
+//                        totalItemCount = 10;
+//                        // 스크롤 라스트 감지
+//
+////                        addVideoCategory(categoryId, currentPage);
+//                        //첫 탭시 로드
+//                         getVideoCategroyId(categoryId, currentPage);
+//
+//                        //전체 보기 비디오 보이기
+////                        binding.allListButton.setVisibility(View.VISIBLE);
+//                        //카테고리 자동 숨기기
+//                        hideCategoryArea();
+//
+//                        break;
+//                    }
+//
+//                    case R.id.checkBoxAfter: {
+//                        String categoryId = "오후";
+//                        MLog.d("사용자 changer 오후");
+//                        mRecyclerAdapter.clearItem();
+//
+//                        currentPage = 0;
+//                        totalItemCount = 10;
+//
+//
+////                        addVideoCategory(categoryId,currentPage);
+//
+//=======
+    private void categoryChanger(View view) {
+        binding.allListButton.morning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String categoryId = "오전";
+                mRecyclerAdapter.clearItem();
+                currentPage = 0;
+                totalItemCount = 10;
+                getVideoCategroyId(categoryId, currentPage);
+
+                closeSubMenusFab();
+            }
+        });
+        binding.allListButton.after.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String categoryId = "오후";
+                mRecyclerAdapter.clearItem();
+                currentPage = 0;
+                totalItemCount = 10;
+                getVideoCategroyId(categoryId, currentPage);
+                closeSubMenusFab();
+
+
+            }
+        });
+        binding.allListButton.dawn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String categoryId = "새벽";
+                mRecyclerAdapter.clearItem();
+                currentPage = 0;
+                totalItemCount = 10;
+                getVideoCategroyId(categoryId, currentPage);
+                closeSubMenusFab();
+
+            }
+        });
+        binding.allListButton.wed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String categoryId = "수요";
+                mRecyclerAdapter.clearItem();
+                currentPage = 0;
+                totalItemCount = 10;
+                getVideoCategroyId(categoryId, currentPage);
+                closeSubMenusFab();
+
+            }
+        });
+    }
+
+    //    private void categoryChanger(View view) {
 //
 //        binding.radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //            @Override
@@ -800,35 +848,35 @@ public class VideoListFragment extends BaseFragment {
 //     * @param currentPage = 카테고리 페이지 Number
 //     */
 //
-//    private void getVideoCategroyId(String categoryId, Integer currentPage) {
-//        unCodeVideoConfig = new UnCodeVideoConfig();
-//        unCodeVideoConfig.unCodeVideoCategoryList(categoryId, currentPage, new ResponseCallback<UnCodeVideoModel>() {
-//            @Override
-//            public void response(UnCodeVideoModel response) {
-//                MLog.d("youtube Model Ok");
-//
-//
-//                if (response != null) {
-//
-//                    VIDEO_LIST_ITEMS.addAll(response.data);
-//                    mRecyclerAdapter.setItems(VIDEO_LIST_ITEMS);
-////                    mRecyclerAdapter.setItems(response.data);
-//
-//                    for (int a = 0; a > response.data.size(); a++) {
-//                        if (a == 0) {
-//                            secondVideo = response.data.get(a).videoId;
-//                            MLog.d("youtube Model Ok!! category ID : " + secondVideo);
-//
-//                        }
-//                    }
-//                    initYouTubePlayerView(secondVideo);
-//                    setYoutubeData();
-//                }
-//
-//            }
-//        });
-//
-//    }
+    private void getVideoCategroyId(String categoryId, Integer currentPage) {
+        unCodeVideoConfig = new UnCodeVideoConfig();
+        unCodeVideoConfig.unCodeVideoCategoryList(categoryId, currentPage, new ResponseCallback<UnCodeVideoModel>() {
+            @Override
+            public void response(UnCodeVideoModel response) {
+                MLog.d("youtube Model Ok");
+
+
+                if (response != null) {
+
+                    unCodeModelList.addAll(response.data);
+                    mRecyclerAdapter.setItems(unCodeModelList);
+//                    mRecyclerAdapter.setItems(response.data);
+
+                    for (int a = 0; a > response.data.size(); a++) {
+                        if (a == 0) {
+                            secondVideo = response.data.get(a).videoId;
+                            MLog.d("youtube Model Ok!! category ID : " + secondVideo);
+
+                        }
+                    }
+                    initYouTubePlayerView(secondVideo);
+                    setYoutubeData();
+                }
+
+            }
+        });
+
+    }
 //
 
     /**
@@ -913,11 +961,11 @@ public class VideoListFragment extends BaseFragment {
         binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
     }
 
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        binding.youtubePlayerView.release();
-//    }
+    //
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding.youtubePlayerView.release();
+    }
 //}
 }

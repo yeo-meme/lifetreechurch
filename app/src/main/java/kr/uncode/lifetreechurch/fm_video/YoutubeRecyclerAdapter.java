@@ -34,10 +34,18 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     }
 
 
-    public void setDataListItem(List<Object> items) {
+    public void setDataListItem(List<UnCodeVideoModel.Data> items) {
+
+
         if (items != null) {
-//            VIDEO_LIST_ITEMS = items;
-//            MLog.d("test 어댑터 VIDEO_LIST_ITEMS " + VIDEO_LIST_ITEMS);
+            for (int i = 0; i < items.size(); i++) {
+                try {
+                    list.add(items.get(i));
+                } catch (Exception e) {
+                    MLog.d(e.getMessage());
+                }
+            }
+            MLog.d("video All" + list);
             notifyDataSetChanged();
         }
 
@@ -45,6 +53,8 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 
     public void clearItem() {
         this.list.clear();
+        notifyDataSetChanged();
+
 //        this.VIDEO_LIST_ITEMS.clear();
     }
 
@@ -79,9 +89,10 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //        notifyDataSetChanged();
 //    }
 
-    public void addItem(UnCodeVideoModel.Data youtube) {
-//        notifyDataSetChanged();'
-
+    public void addItem(List<UnCodeVideoModel.Data> youtube) {
+        list = youtube;
+        MLog.d("addItem" + list);
+        notifyDataSetChanged();
 
     }
 
@@ -94,14 +105,8 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public void setItems(List<UnCodeVideoModel.Data> youtubeVideos) {
         list = youtubeVideos;
         notifyDataSetChanged();
-        MLog.d("reset data first :"+ list);
+        MLog.d("reset data first :" + list);
     }
-
-    public void addItem(List<Object> youtube) {
-        MLog.d("UtubeBasket addItem  youtube:" + youtube);
-        notifyDataSetChanged();
-    }
-
 
 
 }

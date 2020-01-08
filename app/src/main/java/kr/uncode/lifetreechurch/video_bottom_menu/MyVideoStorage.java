@@ -94,22 +94,14 @@ public class MyVideoStorage extends BaseFragment {
 
 
     private void initYouTubePlayerView(String secondVideo) {
-        getLifecycle().addObserver(binding.youtubePlayerView);
+//        getLifecycle().addObserver(binding.youtubePlayerView);
         binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
                 super.onReady(youTubePlayer);
-
-
-//                youTubePlayer.cueVideo(secondVideo,0f);
-//                youTubePlayer.loadVideo(secondVideo,0f);
 //                recyclerClickListener(youTubePlayer);
-//                youTubePlayerUtils.loadOrCueVideo(
-//                        youTubePlayer,
-//                        getLifecycle(),
-//                        secondVideo, 0f
-//                );
-//                addFullScreenListenerToPlayer();
+                youTubePlayer.cueVideo(secondVideo, 0f);
+
             }
         });
     }

@@ -1,16 +1,11 @@
 package kr.uncode.lifetreechurch.lt_main;
 
-import android.app.FragmentTransaction;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -19,8 +14,6 @@ import io.realm.RealmResults;
 import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.base.BaseActivity;
-import kr.uncode.lifetreechurch.base.BaseApplication;
-import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.ActivityMainBinding;
 import kr.uncode.lifetreechurch.init_ft.InitFragment;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;

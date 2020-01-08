@@ -33,7 +33,10 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
+import kr.uncode.lifetreechurch.init_ft.InitFragment;
 import kr.uncode.lifetreechurch.utils.MLog;
+import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
+import kr.uncode.lifetreechurch.video_bottom_menu.RecentMyVideo;
 
 
 public class VideoListFragment extends BaseFragment {
@@ -137,7 +140,6 @@ public class VideoListFragment extends BaseFragment {
         binding.allListButton.dawn.setVisibility(View.VISIBLE);
         binding.allListButton.wed.setVisibility(View.VISIBLE);
         binding.allListButton.recent.setVisibility(View.VISIBLE);
-
         fabExpanded = true;
     }
 
@@ -331,6 +333,14 @@ public class VideoListFragment extends BaseFragment {
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
+
+            }
+        });
+        binding.allListButton.recent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new MyVideoStorage(), false);
+
 
             }
         });

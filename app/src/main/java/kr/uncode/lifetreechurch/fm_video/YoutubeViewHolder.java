@@ -33,13 +33,19 @@ public class YoutubeViewHolder extends BaseViewHolder {
         binding = itemView;
         this.utubeBasket = getUtubeList;
         this.mListener = listener;
+    }
+
+
+    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView) {
+        super(itemView);
+        binding = itemView;
+
 
         binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = getAdapterPosition();
                 if (mListener != null) {
-                    mListener.onListItemClick(utubeBasket, pos);
                 }
             }
         });
@@ -54,11 +60,17 @@ public class YoutubeViewHolder extends BaseViewHolder {
 
     public void onBind(int position) {
         super.onBind(position);
-        if (utubeBasket != null) {
-            String title = utubeBasket.get(position).title;
+//        final UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) VIDEO_LIST.get(position);
+
+//        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
+
+        YoutubeRecyclerAdapter.Item items = new YoutubeRecyclerAdapter.Item();
+
+        if (items != null) {
+            String title = items.unCodeList.get(position).title;
             MLog.d(title);
             binding.youtubeTitle.setText(title);
-            String thumbnail = utubeBasket.get(position).thumbnail;
+            String thumbnail = items.unCodeList.get(position).thumbnail;
             if (thumbnail != null) {
                 Glide.with(itemView.getContext())
                         .load(thumbnail)

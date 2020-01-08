@@ -84,7 +84,7 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //데이터바인딩 유튜브 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
-        videoListTopMenuShowController(true);
+//        videoListTopMenuShowController(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
         return binding.getRoot();

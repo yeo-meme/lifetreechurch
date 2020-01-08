@@ -8,11 +8,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <data>
-            <variable
-                name="passedText"
-                type="String"/>
-        </data>
 
         <!-- 플로팅버튼 리니어시작-->
         <LinearLayout
@@ -27,12 +22,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/black"
                     app:cardUseCompatPadding="true">
 
                     <TextView
@@ -41,6 +37,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="주일오전"
+                        android:textColor="@color/white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -64,12 +61,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/black"
                     app:cardUseCompatPadding="true">
 
                     <TextView
@@ -78,6 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="주일오후"
+                        android:textColor="@color/white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -101,12 +100,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/black"
                     app:cardUseCompatPadding="true">
 
                     <TextView
@@ -115,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="새벽예배"
+                        android:textColor="@color/white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -138,12 +139,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/black"
                     app:cardUseCompatPadding="true">
 
                     <TextView
@@ -152,6 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="수요예배"
+                        android:textColor="@color/white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -171,16 +174,17 @@
             </LinearLayout>
             <!--첫번째 플로팅 버튼-->
             <LinearLayout
-                android:id="@+id/fab1"
+                android:id="@+id/recent"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/black"
                     app:cardUseCompatPadding="true">
 
                     <TextView
@@ -189,6 +193,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="최근본목록"
+                        android:textColor="@color/white"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="16sp"
                         android:textStyle="bold" />

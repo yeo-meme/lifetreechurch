@@ -1,18 +1,11 @@
 package kr.uncode.lifetreechurch.fm_video;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,32 +14,28 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.Realm;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
-import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
+import kr.uncode.lifetreechurch.databinding.FmDawnvideolistBinding;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 
 public class VideoListFragment extends BaseFragment {
-
 
     private boolean fabExpanded = false;
 
@@ -66,8 +55,9 @@ public class VideoListFragment extends BaseFragment {
     //    private YouTubePlayerView youTubePlayerViewLayout;
 
     //바인딩
-    FmMorningvideolistBinding binding;
 
+
+    FmMorningvideolistBinding binding;
     //게시되는 유튜브 아이디 저장 값
     private String secondVideo = null;
 
@@ -86,7 +76,7 @@ public class VideoListFragment extends BaseFragment {
 
     boolean lastitemVisibleFlag = false;
 
-    private List<UnCodeVideoModel> unCodeModelList;
+    private List<UnCodeVideoModel.Data> unCodeModelList = new ArrayList<>();
 
     private Integer totalItemCount = 10;
 
@@ -129,52 +119,48 @@ public class VideoListFragment extends BaseFragment {
 //        binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
 //        categoryChanger(view);
-//        fabEx();
+        fabEx();
 //        scrollChanger();
 //        allList_get(view);
     }
 
-//    private void fabEx() {
-//        binding.allListButton.categoryButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (fabExpanded == true) {
-//                    if (fabExpanded == true) {}
-////                    closeSubMenusFab();
-//                } else {
-////                    openSubMenuFab();
-//                }
-//            }
-//        });
-//    }
+    private void fabEx() {
+        binding.allListButton.categoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fabExpanded == true) {
+                    if (fabExpanded == true) {
+                    }
+                    closeSubMenusFab();
+                } else {
+                    openSubMenuFab();
+                }
+            }
+        });
+    }
 
-//    private void openSubMenuFab() {
-//        binding.allListButton.morning.setVisibility(View.VISIBLE);
-//        binding.allListButton.after.setVisibility(View.VISIBLE);
-//        binding.allListButton.dawn.setVisibility(View.VISIBLE);
-//        binding.allListButton.after.setVisibility(View.VISIBLE);
-//
-//        fabExpanded = true;
-//    }
+    private void openSubMenuFab() {
+        binding.allListButton.morning.setVisibility(View.VISIBLE);
+        binding.allListButton.after.setVisibility(View.VISIBLE);
+        binding.allListButton.dawn.setVisibility(View.VISIBLE);
+        binding.allListButton.wed.setVisibility(View.VISIBLE);
+        binding.allListButton.recent.setVisibility(View.VISIBLE);
 
-//    private void closeSubMenusFab() {
-//        binding.allListButton.morning.setVisibility(View.GONE);
-//        binding.allListButton.after.setVisibility(View.GONE);
-//        binding.allListButton.dawn.setVisibility(View.GONE);
-//        binding.allListButton.after.setVisibility(View.GONE);
-//=======
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        binding.categoryButton.setOnClickListener(this::viewShow);
-////        radioGroup(view);
-//        categoryChanger(view);
-//        scrollChanger();
-//
-//        //카테고리중 플로팅버튼 전체보기
-//        allList_get(view);
-//>>>>>>> 3da1b363619a00139082b40febf507373d37136c
-//    }
+        fabExpanded = true;
+    }
+
+    private void closeSubMenusFab() {
+        binding.allListButton.morning.setVisibility(View.GONE);
+        binding.allListButton.after.setVisibility(View.GONE);
+        binding.allListButton.dawn.setVisibility(View.GONE);
+        binding.allListButton.wed.setVisibility(View.GONE);
+        binding.allListButton.recent.setVisibility(View.GONE);
+
+        fabExpanded = false;
+
+    }
+
+
 //
 //
 //    /**
@@ -544,58 +530,60 @@ public class VideoListFragment extends BaseFragment {
 //    }
 //
 //
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//
-//        // 카테고리 오픈 클로즈 애니메이션 적용
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        // 카테고리 오픈 클로즈 애니메이션 적용
 //        fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
 //        fab_close = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
-//
-//        //리사이클러뷰
-//        mRecyclerAdapter = new YoutubeRecyclerAdapter();
-//
-//        /**
-//         * 유튜브 게시
-//         */
-//        getVideoId(currentPage);
-//
-//
-//        //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
-//        recyclerClickListener(youTubePlayer);
-//
-//    }
-//
+
+        //리사이클러뷰
+        mRecyclerAdapter = new YoutubeRecyclerAdapter();
+
+        /**
+         * 유튜브 게시
+         */
+        getVideoId(currentPage);
+
+
+        //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
+        recyclerClickListener(youTubePlayer);
+
+    }
+
+    //
 //
 //    /**
 //     * 리사이클러뷰에서 아이템 클릭이 일어났을때 듣고 있는 리스너
 //     *
 //     * @param youTubePlayer
 //     */
-//    private void recyclerClickListener(final YouTubePlayer youTubePlayer) {
-//        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onListItemClick(List aa, int position) {
-//
-//                //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
-//                UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
-//                String playId = items.videoId;
-//                String title = items.title;
-//                String imageUrl = items.thumbnail;
-//
-//                MLog.d("new Click Clik: " + playId + title + imageUrl);
-//
-//
-//                //이두개의 메세드의 순서가 바뀌면 에러가남
+    private void recyclerClickListener(final YouTubePlayer youTubePlayer) {
+        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onListItemClick(List aa, int position) {
+
+                //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
+                UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
+                String playId = items.videoId;
+                String title = items.title;
+                String imageUrl = items.thumbnail;
+
+                MLog.d("new Click Clik: " + playId + title + imageUrl);
+
+
+                //이두개의 메세드의 순서가 바뀌면 에러가남
 //                changingVideo(playId, youTubePlayer);
-//                //realm 저장
+                //realm 저장
 //                saveVideo(title, imageUrl, playId);
-//            }
-//        });
-//
-//    }
-//
+            }
+        });
+
+    }
+
+    //
 //
 //    //클릭하면 동영상 바꾸기
 //    private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
@@ -843,84 +831,85 @@ public class VideoListFragment extends BaseFragment {
 //    /**
 //     * 전체 보기
 //     */
-//    private void getVideoId(Integer currentPage) {
-//        unCodeVideoConfig = new UnCodeVideoConfig();
-//        unCodeVideoConfig.unCodeVideoList(currentPage, new ResponseCallback<UnCodeVideoModel>() {
-//            @Override
-//            public void response(UnCodeVideoModel response) {
-//                MLog.d("youtube Model Ok");
-//
-//                if (response != null) {
-//                    VIDEO_LIST_ITEMS.addAll(response.data);
-//                    mRecyclerAdapter.setItems(VIDEO_LIST_ITEMS);
-//
-//                    //게시할 첫번째 비디오 ID 가져오기
-//                    for (int a = 0; a < response.data.size(); a++) {
-//                        if (a == 1) {
-//                            secondVideo = response.data.get(a).videoId;
-//                            MLog.d("youtube Model Ok" + secondVideo);
-//
-//                        }
-//                    }
-//                    initYouTubePlayerView(secondVideo);
-//
-//                }
-//                setYoutubeData();
-////                mRecyclerAdapter.notifyDataSetChanged();
-//
-//            }
-//        });
-//
-//
-//    }
-//
-//    private void initYouTubePlayerView(String secondVideo) {
-//
-////        getLifecycle().addObserver(binding.youtubePlayerView);
-//
-//        try {
-//            binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-//                @Override
-//                public void onReady(YouTubePlayer youTubePlayer) {
-////                super.onReady(youTubePlayer);
-//
-//                    recyclerClickListener(youTubePlayer);
-//                    youTubePlayer.cueVideo(secondVideo, 0f);
-////                    YouTubePlayerUtils.loadOrCueVideo(
-////                            youTubePlayer,
-////                            getLifecycle(),
-////                            secondVideo, 0f
-////                    );
-////                addFullScreenListenerToPlayer();
-//                }
-//            });
-//        } catch (Exception e) {
-//            Toast.makeText(getContext(), "network 상태 확인 요망", Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
-//
+    private void getVideoId(Integer currentPage) {
+        unCodeVideoConfig = new UnCodeVideoConfig();
+        unCodeVideoConfig.unCodeVideoList(currentPage, new ResponseCallback<UnCodeVideoModel>() {
+            @Override
+            public void response(UnCodeVideoModel response) {
+                MLog.d("youtube Model Ok");
+
+                if (response != null) {
+                    mRecyclerAdapter.setItems(unCodeModelList);
+
+                    //게시할 첫번째 비디오 ID 가져오기
+                    for (int a = 0; a < response.data.size(); a++) {
+                        if (a == 1) {
+                            secondVideo = response.data.get(a).videoId;
+                            MLog.d("youtube Model Ok" + secondVideo);
+
+                        }
+                    }
+                    initYouTubePlayerView(secondVideo);
+
+                }
+                setYoutubeData();
+//                mRecyclerAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+
+    }
+
+    //
+    private void initYouTubePlayerView(String secondVideo) {
+
+//        getLifecycle().addObserver(binding.youtubePlayerView);
+
+        try {
+            binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(YouTubePlayer youTubePlayer) {
+//                super.onReady(youTubePlayer);
+
+                    recyclerClickListener(youTubePlayer);
+                    youTubePlayer.cueVideo(secondVideo, 0f);
+//                    YouTubePlayerUtils.loadOrCueVideo(
+//                            youTubePlayer,
+//                            getLifecycle(),
+//                            secondVideo, 0f
+//                    );
+//                addFullScreenListenerToPlayer();
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "network 상태 확인 요망", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    //
 //
 //    /**
 //     * 리사이클러뷰 셋
 //     */
-//    private void setYoutubeData() {
-//        //패스
-//        binding.recyclerViewFeed.setHasFixedSize(true);
-//
-//
-//        //가로세로 설정 매니저
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-//
-//        // Data View 처리
-//        binding.recyclerViewFeed.setLayoutManager(layoutManager);
-//
-//        //기본 구분선(DividerItemDecoration) 추가
-//        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration(2));
-//
-//        binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
-//    }
-//
+    private void setYoutubeData() {
+        //패스
+        binding.recyclerViewFeed.setHasFixedSize(true);
+
+
+        //가로세로 설정 매니저
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+        // Data View 처리
+        binding.recyclerViewFeed.setLayoutManager(layoutManager);
+
+        //기본 구분선(DividerItemDecoration) 추가
+        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration(2));
+
+        binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
+    }
+
 //
 //    @Override
 //    public void onDestroy() {

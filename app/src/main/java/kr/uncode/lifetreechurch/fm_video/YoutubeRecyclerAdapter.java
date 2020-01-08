@@ -24,7 +24,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //    private List<UnCodeVideoModel.Data> UtubeBasket;
 
     private List<UnCodeVideoModel.Data> list = new ArrayList<>();
-        private List<Object> basket;
+    private List<Object> basket;
     DisplayMetrics displayMetrics = new DisplayMetrics();
 //    public List<Object> VIDEO_LIST_ITEMS = new ArrayList<>();
 
@@ -56,7 +56,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new YoutubeViewHolder(binding,list,mListener);
+        return new YoutubeViewHolder(binding, list, mListener);
 //        return new YoutubeViewHolder(binding,VIDEO_LIST_ITEMS);
     }
 
@@ -91,7 +91,8 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
      *
      * @param youtubeVideos
      */
-    public void setItems(List<Object> youtubeVideos) {
+    public void setItems(List<UnCodeVideoModel.Data> youtubeVideos) {
+        list = youtubeVideos;
         notifyDataSetChanged();
     }
 
@@ -105,7 +106,9 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
         public List<UnCodeVideoModel.Data> unCodeList;
 
 
-        public Item() {}
+        public Item() {
+        }
+
         public Item(List<UnCodeVideoModel.Data> ucList) {
             this.unCodeList = ucList;
         }

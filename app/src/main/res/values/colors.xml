@@ -15,4 +15,5 @@
     <color name="happy">#CE5F34</color>
     <color name="selected_dot">#99004C</color>
     <color name="status_bar">#d47135</color>
+    <color name="black">#000000</color>
 </resources>

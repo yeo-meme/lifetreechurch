@@ -28,11 +28,11 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     DisplayMetrics displayMetrics = new DisplayMetrics();
 //    public List<Object> VIDEO_LIST_ITEMS = new ArrayList<>();
 
-    private OnItemClickListener mListener = null;
+    private OnItemClickListener<UnCodeVideoModel.Data> mListener = null;
 
-    public YoutubeRecyclerAdapter() {
+    public void setOnItemClickListener(OnItemClickListener<UnCodeVideoModel.Data> listener) {
+        this.mListener = listener;
     }
-
 
     public void setDataListItem(List<UnCodeVideoModel.Data> items) {
 
@@ -58,15 +58,13 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //        this.VIDEO_LIST_ITEMS.clear();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener;
-    }
+
 
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new YoutubeViewHolder(binding, list);
+        return new YoutubeViewHolder(binding, list,mListener);
 //        return new YoutubeViewHolder(binding,VIDEO_LIST_ITEMS);
     }
 
@@ -114,9 +112,8 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     public void setItems(List<UnCodeVideoModel.Data> youtubeVideos) {
 
 
-
         if (youtubeVideos != null) {
-            for (int e = 0; e<youtubeVideos.size(); e++) {
+            for (int e = 0; e < youtubeVideos.size(); e++) {
                 try {
                     list.add(youtubeVideos.get(e));
                 } catch (Exception i) {

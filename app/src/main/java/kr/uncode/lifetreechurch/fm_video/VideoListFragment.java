@@ -1,6 +1,5 @@
 package kr.uncode.lifetreechurch.fm_video;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -20,8 +19,6 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +30,8 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
-import kr.uncode.lifetreechurch.init_ft.InitFragment;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
-import kr.uncode.lifetreechurch.video_bottom_menu.RecentMyVideo;
 
 
 public class VideoListFragment extends BaseFragment {
@@ -118,7 +113,6 @@ public class VideoListFragment extends BaseFragment {
         categoryChanger(view);
 
 
-
         fabEx();
 
 
@@ -131,10 +125,9 @@ public class VideoListFragment extends BaseFragment {
     }
 
     /**
-     *전체보기 버튼 클릭할때 팝업메뉴버튼
-     *  true = fabExpanded .. 클로즈
-     *  false = fabExpanded  .. 오픈
-     *
+     * 전체보기 버튼 클릭할때 팝업메뉴버튼
+     * true = fabExpanded .. 클로즈
+     * false = fabExpanded  .. 오픈
      */
     private void fabEx() {
         binding.allListButton.allButton.setOnClickListener(new View.OnClickListener() {
@@ -153,10 +146,9 @@ public class VideoListFragment extends BaseFragment {
     }
 
     /**
-     *전체보기 버튼 클릭할때 팝업메뉴버튼
-     *  true = fabExpanded .. 클로즈
-     *  false = fabExpanded  .. 오픈
-     *
+     * 전체보기 버튼 클릭할때 팝업메뉴버튼
+     * true = fabExpanded .. 클로즈
+     * false = fabExpanded  .. 오픈
      */
     private void openSubMenuFab() {
         binding.allListButton.morning.setVisibility(View.VISIBLE);
@@ -169,10 +161,9 @@ public class VideoListFragment extends BaseFragment {
     }
 
     /**
-     *전체보기 버튼 클릭할때 팝업메뉴버튼
-     *  true = fabExpanded .. 클로즈
-     *  false = fabExpanded  .. 오픈
-     *
+     * 전체보기 버튼 클릭할때 팝업메뉴버튼
+     * true = fabExpanded .. 클로즈
+     * false = fabExpanded  .. 오픈
      */
     private void closeSubMenusFab() {
         binding.allListButton.morning.setVisibility(View.GONE);
@@ -228,33 +219,32 @@ public class VideoListFragment extends BaseFragment {
                 int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
 
 
-
                 if (lastVisibleItemPosition >= totalItemCount - 1) {
 
                     if (moring_check == true) {
                         MLog.d("오전in");
-                        String morning  = "오전";
-                        addVideoCategory(morning,currentPage);
+                        String morning = "오전";
+                        addVideoCategory(morning, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
                     if (after_check == true) {
                         String after = "오후";
-                        addVideoCategory(after,currentPage);
+                        addVideoCategory(after, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
 
                     if (wed_check == true) {
                         String wed = "수요";
-                        addVideoCategory(wed,currentPage);
+                        addVideoCategory(wed, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
 
-                    if(dwan_check ==true) {
+                    if (dwan_check == true) {
                         String dawn = "새벽";
-                        addVideoCategory(dawn,currentPage);
+                        addVideoCategory(dawn, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
@@ -275,6 +265,7 @@ public class VideoListFragment extends BaseFragment {
 
     /**
      * 리사이클러뷰 데이터 체인지 후 포커스 지정을 위해 시간차 딜레이 주기
+     *
      * @param lastVisible
      */
     private void delayedRecyclerNotice(Integer lastVisible) {
@@ -294,7 +285,7 @@ public class VideoListFragment extends BaseFragment {
      * @param view
      */
     private void allList_get(View view) {
-                getVideoId(currentPage);
+        getVideoId(currentPage);
     }
 //
 
@@ -427,22 +418,23 @@ public class VideoListFragment extends BaseFragment {
 //     *
 //     * @param youTubePlayer
 //     */
-    private void recyclerClickListener(final YouTubePlayer youTubePlayer) {
-        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onListItemClick(List aa, int position) {
 
+    public void recyclerClickListener(final YouTubePlayer youTubePlayer) {
+        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener<UnCodeVideoModel.Data>() {
+            @Override
+            public void onListItemClick(List<UnCodeVideoModel.Data> aa, int position) {
+                MLog.d("click in");
                 //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
                 UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
                 String playId = items.videoId;
                 String title = items.title;
                 String imageUrl = items.thumbnail;
-
+//
                 MLog.d("new Click Clik: " + playId + title + imageUrl);
 
 
-                //이두개의 메세드의 순서가 바뀌면 에러가남
-//                changingVideo(playId, youTubePlayer);
+//                이두개의 메세드의 순서가 바뀌면 에러가남
+                changingVideo(playId, youTubePlayer);
                 //realm 저장
 //                saveVideo(title, imageUrl, playId);
             }
@@ -450,23 +442,19 @@ public class VideoListFragment extends BaseFragment {
 
     }
 
+
+    //클릭하면 동영상 바꾸기
+    private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
+        MLog.d("changing video" + video);
+//        binding.youtubePlayerView.setEnableAutomaticInitialization();to
+        if (video != null && youTubePlayer != null) {
+            recyclerClickListener(youTubePlayer);
+            youTubePlayer.cueVideo(video, 0f);
+
+        }
+    }
+
     //
-//
-//    //클릭하면 동영상 바꾸기
-//    private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
-//        MLog.d("changing video");
-//
-//        MLog.d("changing video"+ video);
-////        binding.youtubePlayerView.setEnableAutomaticInitialization();to
-//        if (video != null && youTubePlayer != null) {
-////            recyclerClickListener(youTubePlayer);
-//            youTubePlayer.cueVideo(video, 0f);
-//
-//        }
-//
-//
-//    }
-//
 //
 //    /**
 //     * 최근 봤던 비디오 리얼엠에 저장하기

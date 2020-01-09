@@ -1,6 +1,7 @@
 package kr.uncode.lifetreechurch.fm_video;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 
@@ -20,36 +21,45 @@ import kr.uncode.lifetreechurch.utils.MLog;
  */
 public class YoutubeViewHolder extends BaseViewHolder {
 
-    private OnItemClickListener mListener = null;
+    private OnItemClickListener<UnCodeVideoModel.Data> mListener = null;
     private List<UnCodeVideoModel.Data> utubeBasket = new ArrayList<>();
     ItemYoutubeListBinding binding;
 
+    private YoutubeRecyclerAdapter youtubeRecyclerAdapter;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+
+
+
+
+    public void setOnItemClickListener(OnItemClickListener<UnCodeVideoModel.Data> listener) {
         this.mListener = listener;
     }
-
-    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList) {
+    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList,OnItemClickListener listener) {
         super(itemView);
         binding = itemView;
         this.utubeBasket = getUtubeList;
-    }
-
-
-    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView) {
-        super(itemView);
-        binding = itemView;
-
+        this.mListener = listener;
 
         binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = getAdapterPosition();
+
                 if (mListener != null) {
+                    mListener.onListItemClick(utubeBasket,pos);
                 }
             }
         });
     }
+
+//
+//    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView) {
+//        super(itemView);
+//        binding = itemView;
+//
+//
+
+//    }
 
 
 

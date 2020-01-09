@@ -22,8 +22,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTube
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
+import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.RecyclerViewDecoration;
 import kr.uncode.lifetreechurch.ResponseCallback;
@@ -436,7 +438,7 @@ public class VideoListFragment extends BaseFragment {
 //                이두개의 메세드의 순서가 바뀌면 에러가남
                 changingVideo(playId, youTubePlayer);
                 //realm 저장
-//                saveVideo(title, imageUrl, playId);
+                saveVideo(title, imageUrl, playId);
             }
         });
 
@@ -456,27 +458,27 @@ public class VideoListFragment extends BaseFragment {
 
     //
 //
-//    /**
-//     * 최근 봤던 비디오 리얼엠에 저장하기
-//     *
-//     * @param title   유튜브 제목
-//     * @param image   유튜브 썸네일
-//     * @param videoId 유튜브 비디오 아이디
-//     */
-//    private void saveVideo(String title, String image, String videoId) {
-//        final Realm realm = Realm.getDefaultInstance();
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                UserVideo userVideo = realm.createObject(UserVideo.class);
-//                userVideo.setVideoId(videoId);
-//                userVideo.setImage_Url(image);
-//                userVideo.setTitle(title);
-//                MLog.d("saveVideo" + videoId + image + title);
-//            }
-//        });
-//
-//    }
+    /**
+     * 최근 봤던 비디오 리얼엠에 저장하기
+     *
+     * @param title   유튜브 제목
+     * @param image   유튜브 썸네일
+     * @param videoId 유튜브 비디오 아이디
+     */
+    private void saveVideo(String title, String image, String videoId) {
+        final Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                UserVideo userVideo = realm.createObject(UserVideo.class);
+                userVideo.setVideoId(videoId);
+                userVideo.setImage_Url(image);
+                userVideo.setTitle(title);
+                MLog.d("saveVideo" + videoId + image + title);
+            }
+        });
+
+    }
 //
 //
 //    /**

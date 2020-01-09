@@ -112,7 +112,18 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
      * @param youtubeVideos
      */
     public void setItems(List<UnCodeVideoModel.Data> youtubeVideos) {
-        list = youtubeVideos;
+
+
+
+        if (youtubeVideos != null) {
+            for (int e = 0; e<youtubeVideos.size(); e++) {
+                try {
+                    list.add(youtubeVideos.get(e));
+                } catch (Exception i) {
+                    MLog.d(i.getMessage());
+                }
+            }
+        }
         notifyDataSetChanged();
         MLog.d("reset data first :" + list);
     }

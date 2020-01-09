@@ -84,7 +84,7 @@ public class VideoListFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //데이터바인딩 유튜브 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
-//        videoListTopMenuShowController(true);
+        videoListTopMenuShowController(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
         return binding.getRoot();
@@ -113,42 +113,74 @@ public class VideoListFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
+
+        //카테고리 선택할때 영상을 바꿔줌
         categoryChanger(view);
+
+
+
         fabEx();
+
+
+        //팝업창 애니메이션
         anim();
 
+        //스크롤 마지막에 닿았을때 데이터 새로 불러오기
         scrollChanger();
-//        allList_get(view);
+        allList_get(view);
     }
 
+    /**
+     *전체보기 버튼 클릭할때 팝업메뉴버튼
+     *  true = fabExpanded .. 클로즈
+     *  false = fabExpanded  .. 오픈
+     *
+     */
     private void fabEx() {
-        binding.allListButton.categoryButton.setOnClickListener(new View.OnClickListener() {
+        binding.allListButton.allButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (fabExpanded == true) {
                     closeSubMenusFab();
+                    MLog.d("opne :" + fabExpanded);
                 } else {
                     openSubMenuFab();
+                    MLog.d("opne :" + fabExpanded);
+
                 }
             }
         });
     }
 
+    /**
+     *전체보기 버튼 클릭할때 팝업메뉴버튼
+     *  true = fabExpanded .. 클로즈
+     *  false = fabExpanded  .. 오픈
+     *
+     */
     private void openSubMenuFab() {
         binding.allListButton.morning.setVisibility(View.VISIBLE);
         binding.allListButton.after.setVisibility(View.VISIBLE);
         binding.allListButton.dawn.setVisibility(View.VISIBLE);
         binding.allListButton.wed.setVisibility(View.VISIBLE);
         binding.allListButton.recent.setVisibility(View.VISIBLE);
+        binding.allListButton.callAllListBtn.setVisibility(View.VISIBLE);
         fabExpanded = true;
     }
 
+    /**
+     *전체보기 버튼 클릭할때 팝업메뉴버튼
+     *  true = fabExpanded .. 클로즈
+     *  false = fabExpanded  .. 오픈
+     *
+     */
     private void closeSubMenusFab() {
         binding.allListButton.morning.setVisibility(View.GONE);
         binding.allListButton.after.setVisibility(View.GONE);
         binding.allListButton.dawn.setVisibility(View.GONE);
         binding.allListButton.wed.setVisibility(View.GONE);
         binding.allListButton.recent.setVisibility(View.GONE);
+        binding.allListButton.callAllListBtn.setVisibility(View.GONE);
 
         fabExpanded = false;
 
@@ -241,6 +273,10 @@ public class VideoListFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 리사이클러뷰 데이터 체인지 후 포커스 지정을 위해 시간차 딜레이 주기
+     * @param lastVisible
+     */
     private void delayedRecyclerNotice(Integer lastVisible) {
 
         new Handler().postDelayed(new Runnable() {
@@ -251,23 +287,15 @@ public class VideoListFragment extends BaseFragment {
             }
         }, 500);
     }
-//
-//    /**
-//     * 카테고리 메뉴에서 사용자가 전체보기 눌렀을때 전체 유튜브 리스트를 불러오기
-//     *
-//     * @param view
-//     */
-//    private void allList_get(View view) {
-////        binding.allListButton.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                getVideoId(currentPage);
-////                binding.radio.clearCheck();
-//////                binding.allListButton.setVisibility(View.GONE);
-////                binding.checkboxArea.setVisibility(View.VISIBLE);
-////            }
-////        });
-//    }
+
+    /**
+     * 카테고리 메뉴에서 사용자가 전체보기 눌렀을때 전체 유튜브 리스트를 불러오기
+     *
+     * @param view
+     */
+    private void allList_get(View view) {
+                getVideoId(currentPage);
+    }
 //
 
     private void categoryChanger(View view) {
@@ -341,6 +369,15 @@ public class VideoListFragment extends BaseFragment {
             public void onClick(View view) {
                 replaceFragment(new MyVideoStorage(), false);
 
+
+            }
+        });
+        binding.allListButton.callAllListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MLog.d("call all list");
+                allList_get(view);
+                closeSubMenusFab();
 
             }
         });
@@ -655,7 +692,7 @@ public class VideoListFragment extends BaseFragment {
 //
 
     /**
-     * 전체 보기
+     * 전체 보기 팝어버튼 선택시 유튜브 [전체보기] 불러오기
      */
     private void getVideoId(Integer pageNum) {
         unCodeVideoConfig = new UnCodeVideoConfig();
@@ -680,7 +717,7 @@ public class VideoListFragment extends BaseFragment {
 
                 }
                 setYoutubeData();
-//                mRecyclerAdapter.notifyDataSetChanged();
+                mRecyclerAdapter.notifyDataSetChanged();
 
             }
         });

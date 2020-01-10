@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -47,14 +47,12 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/morning_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:backgroundTint="@color/white"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+                    app:elevation="0dp"/>
 
             </LinearLayout>
             <!--두번째 플로팅 버튼-->
@@ -63,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -87,14 +85,12 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/after_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:backgroundTint="@color/white"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+                    app:elevation="0dp" />
 
             </LinearLayout>
             <!--세번째 플로팅 버튼-->
@@ -103,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -127,14 +123,13 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/dawn_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:maxImageSize="60dp"
                     app:backgroundTint="@color/white"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+                    app:elevation="0dp"/>
 
             </LinearLayout>
             <!--네번째 플로팅 버튼-->
@@ -143,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -167,14 +162,12 @@
                 </androidx.cardview.widget.CardView>
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageView
                     android:id="@+id/wed_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:backgroundTint="@color/white"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+                    app:elevation="0dp"/>
 
             </LinearLayout>
             <!--첫번째 플로팅 버튼-->
@@ -183,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -208,7 +201,7 @@
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab1_icon"
+                    android:id="@+id/recent_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:backgroundTint="@color/white"
@@ -229,9 +222,9 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/call_all_list_btn"
-                    android:visibility="visible"
-                    android:layout_width="130dp"
-                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    android:layout_width="150dp"
+                    android:layout_marginRight="20dp"
                     android:layout_height="match_parent"
                     android:backgroundTint="@color/dawn"
                     app:cardUseCompatPadding="true">
@@ -253,11 +246,9 @@
                     android:id="@+id/all_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전체보기"
                     android:visibility="visible"
                     app:backgroundTint="@color/selected_dot"
-                    app:elevation="0dp"
-                    app:fabSize="normal"
+                    app:fabSize="mini"
                     app:srcCompat="@drawable/ic_clear_allwhite_24dp" />
 
             </LinearLayout>

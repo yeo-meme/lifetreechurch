@@ -1,5 +1,9 @@
 package kr.uncode.lifetreechurch.fm_video;
 
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,6 +19,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
@@ -23,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
@@ -84,7 +91,37 @@ public class VideoListFragment extends BaseFragment {
         videoListTopMenuShowController(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
+        drawingIcon();
         return binding.getRoot();
+    }
+
+    private void drawingIcon() {
+//        binding.allListButton.dawnIcon.setBackground(new ShapeDrawable(new OvalShape()));
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            binding.allListButton.dawnIcon.setClipToOutline(true);
+//        }
+
+        Glide.with(getContext())
+                .load(R.drawable.c)
+                .circleCrop()
+//                .apply(new RequestOptions().circleCrop().centerCrop())
+                .into(binding.allListButton.dawnIcon);
+        Glide.with(getContext())
+                .load(R.drawable.b)
+                .circleCrop()
+//                .apply(new RequestOptions().circleCrop().centerCrop())
+                .into(binding.allListButton.afterIcon);
+        Glide.with(getContext())
+                .load(R.drawable.a)
+                .circleCrop()
+//                .apply(new RequestOptions().circleCrop().centerCrop())
+                .into(binding.allListButton.morningIcon);
+        Glide.with(getContext())
+                .load(R.drawable.d)
+                .circleCrop()
+//                .apply(new RequestOptions().circleCrop().centerCrop())
+                .into(binding.allListButton.wedIcon);
+
     }
 
 //    private void viewShow(View view) {

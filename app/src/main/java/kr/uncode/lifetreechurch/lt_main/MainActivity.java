@@ -48,15 +48,29 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
         replaceFragment(new InitFragment(), false);
     }
 
+
+    /**
+     * 최근본목록 툴바 모두 삭제 버튼 불러오기
+     * @param isShowMenuButton true 불러오기
+     */
     public void toolbarMenuButtonController(boolean isShowMenuButton) {
 
         if (isShowMenuButton) {
             binding.mainRightButton.setVisibility(View.VISIBLE);
         }
-
-
     }
 
+    /**
+     * 비디오리스트에서 상단에 최근본 목록 가기 위해 메뉴 버튼 생성
+     * @param isShow true일때
+     */
+    public void recentVideoListGo(boolean isShow) {
+        if (isShow) {
+            binding.recentGoButton.setVisibility(View.VISIBLE);
+        } else {
+            binding.recentGoButton.setVisibility(View.GONE);
+        }
+    }
 
     public void showPopup(View v) {
         PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
@@ -67,14 +81,25 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
         popupMenu.show();
     }
 
-    public void videoListTopMenuShow(boolean isShow) {
+//    public void videoListTopMenuShow(boolean isShow) {
+//
+//        if (isShow) {
+//            binding.videoMenu.setVisibility(View.VISIBLE);
+//            binding.toolbar.setVisibility(View.GONE);
+//        }
+//    }
 
+    public void backKeyHide(boolean isShow) {
         if (isShow) {
-            binding.videoMenu.setVisibility(View.VISIBLE);
-            binding.toolbar.setVisibility(View.GONE);
+            binding.backKey.setVisibility(View.GONE);
         }
     }
 
+    public void backKeyShow(boolean isShow) {
+        if (isShow) {
+            binding.backKey.setVisibility(View.VISIBLE);
+        }
+    }
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {

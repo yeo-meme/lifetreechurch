@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -105,14 +106,37 @@ public class BaseFragment extends Fragment {
             parentActivity.toolbarMenuButtonController(isShowMenuButton);
         }
     }
-    public void videoListTopMenuShowController(boolean isShowMenuButton) {
+
+    public void recentMenuShowController(boolean isShow) {
         Activity activity = getActivity();
         if (activity instanceof MainActivity) {
             MainActivity parentActivity = (MainActivity) activity;
-            parentActivity.videoListTopMenuShow(isShowMenuButton);
+            parentActivity.recentVideoListGo(isShow);
+        }
+    }
+//    public void videoListTopMenuShowController(boolean isShowMenuButton) {
+//        Activity activity = getActivity();
+//        if (activity instanceof MainActivity) {
+//            MainActivity parentActivity = (MainActivity) activity;
+//            parentActivity.videoListTopMenuShow(isShowMenuButton);
+//        }
+//    }
+
+    public void backKeyHideController(boolean isShowMenuButton) {
+        Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            MainActivity parentActivity = (MainActivity) activity;
+            parentActivity.backKeyHide(isShowMenuButton);
         }
     }
 
+    public void backKeyShowController(boolean isShowMenuButton) {
+        Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            MainActivity parentActivity = (MainActivity) activity;
+            parentActivity.backKeyShow(isShowMenuButton);
+        }
+    }
     public void progressON() {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {

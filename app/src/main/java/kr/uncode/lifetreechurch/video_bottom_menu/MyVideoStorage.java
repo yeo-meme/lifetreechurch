@@ -47,6 +47,8 @@ public class MyVideoStorage extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setHasOptionsMenu(true);
+        recentMenuShowController(false);
+
         if (youTubePlayId != null) {
             initYouTubePlayerView(youTubePlayId);
         } else {
@@ -87,7 +89,7 @@ public class MyVideoStorage extends BaseFragment {
         recentAdapter.setItems(tem);
 
 
-        toolbarMenuButtonController(true);
+//        toolbarMenuButtonController(true);
 
 
     }
@@ -116,4 +118,10 @@ public class MyVideoStorage extends BaseFragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+//        toolbarMenuButtonController(false);
+    }
 }

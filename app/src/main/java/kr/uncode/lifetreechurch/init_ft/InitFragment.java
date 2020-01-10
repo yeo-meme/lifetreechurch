@@ -33,6 +33,8 @@ public class InitFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_main, container, false);
 //        binding = FragmentMainBinding.inflate(inflater, container, false);
+        backKeyHideController(true);
+        recentMenuShowController(false);
         return binding.getRoot();
     }
 
@@ -100,7 +102,12 @@ public class InitFragment extends BaseFragment {
 //        binding.progress.setVisibility(View.VISIBLE);
     }
 
-//    public void loading(View view) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    //    public void loading(View view) {
 //
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {

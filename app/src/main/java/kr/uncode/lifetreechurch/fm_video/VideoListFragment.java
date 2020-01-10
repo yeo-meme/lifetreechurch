@@ -93,18 +93,12 @@ public class VideoListFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
         drawingIcon();
+        toolbarMenuButtonController(false);
         backKeyShowController(true);
         recentMenuShowController(true);
         return binding.getRoot();
     }
 
-    public void close() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction().remove(VideoListFragment.this).commit();
-        fragmentManager.popBackStack();
-        MLog.d("Video Fragment back click");
-
-    }
     private void drawingIcon() {
 //        binding.allListButton.dawnIcon.setBackground(new ShapeDrawable(new OvalShape()));
 //        if (Build.VERSION.SDK_INT >= 21) {
@@ -204,7 +198,7 @@ public class VideoListFragment extends BaseFragment {
         binding.allListButton.after.setVisibility(View.VISIBLE);
         binding.allListButton.dawn.setVisibility(View.VISIBLE);
         binding.allListButton.wed.setVisibility(View.VISIBLE);
-        binding.allListButton.recent.setVisibility(View.VISIBLE);
+//        binding.allListButton.recent.setVisibility(View.VISIBLE);
         binding.allListButton.callAllListBtn.setVisibility(View.VISIBLE);
         fabExpanded = true;
     }
@@ -219,7 +213,7 @@ public class VideoListFragment extends BaseFragment {
         binding.allListButton.after.setVisibility(View.GONE);
         binding.allListButton.dawn.setVisibility(View.GONE);
         binding.allListButton.wed.setVisibility(View.GONE);
-        binding.allListButton.recent.setVisibility(View.GONE);
+//        binding.allListButton.recent.setVisibility(View.GONE);
         binding.allListButton.callAllListBtn.setVisibility(View.GONE);
 
         fabExpanded = false;
@@ -404,14 +398,14 @@ public class VideoListFragment extends BaseFragment {
 
             }
         });
-        binding.allListButton.recent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                replaceFragment(new MyVideoStorage(), false);
-
-
-            }
-        });
+//        binding.allListButton.recent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                replaceFragment(new MyVideoStorage(), false);
+//
+//
+//            }
+//        });
         binding.allListButton.callAllListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

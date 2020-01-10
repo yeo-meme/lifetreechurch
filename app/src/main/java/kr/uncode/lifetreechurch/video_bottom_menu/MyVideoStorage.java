@@ -48,11 +48,16 @@ public class MyVideoStorage extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_myvideostorage, container, false);
         setHasOptionsMenu(true);
         recentMenuShowController(false);
-
+        toolbarMenuButtonController(true);
         if (youTubePlayId != null) {
             initYouTubePlayerView(youTubePlayId);
+            binding.empty.setVisibility(View.GONE);
+            binding.youtubeCard.setVisibility(View.VISIBLE);
         } else {
-            Toast.makeText(getContext(), "보관함이비워져 있습니다.", Toast.LENGTH_LONG).show();
+
+            binding.empty.setVisibility(View.VISIBLE);
+            binding.youtubeCard.setVisibility(View.GONE);
+            toolbarMenuButtonController(false);
 //            binding.youtubePlayerView.release();
         }
         setYoutubeData();

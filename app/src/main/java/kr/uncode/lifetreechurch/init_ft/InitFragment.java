@@ -35,6 +35,8 @@ public class InitFragment extends BaseFragment {
 //        binding = FragmentMainBinding.inflate(inflater, container, false);
         backKeyHideController(true);
         recentMenuShowController(false);
+        toolbarMenuButtonController(false);
+
         return binding.getRoot();
     }
 

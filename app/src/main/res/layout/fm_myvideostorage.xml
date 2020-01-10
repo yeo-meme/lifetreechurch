@@ -55,6 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
+            android:id="@+id/youtube_card"
             android:background="@color/weekend_bg">
             <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
@@ -67,6 +69,24 @@
                 android:id="@+id/recyclerViewFeed"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/empty"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:backgroundTint="@color/dawn"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textAppearance="@font/scdream3"
+                android:text="최근 시청한 목록이 없습니다. 유튜브채널에서 말씀을
+시청해보세요"/>
 
         </LinearLayout>
         <!-- 가로 리사이클러뷰 끝-->

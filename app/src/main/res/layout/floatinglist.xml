@@ -171,45 +171,45 @@
 
             </LinearLayout>
             <!--첫번째 플로팅 버튼-->
-            <LinearLayout
-                android:id="@+id/recent"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:visibility="gone"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/recent"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="right"-->
+<!--                android:visibility="gone"-->
+<!--                android:orientation="horizontal">-->
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="@color/happy"
-                    android:layout_marginRight="15dp"
-                    app:cardUseCompatPadding="true">
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:backgroundTint="@color/happy"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    app:cardUseCompatPadding="true">-->
 
-                    <TextView
-                        android:id="@+id/fab1_text"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:text="최근본목록"
-                        android:textColor="@color/white"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/fab1_text"-->
+<!--                        android:layout_width="150dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:text="최근본목록"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:textAppearance="?android:attr/textAppearanceSmall"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textStyle="bold" />-->
 
-                </androidx.cardview.widget.CardView>
+<!--                </androidx.cardview.widget.CardView>-->
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/recent_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="@color/white"
-                    app:elevation="0dp"
-                    app:fabSize="mini"
-                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />
+<!--                <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                    android:id="@+id/recent_icon"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:backgroundTint="@color/white"-->
+<!--                    app:elevation="0dp"-->
+<!--                    app:fabSize="mini"-->
+<!--                    app:srcCompat="@drawable/ic_add_alert_black_24dp" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <!-- 플로팅버튼 카테고리 버튼 시작-->
             <LinearLayout

@@ -36,8 +36,19 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 //            getWindow().setStatusBarColor(getResources().getColor(R.color.status_bar));
 //        }
 
+//        recentVideo();
         backPlay();
         initPageLoad();
+    }
+
+    private void recentVideo() {
+        binding.recentGoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new MyVideoStorage(), true);
+            }
+        });
+
     }
 
     /**
@@ -75,6 +86,8 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
         if (isShowMenuButton) {
             binding.mainRightButton.setVisibility(View.VISIBLE);
+        } else {
+            binding.mainRightButton.setVisibility(View.GONE);
         }
     }
 
@@ -98,6 +111,15 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
         PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.mene_storage, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(this::onMenuItemClick);
+        popupMenu.show();
+    }
+
+
+    public void showPopupVideoList(View v) {
+        PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.menu_videolist, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(this::onMenuItemClick);
         popupMenu.show();
     }
@@ -150,6 +172,11 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
                 break;
 
+            case R.id.recent:
+                MLog.d("recent Click");
+                replaceFragment(new MyVideoStorage(), true);
+
+                break;
         }
         return false;
     }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -97,6 +98,13 @@ public class VideoListFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+    public void close() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().remove(VideoListFragment.this).commit();
+        fragmentManager.popBackStack();
+        MLog.d("Video Fragment back click");
+
+    }
     private void drawingIcon() {
 //        binding.allListButton.dawnIcon.setBackground(new ShapeDrawable(new OvalShape()));
 //        if (Build.VERSION.SDK_INT >= 21) {

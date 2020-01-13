@@ -299,7 +299,7 @@ public class VideoListFragment extends BaseFragment {
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
 
-                    if (all ==true) {
+                    if (all == true) {
                         addVideoAll(currentPage);
                         MLog.d("here in all");
                     }
@@ -361,7 +361,7 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = false;
                 dwan_check = false;
-                all =false;
+                all = false;
 
                 getVideoCategroyId(categoryId, currentPage);
 
@@ -377,7 +377,7 @@ public class VideoListFragment extends BaseFragment {
                 after_check = true;
                 wed_check = false;
                 dwan_check = false;
-                all =false;
+                all = false;
 
                 currentPage = 0;
                 totalItemCount = 10;
@@ -396,7 +396,7 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = false;
                 dwan_check = true;
-                all =false;
+                all = false;
 
                 currentPage = 0;
                 totalItemCount = 10;
@@ -414,7 +414,7 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = true;
                 dwan_check = false;
-                all =false;
+                all = false;
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
@@ -430,7 +430,7 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = false;
                 dwan_check = false;
-                all =true;
+                all = true;
 //                allList_get(view);
                 getVideoId(currentPage);
                 closeSubMenusFab();
@@ -535,26 +535,44 @@ public class VideoListFragment extends BaseFragment {
      * @param videoId 유튜브 비디오 아이디
      */
     private void saveVideo(String title, String image, String videoId) {
+        MLog.d("non save metheod");
+        List<String> temp = new ArrayList<>();
+
+        final Realm realm = Realm.getDefaultInstance();
+        RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).findAll();
+//        if (realmResults.size() == 0) {
+//            saveRecentVideo(title, image, videoId); }
+        MLog.d("realmResult" + realmResults);
+
+
+        if (realmResults.size() != 0) {
+            saveRecentVideo(title, image, videoId);
+            for (int e=0; e<realmResults.size(); e++) {
+                temp.add(realmResults.get(e).videoId);
+                MLog.d("realmResult videoId" + temp);
+            }
+
+            for (int i =0; i<temp.size(); i++) {
+                MLog.d("text  aaaaa" + videoId.equals(temp.get(i)));
+            }
+        }
+
+    }
+
+    private void saveRecent(String title, String image, String videoId) {
+
+    }
+
+    private void saveRecentVideo(String title, String image, String videoId) {
         final Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
-                RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).findAll();
-
-                for (int i = 0; i < realmResults.size(); i++) {
-
-                    if (videoId.equals(realmResults.get(i).videoId)) {
-                        MLog.d("non save");
-                    } else {
-                        UserVideo userVideo = realm.createObject(UserVideo.class);
-                        userVideo.setVideoId(videoId);
-                        userVideo.setImage_Url(image);
-                        userVideo.setTitle(title);
-                        MLog.d("saveVideo" + videoId + image + title);
-                    }
-                }
-
+                UserVideo userVideo = realm.createObject(UserVideo.class);
+                userVideo.setVideoId(videoId);
+                userVideo.setImage_Url(image);
+                userVideo.setTitle(title);
+                MLog.d("saveVideo recent Video" + videoId + image + title);
             }
         });
 

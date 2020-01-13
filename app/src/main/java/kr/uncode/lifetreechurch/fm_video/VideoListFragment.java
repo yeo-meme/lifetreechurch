@@ -52,7 +52,7 @@ public class VideoListFragment extends BaseFragment {
     private Animation fab_open, fab_close;
 
     // 유튜브 객체
-    private YouTubePlayer youTubePlayer;
+    private YouTubePlayer mYoutubePlayer;
     private YouTubePlayerUtils youTubePlayerUtils;
 
     //어댑터 셋
@@ -92,7 +92,9 @@ public class VideoListFragment extends BaseFragment {
 //        videoListTopMenuShowController(true);
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
+        //카테고리아이콘
         drawingIcon();
+        //툴바메뉴
         toolbarMenuButtonController(false);
         backKeyShowController(true);
         recentMenuShowController(true);
@@ -151,7 +153,9 @@ public class VideoListFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
 //        radioGroup(view);
-
+//        recyclerClickListener(mYoutubePlayer);
+        MLog.d("num 2");
+        MLog.d("onCreated View youTubePlayer" + mYoutubePlayer);
         //카테고리 선택할때 영상을 바꿔줌
         categoryChanger(view);
 
@@ -165,6 +169,12 @@ public class VideoListFragment extends BaseFragment {
         //스크롤 마지막에 닿았을때 데이터 새로 불러오기
         scrollChanger();
         allList_get(view);
+    }
+
+
+    private void setmYoutubePlayer() {
+
+
     }
 
     /**
@@ -421,6 +431,7 @@ public class VideoListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // 카테고리 오픈 클로즈 애니메이션 적용
         fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getContext(), R.anim.fab_close);
@@ -435,7 +446,7 @@ public class VideoListFragment extends BaseFragment {
 
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
-        recyclerClickListener(youTubePlayer);
+//        recyclerClickListener(youTubePlayer);
 
     }
 
@@ -489,16 +500,19 @@ public class VideoListFragment extends BaseFragment {
     //클릭하면 동영상 바꾸기
     private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
         MLog.d("changing video" + video);
+        MLog.d("changing video youTubePlayer" + youTubePlayer);
 //        binding.youtubePlayerView.setEnableAutomaticInitialization();to
-        if (video != null && youTubePlayer != null) {
-            recyclerClickListener(youTubePlayer);
+        if (video != null) {
+            MLog.d("changing video in" + video);
             youTubePlayer.cueVideo(video, 0f);
+//            recyclerClickListener(youTubePlayer);
 
         }
     }
 
     //
 //
+
     /**
      * 최근 봤던 비디오 리얼엠에 저장하기
      *
@@ -520,7 +534,8 @@ public class VideoListFragment extends BaseFragment {
         });
 
     }
-//
+
+    //
 //
 //    /**
 //     * 프리페어런스 봤던 아이디 저장하기 -- 사용하지 않음 realm으로 사용중 코드 정리 안되서 아직 안지웠음
@@ -750,6 +765,7 @@ public class VideoListFragment extends BaseFragment {
                 setYoutubeData();
                 mRecyclerAdapter.notifyDataSetChanged();
 
+
             }
         });
 
@@ -767,7 +783,13 @@ public class VideoListFragment extends BaseFragment {
                 public void onReady(YouTubePlayer youTubePlayer) {
 //                super.onReady(youTubePlayer);
 
-                    recyclerClickListener(youTubePlayer);
+                    MLog.d("num 1");
+                    MLog.d("youtube Player null check : " + youTubePlayer);
+                    mYoutubePlayer = youTubePlayer;
+                    MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
+//                    recyclerClickListener(mYoutubePlayer);
+                    recyclerClickListener(mYoutubePlayer);
+                    MLog.d("num 5");
                     youTubePlayer.cueVideo(secondVideo, 0f);
 //                    YouTubePlayerUtils.loadOrCueVideo(
 //                            youTubePlayer,

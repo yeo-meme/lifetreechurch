@@ -10,7 +10,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmRecentcardBinding;
 import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
@@ -20,16 +22,23 @@ import kr.uncode.lifetreechurch.utils.MLog;
  */
 public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
 
+    private OnItemClickListener<UserVideo> onItemClickListener;
 
     private List<UserVideo> userVideos;
     FmRecentcardBinding binding;
+
+
+    public void setOnItemClickListener(OnItemClickListener<UserVideo> listener) {
+        this.onItemClickListener = listener;
+    }
+
 
     @NonNull
     @Override
     public RecentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = FmRecentcardBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        return new ViewHolder(binding);
+        return new MyVideoStorageHolder(binding,userVideos,onItemClickListener);
     }
 
     @Override
@@ -49,38 +58,38 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentViewHolder> {
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecentViewHolder {
-        FmRecentcardBinding binding;
-        public ViewHolder(@NonNull FmRecentcardBinding itemView) {
-            super(itemView);
-            binding = itemView;
-        }
-
-        @Override
-        protected void clear() {
-
-        }
-
-        @Override
-        public void onBind(int position) {
-            super.onBind(position);
-
-            String title = userVideos.get(position).getTitle();
-            String image = userVideos.get(position).getImage_Url();
-            String videoId = userVideos.get(position).getVideoId();
-
-            MLog.d("bind" + title);
-            MLog.d("bind" + image);
-            binding.title.setText(title);
-
-            if (image != null) {
-                Glide.with(itemView.getContext())
-                        .load(image)
-                        .into(binding.thumbnail);
-            }
-
-
-
-        }
-    }
+//    public class ViewHolder extends RecentViewHolder {
+//        FmRecentcardBinding binding;
+//        public ViewHolder(@NonNull FmRecentcardBinding itemView) {
+//            super(itemView);
+//            binding = itemView;
+//        }
+//
+//        @Override
+//        protected void clear() {
+//
+//        }
+//
+//        @Override
+//        public void onBind(int position) {
+//            super.onBind(position);
+//
+//            String title = userVideos.get(position).getTitle();
+//            String image = userVideos.get(position).getImage_Url();
+//            String videoId = userVideos.get(position).getVideoId();
+//
+//            MLog.d("bind" + title);
+//            MLog.d("bind" + image);
+//            binding.title.setText(title);
+//
+//            if (image != null) {
+//                Glide.with(itemView.getContext())
+//                        .load(image)
+//                        .into(binding.thumbnail);
+//            }
+//
+//
+//
+//        }
+//    }
 }

@@ -22,9 +22,11 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.base.BaseFragment;
+import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMyvideostorageBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
@@ -42,6 +44,8 @@ public class MyVideoStorage extends BaseFragment {
     private String youTubePlayId;
     public String videoId;
 
+    public YouTubePlayer mYouTubePlayer;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +55,7 @@ public class MyVideoStorage extends BaseFragment {
         toolbarMenuButtonController(true);
         if (youTubePlayId != null) {
             initYouTubePlayerView(youTubePlayId);
+
             binding.empty.setVisibility(View.GONE);
             binding.youtubeCard.setVisibility(View.VISIBLE);
         } else {
@@ -61,10 +66,22 @@ public class MyVideoStorage extends BaseFragment {
 //            binding.youtubePlayerView.release();
         }
         setYoutubeData();
+        MLog.d("num 2");
+//        recyclerViewListener(mYouTubePlayer);
         return binding.getRoot();
 
     }
 
+    private void changeVideo(String videoId,final YouTubePlayer youTubePlayer) {
+        MLog.d("xxxxx"+ videoId);
+        MLog.d("num 6");
+        if (videoId != null) {
+            try {
+                youTubePlayer.cueVideo(videoId,0f);
+            } catch (Exception e) {}
+        }
+
+    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -72,15 +89,32 @@ public class MyVideoStorage extends BaseFragment {
         inflater.inflate(R.menu.mene_storage, menu);
     }
 
+    public void recyclerViewListener(final YouTubePlayer youTubePlayer) {
+        recentAdapter.setOnItemClickListener(new OnItemClickListener<UserVideo>() {
+            @Override
+            public void onListItemClick(List<UserVideo> userVideos, int position) {
+                MLog.d("hiiiii storage");
+                MLog.d("num 1");
+                MLog.d("listener youtubePlayer" + mYouTubePlayer);
+                MLog.d("hiiiii storage" + userVideos.get(position).videoId);
+                String videoId = userVideos.get(position).videoId;
+                String title = userVideos.get(position).title;
+                changeVideo(videoId,youTubePlayer);
+            }
+        });
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserVideo> data = realm.where(UserVideo.class).findAll();
 
+
+
         MLog.d("userVideo 1:" + data);
         List<UserVideo> tem = data;
         MLog.d("userVideo 2:" + tem);
+
 
         for (int i = 0; i < tem.size(); i++) {
             videoId = tem.get(i).getVideoId();
@@ -100,7 +134,11 @@ public class MyVideoStorage extends BaseFragment {
     }
 
 
+
+
     private void initYouTubePlayerView(String secondVideo) {
+        MLog.d("num 3");
+
 //        getLifecycle().addObserver(binding.youtubePlayerView);
         binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
@@ -108,6 +146,8 @@ public class MyVideoStorage extends BaseFragment {
                 super.onReady(youTubePlayer);
 //                recyclerClickListener(youTubePlayer);
                 youTubePlayer.cueVideo(secondVideo, 0f);
+                mYouTubePlayer = youTubePlayer;
+                recyclerViewListener(youTubePlayer);
 
             }
         });
@@ -116,7 +156,7 @@ public class MyVideoStorage extends BaseFragment {
 
     private void setYoutubeData() {
         binding.recyclerViewFeed.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         binding.recyclerViewFeed.setLayoutManager(layoutManager);
 //        binding.recyclerViewFeed.addItemDecoration(new RecyclerViewDecoration());
         binding.recyclerViewFeed.setAdapter(recentAdapter);
@@ -129,4 +169,6 @@ public class MyVideoStorage extends BaseFragment {
 
 //        toolbarMenuButtonController(false);
     }
+
+
 }

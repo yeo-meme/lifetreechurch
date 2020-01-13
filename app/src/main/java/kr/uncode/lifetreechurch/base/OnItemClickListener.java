@@ -6,5 +6,5 @@ import kr.uncode.lifetreechurch.Model.NewMemberModel;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 
 public interface OnItemClickListener<T> {
-    void onListItemClick(List<UnCodeVideoModel.Data> aa, int position);
+    void onListItemClick(List<T> aa, int position);
 }

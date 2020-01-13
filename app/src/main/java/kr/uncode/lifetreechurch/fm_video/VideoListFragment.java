@@ -301,6 +301,7 @@ public class VideoListFragment extends BaseFragment {
 
                     if (all ==true) {
                         addVideoAll(currentPage);
+                        MLog.d("here in all");
                     }
 //                    MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
 //                    addVideoAll(currentPage);
@@ -421,14 +422,6 @@ public class VideoListFragment extends BaseFragment {
 
             }
         });
-//        binding.allListButton.recent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                replaceFragment(new MyVideoStorage(), false);
-//
-//
-//            }
-//        });
         binding.allListButton.callAllListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -438,7 +431,8 @@ public class VideoListFragment extends BaseFragment {
                 wed_check = false;
                 dwan_check = false;
                 all =true;
-                allList_get(view);
+//                allList_get(view);
+                getVideoId(currentPage);
                 closeSubMenusFab();
 
             }
@@ -773,6 +767,7 @@ public class VideoListFragment extends BaseFragment {
      * 전체 보기 팝어버튼 선택시 유튜브 [전체보기] 불러오기
      */
     private void getVideoId(Integer pageNum) {
+        progressON();
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoList(pageNum, new ResponseCallback<UnCodeVideoModel>() {
             @Override
@@ -797,6 +792,7 @@ public class VideoListFragment extends BaseFragment {
                 setYoutubeData();
 //                scrollChanger();
                 all = true;
+                progressOFF();
                 mRecyclerAdapter.notifyDataSetChanged();
 
 

@@ -1,9 +1,5 @@
 package kr.uncode.lifetreechurch.fm_video;
 
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -16,12 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
@@ -30,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import io.realm.RealmResults;
 import kr.uncode.lifetreechurch.Config.UnCodeVideoConfig;
 import kr.uncode.lifetreechurch.Model.UnCodeVideoModel;
 import kr.uncode.lifetreechurch.Model.UserVideo;
@@ -41,7 +35,6 @@ import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
-import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
 
 public class VideoListFragment extends BaseFragment {
@@ -85,6 +78,8 @@ public class VideoListFragment extends BaseFragment {
     private boolean wed_check = false;
     private boolean dwan_check = false;
 
+    private boolean all = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +96,9 @@ public class VideoListFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+    /**
+     * 플로팅버튼 이미지 입히기
+     */
     private void drawingIcon() {
 //        binding.allListButton.dawnIcon.setBackground(new ShapeDrawable(new OvalShape()));
 //        if (Build.VERSION.SDK_INT >= 21) {
@@ -158,14 +156,9 @@ public class VideoListFragment extends BaseFragment {
         MLog.d("onCreated View youTubePlayer" + mYoutubePlayer);
         //카테고리 선택할때 영상을 바꿔줌
         categoryChanger(view);
-
-
         fabEx();
-
-
         //팝업창 애니메이션
         anim();
-
         //스크롤 마지막에 닿았을때 데이터 새로 불러오기
         scrollChanger();
         allList_get(view);
@@ -258,6 +251,9 @@ public class VideoListFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 스크롤 마지막 인덱스를 읽은후 새로운 리사이클러뷰 불러오기
+     */
     private void scrollChanger() {
 //        LinearLayoutManager layoutManager = LinearLayoutManager.class.cast(binding.recyclerViewFeed.getLayoutManager());
 //        int lastVisible = layoutManager.findLastCompletelyVisibleItemPosition();
@@ -302,6 +298,10 @@ public class VideoListFragment extends BaseFragment {
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
+
+                    if (all ==true) {
+                        addVideoAll(currentPage);
+                    }
 //                    MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
 //                    addVideoAll(currentPage);
 //                    MLog.d("마지막 totalItemCount: " + totalItemCount);
@@ -344,8 +344,8 @@ public class VideoListFragment extends BaseFragment {
 //
 
     /**
-     *
      * 카테고리 별 메뉴 클릭시 화면 체인져
+     *
      * @param view
      */
     private void categoryChanger(View view) {
@@ -360,6 +360,8 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = false;
                 dwan_check = false;
+                all =false;
+
                 getVideoCategroyId(categoryId, currentPage);
 
                 closeSubMenusFab();
@@ -374,6 +376,8 @@ public class VideoListFragment extends BaseFragment {
                 after_check = true;
                 wed_check = false;
                 dwan_check = false;
+                all =false;
+
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
@@ -391,6 +395,8 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = false;
                 dwan_check = true;
+                all =false;
+
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
@@ -407,6 +413,7 @@ public class VideoListFragment extends BaseFragment {
                 after_check = false;
                 wed_check = true;
                 dwan_check = false;
+                all =false;
                 currentPage = 0;
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
@@ -426,6 +433,11 @@ public class VideoListFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 MLog.d("call all list");
+                moring_check = false;
+                after_check = false;
+                wed_check = false;
+                dwan_check = false;
+                all =true;
                 allList_get(view);
                 closeSubMenusFab();
 
@@ -458,6 +470,7 @@ public class VideoListFragment extends BaseFragment {
 
 
     private void addVideoAll(Integer pageNum) {
+        progressON();
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoList(pageNum, new ResponseCallback<UnCodeVideoModel>() {
             @Override
@@ -466,6 +479,7 @@ public class VideoListFragment extends BaseFragment {
                     unCodeModelList.addAll(response.data);
                     mRecyclerAdapter.setDataListItem(unCodeModelList);
                     setYoutubeData();
+                    progressOFF();
                 }
             }
         });
@@ -531,11 +545,22 @@ public class VideoListFragment extends BaseFragment {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                UserVideo userVideo = realm.createObject(UserVideo.class);
-                userVideo.setVideoId(videoId);
-                userVideo.setImage_Url(image);
-                userVideo.setTitle(title);
-                MLog.d("saveVideo" + videoId + image + title);
+
+                RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).findAll();
+
+                for (int i = 0; i < realmResults.size(); i++) {
+
+                    if (videoId.equals(realmResults.get(i).videoId)) {
+                        MLog.d("non save");
+                    } else {
+                        UserVideo userVideo = realm.createObject(UserVideo.class);
+                        userVideo.setVideoId(videoId);
+                        userVideo.setImage_Url(image);
+                        userVideo.setTitle(title);
+                        MLog.d("saveVideo" + videoId + image + title);
+                    }
+                }
+
             }
         });
 
@@ -710,6 +735,7 @@ public class VideoListFragment extends BaseFragment {
 //        });
 //    }
 //
+
     /**
      * 카테고리별 유튜브 영상 긁어오기
      *
@@ -769,6 +795,8 @@ public class VideoListFragment extends BaseFragment {
 
                 }
                 setYoutubeData();
+//                scrollChanger();
+                all = true;
                 mRecyclerAdapter.notifyDataSetChanged();
 
 
@@ -787,7 +815,7 @@ public class VideoListFragment extends BaseFragment {
             binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(YouTubePlayer youTubePlayer) {
-                super.onReady(youTubePlayer);
+                    super.onReady(youTubePlayer);
 
                     MLog.d("num 1");
                     MLog.d("youtube Player null check : " + youTubePlayer);

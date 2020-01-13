@@ -238,6 +238,7 @@ public class VideoListFragment extends BaseFragment {
      * @param pageNum    초기값 0 +1씩 증가! 스크롤해서 > add로 넘어와을때
      */
     private void addVideoCategory(String categoryId, Integer pageNum) {
+        progressON();
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoCategoryList(categoryId, pageNum, new ResponseCallback<UnCodeVideoModel>() {
             @Override
@@ -251,6 +252,7 @@ public class VideoListFragment extends BaseFragment {
 
                     binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
 
+                    progressOFF();
                 }
             }
         });
@@ -270,7 +272,6 @@ public class VideoListFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
 
                 int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-
 
                 if (lastVisibleItemPosition >= totalItemCount - 1) {
 
@@ -342,6 +343,11 @@ public class VideoListFragment extends BaseFragment {
     }
 //
 
+    /**
+     *
+     * 카테고리 별 메뉴 클릭시 화면 체인져
+     * @param view
+     */
     private void categoryChanger(View view) {
         binding.allListButton.morning.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -704,12 +710,12 @@ public class VideoListFragment extends BaseFragment {
 //        });
 //    }
 //
-//    /**
-//     * 카테고리별 유튜브 영상 긁어오기
-//     *
-//     * @param categoryId  = 카테고리 키워드
-//     * @param currentPage = 카테고리 페이지 Number
-//     */
+    /**
+     * 카테고리별 유튜브 영상 긁어오기
+     *
+     * @param categoryId  = 카테고리 키워드
+     * @param currentPage = 카테고리 페이지 Number
+     */
 //
     private void getVideoCategroyId(String categoryId, Integer currentPage) {
         unCodeVideoConfig = new UnCodeVideoConfig();
@@ -781,13 +787,12 @@ public class VideoListFragment extends BaseFragment {
             binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(YouTubePlayer youTubePlayer) {
-//                super.onReady(youTubePlayer);
+                super.onReady(youTubePlayer);
 
                     MLog.d("num 1");
                     MLog.d("youtube Player null check : " + youTubePlayer);
                     mYoutubePlayer = youTubePlayer;
                     MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
-//                    recyclerClickListener(mYoutubePlayer);
                     recyclerClickListener(mYoutubePlayer);
                     MLog.d("num 5");
                     youTubePlayer.cueVideo(secondVideo, 0f);

@@ -527,26 +527,29 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     //클릭하면 동영상 바꾸기
     private void changingVideo(String video) {
 
-        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(YouTubePlayer youTubePlayer) {
-                super.onReady(youTubePlayer);
-                MLog.d("changing video" + video);
-                MLog.d("changing video youTubePlayer" + youTubePlayer);
-//        binding.youtubePlayerView.setEnableAutomaticInitialization();to
-                if (video != null) {
-                    MLog.d("changing video in" + video);
-                    YouTubePlayerUtils.loadOrCueVideo(
-                            youTubePlayer, getLifecycle(),
-                            video, 0f
-                    );
-                }
-            }
 
-//            youTubePlayer.cueVideo(video, 0f);
-//            recyclerClickListener(youTubePlayer);
-
-        });
+        MLog.d("youtube plater changing chekc" + mYoutubePlayer);
+        mYoutubePlayer.cueVideo(video,0f);
+//        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//            @Override
+//            public void onReady(YouTubePlayer youTubePlayer) {
+//                super.onReady(youTubePlayer);
+//                MLog.d("changing video" + video);
+//                MLog.d("changing video youTubePlayer" + youTubePlayer);
+////        binding.youtubePlayerView.setEnableAutomaticInitialization();to
+//                if (video != null) {
+//                    MLog.d("changing video in" + video);
+//                    YouTubePlayerUtils.loadOrCueVideo(
+//                            youTubePlayer, getLifecycle(),
+//                            video, 0f
+//                    );
+//                }
+//            }
+//
+////            youTubePlayer.cueVideo(video, 0f);
+////            recyclerClickListener(youTubePlayer);
+//
+//        });
     }
 
     //
@@ -867,7 +870,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
 //        getLifecycle().addObserver(binding.youtubePlayerView);
 
-//        try {
+        try {
         binding.youtubePlayerView.initialize(new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(YouTubePlayer youTubePlayer) {
@@ -882,9 +885,10 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             }
         });
 
-//        } catch (Exception e) {
-//
-//        }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "네트워크 환경을 확인해주세요", Toast.LENGTH_LONG).show();
+
+        }
 
 //        try {
 //            binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {

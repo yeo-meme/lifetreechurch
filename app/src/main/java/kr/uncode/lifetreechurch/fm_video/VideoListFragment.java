@@ -307,7 +307,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                     }
 
                     if (all == true) {
-                        addVideoAll(currentPage);
+                        addVideoCategory("",currentPage);
                         MLog.d("here in all");
                     }
 //                    MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);

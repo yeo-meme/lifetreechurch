@@ -23,7 +23,7 @@ public class YoutubeViewHolder extends BaseViewHolder {
 
     private OnItemClickListener<UnCodeVideoModel.Data> mListener = null;
     private List<UnCodeVideoModel.Data> utubeBasket = new ArrayList<>();
-    ItemYoutubeListBinding binding;
+    ItemYoutubeListBinding b;
 
     private YoutubeRecyclerAdapter youtubeRecyclerAdapter;
 
@@ -34,23 +34,24 @@ public class YoutubeViewHolder extends BaseViewHolder {
     public void setOnItemClickListener(OnItemClickListener<UnCodeVideoModel.Data> listener) {
         this.mListener = listener;
     }
-    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> getUtubeList,OnItemClickListener listener) {
+    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> data) {
         super(itemView);
-        binding = itemView;
-        this.utubeBasket = getUtubeList;
-        this.mListener = listener;
+        b = itemView;
+        this.utubeBasket = data;
 
-        binding.youtubeCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int pos = getAdapterPosition();
-
-                if (mListener != null) {
-                    mListener.onListItemClick(utubeBasket,pos);
-                }
-            }
-        });
+//        b.youtubeCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int pos = getAdapterPosition();
+//
+//                if (mListener != null) {
+//                    mListener.onListItemClick(utubeBasket,pos);
+//                    MLog.d("listener worksssss"+ utubeBasket);
+//                }
+//            }
+//        });
     }
+
 
 //
 //    public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView) {
@@ -73,16 +74,25 @@ public class YoutubeViewHolder extends BaseViewHolder {
 //        final UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) VIDEO_LIST.get(position);
 
 //        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
+        b.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    MLog.d("holder Listenr");
+                    mListener.onListItemClick(utubeBasket,getAdapterPosition());
+                }
+            }
+        });
 
         if (utubeBasket != null) {
             String title = utubeBasket.get(position).title;
-            binding.youtubeTitle.setText(title);
+            b.youtubeTitle.setText(title);
 
             String thumbnail = utubeBasket.get(position).thumbnail;
             if (thumbnail != null) {
                 Glide.with(itemView.getContext())
                         .load(thumbnail)
-                        .into(binding.youtubeImg);
+                        .into(b.youtubeImg);
             }
         }
 

@@ -37,7 +37,7 @@ import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 
-public class VideoListFragment extends BaseFragment {
+public class VideoListFragment extends BaseFragment implements OnItemClickListener<UnCodeVideoModel.Data> {
 
     private boolean fabExpanded = false;
 
@@ -88,6 +88,7 @@ public class VideoListFragment extends BaseFragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
         //카테고리아이콘
+        mRecyclerAdapter.setOnItemClickListener(this);
         drawingIcon();
         //툴바메뉴
         toolbarMenuButtonController(false);
@@ -154,11 +155,17 @@ public class VideoListFragment extends BaseFragment {
 //        recyclerClickListener(mYoutubePlayer);
         MLog.d("num 2");
         MLog.d("onCreated View youTubePlayer" + mYoutubePlayer);
+
+
         //카테고리 선택할때 영상을 바꿔줌
         categoryChanger(view);
+
+
         fabEx();
         //팝업창 애니메이션
         anim();
+
+
         //스크롤 마지막에 닿았을때 데이터 새로 불러오기
         scrollChanger();
         allList_get(view);
@@ -487,45 +494,59 @@ public class VideoListFragment extends BaseFragment {
 //     * @param youTubePlayer
 //     */
 
-    public void recyclerClickListener(final YouTubePlayer youTubePlayer) {
-        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener<UnCodeVideoModel.Data>() {
-            @Override
-            public void onListItemClick(List<UnCodeVideoModel.Data> aa, int position) {
-                MLog.d("click in");
-                //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
-                UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
-                String playId = items.videoId;
-                String title = items.title;
-                String imageUrl = items.thumbnail;
+//    public void recyclerClickListener(final YouTubePlayer youTubePlayer) {
+//        mRecyclerAdapter.setOnItemClickListener(new OnItemClickListener<UnCodeVideoModel.Data>() {
+//            @Override
+//            public void onListItemClick(List<UnCodeVideoModel.Data> aa, int position) {
 //
-                MLog.d("new Click Clik: " + playId + title + imageUrl);
-
-
-//                이두개의 메세드의 순서가 바뀌면 에러가남
-                //클릭하면 동영상 바꾸기
-
-                changingVideo(playId, youTubePlayer);
-
-
-                //realm 저장
-                saveVideo(title, imageUrl, playId);
-            }
-        });
-
-    }
+//
+//                MLog.d("click in");
+//                //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
+//                UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
+//                String playId = items.videoId;
+//                String title = items.title;
+//                String imageUrl = items.thumbnail;
+////
+//                MLog.d("new Click Clik: " + playId + title + imageUrl);
+//
+//
+////                이두개의 메세드의 순서가 바뀌면 에러가남
+//                //클릭하면 동영상 바꾸기
+//
+//                changingVideo(playId, youTubePlayer);
+//
+//
+//                //realm 저장
+//                saveVideo(title, imageUrl, playId);
+//            }
+//        });
+//
+//    }
 
 
     //클릭하면 동영상 바꾸기
-    private void changingVideo(String video, final YouTubePlayer youTubePlayer) {
-        MLog.d("changing video" + video);
-        MLog.d("changing video youTubePlayer" + youTubePlayer);
+    private void changingVideo(String video) {
+
+        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                MLog.d("changing video" + video);
+                MLog.d("changing video youTubePlayer" + youTubePlayer);
 //        binding.youtubePlayerView.setEnableAutomaticInitialization();to
-        if (video != null) {
-            MLog.d("changing video in" + video);
-            youTubePlayer.cueVideo(video, 0f);
+                if (video != null) {
+                    MLog.d("changing video in" + video);
+                    YouTubePlayerUtils.loadOrCueVideo(
+                            youTubePlayer, getLifecycle(),
+                            video, 0f
+                    );
+                }
+            }
+
+//            youTubePlayer.cueVideo(video, 0f);
 //            recyclerClickListener(youTubePlayer);
 
-        }
+        });
     }
 
     //
@@ -542,11 +563,9 @@ public class VideoListFragment extends BaseFragment {
         MLog.d("non save metheod");
 
 
-
         final Realm realm = Realm.getDefaultInstance();
 
-        RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).equalTo("videoId",videoId).findAll();
-
+        RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).equalTo("videoId", videoId).findAll();
 
 
         if (realmResults.size() != 0) {
@@ -556,7 +575,6 @@ public class VideoListFragment extends BaseFragment {
             saveRecentVideo(title, image, videoId);
 
         }
-
 
 
 //        List<String> temp = new ArrayList<>();
@@ -787,6 +805,7 @@ public class VideoListFragment extends BaseFragment {
 
 
                 if (response != null) {
+                    mRecyclerAdapter.clearItem();
                     mRecyclerAdapter.setItems(response.data);
                     for (int a = 0; a > response.data.size(); a++) {
                         if (a == 0) {
@@ -848,30 +867,49 @@ public class VideoListFragment extends BaseFragment {
 
 //        getLifecycle().addObserver(binding.youtubePlayerView);
 
-        try {
-            binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-                @Override
-                public void onReady(YouTubePlayer youTubePlayer) {
-                    super.onReady(youTubePlayer);
+//        try {
+        binding.youtubePlayerView.initialize(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(YouTubePlayer youTubePlayer) {
+                super.onReady(youTubePlayer);
+                MLog.d("num 1");
+                MLog.d("youtube Player null check : " + youTubePlayer);
+                mYoutubePlayer = youTubePlayer;
+                MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
+                MLog.d("num 5");
+                youTubePlayer.cueVideo(secondVideo, 0f);
+//                recyclerClickListener(mYoutubePlayer);
+            }
+        });
 
-                    MLog.d("num 1");
-                    MLog.d("youtube Player null check : " + youTubePlayer);
-                    mYoutubePlayer = youTubePlayer;
-                    MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
-                    recyclerClickListener(mYoutubePlayer);
-                    MLog.d("num 5");
-                    youTubePlayer.cueVideo(secondVideo, 0f);
-//                    YouTubePlayerUtils.loadOrCueVideo(
-//                            youTubePlayer,
-//                            getLifecycle(),
-//                            secondVideo, 0f
-//                    );
-//                addFullScreenListenerToPlayer();
-                }
-            });
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "network 상태 확인 요망", Toast.LENGTH_LONG).show();
-        }
+//        } catch (Exception e) {
+//
+//        }
+
+//        try {
+//            binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+//                @Override
+//                public void onReady(YouTubePlayer youTubePlayer) {
+//                    super.onReady(youTubePlayer);
+//
+//                    MLog.d("num 1");
+//                    MLog.d("youtube Player null check : " + youTubePlayer);
+//                    mYoutubePlayer = youTubePlayer;
+//                    MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
+//                    recyclerClickListener(mYoutubePlayer);
+//                    MLog.d("num 5");
+//                    youTubePlayer.cueVideo(secondVideo, 0f);
+////                    YouTubePlayerUtils.loadOrCueVideo(
+////                            youTubePlayer,
+////                            getLifecycle(),
+////                            secondVideo, 0f
+////                    );
+////                addFullScreenListenerToPlayer();
+//                }
+//            });
+//        } catch (Exception e) {
+//            Toast.makeText(getContext(), "network 상태 확인 요망", Toast.LENGTH_LONG).show();
+//        }
 
     }
 
@@ -902,6 +940,28 @@ public class VideoListFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         binding.youtubePlayerView.release();
+    }
+
+    @Override
+    public void onListItemClick(List<UnCodeVideoModel.Data> aa, int position) {
+        MLog.d("click in");
+        //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
+        UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) aa.get(position);
+        String playId = items.videoId;
+        String title = items.title;
+        String imageUrl = items.thumbnail;
+//
+        MLog.d("new Click Clik: " + playId + title + imageUrl);
+
+
+//                이두개의 메세드의 순서가 바뀌면 에러가남
+        //클릭하면 동영상 바꾸기
+
+        changingVideo(playId);
+
+
+        //realm 저장
+        saveVideo(title, imageUrl, playId);
     }
 //}
 }

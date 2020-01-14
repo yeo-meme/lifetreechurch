@@ -27,7 +27,7 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     private List<Object> basket;
     DisplayMetrics displayMetrics = new DisplayMetrics();
 //    public List<Object> VIDEO_LIST_ITEMS = new ArrayList<>();
-
+//
     private OnItemClickListener<UnCodeVideoModel.Data> mListener = null;
 
     public void setOnItemClickListener(OnItemClickListener<UnCodeVideoModel.Data> listener) {
@@ -63,9 +63,14 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
     @NonNull
     @Override
     public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+//        YoutubeViewHolder holder = new YoutubeViewHolder(ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false));
+//        holder.setOnItemClickListener(mListener);
+//        return holder;
         binding = ItemYoutubeListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        return new YoutubeViewHolder(binding, list,mListener);
-//        return new YoutubeViewHolder(binding,VIDEO_LIST_ITEMS);
+       YoutubeViewHolder holder = new YoutubeViewHolder(binding,list);
+       holder.setOnItemClickListener(mListener);
+        return holder;
     }
 
     @Override

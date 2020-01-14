@@ -104,12 +104,7 @@ public class InitFragment extends BaseFragment {
 //        binding.progress.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    //    public void loading(View view) {
+//    public void loading(View view) {
 //
 //        new android.os.Handler().postDelayed(
 //                new Runnable() {

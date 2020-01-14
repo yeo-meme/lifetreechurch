@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+
 import kr.uncode.lifetreechurch.fm_news.NewMemberFragment;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class BaseActivity extends AppCompatActivity {
@@ -87,4 +89,5 @@ public class BaseActivity extends AppCompatActivity {
         }
 
     }
+
 }

@@ -47,6 +47,13 @@ public class NoticeFragment extends BaseFragment {
         noticeAdapter = new NoticeAdapter();
         getContent();
 
+        binding.closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+
+            }
+        });
         noticeAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onListItemClick(List aa, int position) {

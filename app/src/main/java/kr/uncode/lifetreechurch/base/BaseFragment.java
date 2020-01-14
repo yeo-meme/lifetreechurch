@@ -72,6 +72,7 @@ public class BaseFragment extends Fragment {
     }
 
 
+
     /**
      * 메인 Fragment Youtube 변경메서드
      */

@@ -1,8 +1,11 @@
 package kr.uncode.lifetreechurch.fm_video;
 
+import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.utils.YouTubePlayerUtils;
 
 import java.util.ArrayList;
@@ -38,6 +43,7 @@ import kr.uncode.lifetreechurch.utils.MLog;
 
 
 public class VideoListFragment extends BaseFragment implements OnItemClickListener<UnCodeVideoModel.Data> {
+
 
     private boolean fabExpanded = false;
 
@@ -85,16 +91,79 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //데이터바인딩 유튜브 라이브러리 적용 어려워서 일단 기본틀로 가려고 주석
 //        videoListTopMenuShowController(true);
+
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
+
+        binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        MLog.d("touchchchchch");
+                        break;
+                }
+                return true;
+            }
+        });
+
         //카테고리아이콘
         mRecyclerAdapter.setOnItemClickListener(this);
+
+//        delayClick();
         drawingIcon();
         //툴바메뉴
         toolbarMenuButtonController(false);
         backKeyShowController(true);
         recentMenuShowController(true);
         return binding.getRoot();
+    }
+    private void addCustomActionsToPlayer() {
+        Drawable customAction1Icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_insert_emoticon_black_24dp);
+        Drawable customAction2Icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_insert_emoticon_black_24dp);
+        assert customAction1Icon != null;
+        assert customAction2Icon != null;
+
+        binding.youtubePlayerView.getPlayerUiController().setCustomAction1(customAction1Icon, view ->
+                Toast.makeText(getActivity(), "custom action1 clicked", Toast.LENGTH_SHORT).show());
+
+        binding.youtubePlayerView.getPlayerUiController().setCustomAction2(customAction2Icon, view ->
+                Toast.makeText(getActivity(), "custom action1 clicked", Toast.LENGTH_SHORT).show());
+    }
+
+
+
+    private void removeCustomActionsFromPlayer() {
+        binding.youtubePlayerView.getPlayerUiController().showCustomAction1(false);
+        binding.youtubePlayerView.getPlayerUiController().showCustomAction2(false);
+    }
+
+
+    private void addFullScreenListenerToPlayer() {
+        binding.youtubePlayerView.addFullScreenListener(new YouTubePlayerFullScreenListener() {
+            @Override
+            public void onYouTubePlayerEnterFullScreen() {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                binding.youtubePlayerView.enterFullScreen();
+
+                addCustomActionsToPlayer();
+            }
+
+            @Override
+            public void onYouTubePlayerExitFullScreen() {
+               getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                binding.youtubePlayerView.exitFullScreen();
+                removeCustomActionsFromPlayer();
+            }
+        });
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     /**
@@ -307,7 +376,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                     }
 
                     if (all == true) {
-                        addVideoCategory("",currentPage);
+                        addVideoCategory("", currentPage);
                         MLog.d("here in all");
                     }
 //                    MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
@@ -529,7 +598,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
 
         MLog.d("youtube plater changing chekc" + mYoutubePlayer);
-        mYoutubePlayer.cueVideo(video,0f);
+        mYoutubePlayer.cueVideo(video, 0f);
 //        binding.youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
 //            @Override
 //            public void onReady(YouTubePlayer youTubePlayer) {
@@ -830,7 +899,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
      * 전체 보기 팝어버튼 선택시 유튜브 [전체보기] 불러오기
      */
     private void getVideoId(Integer pageNum) {
-        progressON();
         unCodeVideoConfig = new UnCodeVideoConfig();
         unCodeVideoConfig.unCodeVideoList(pageNum, new ResponseCallback<UnCodeVideoModel>() {
             @Override
@@ -855,7 +923,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 setYoutubeData();
 //                scrollChanger();
                 all = true;
-                progressOFF();
                 mRecyclerAdapter.notifyDataSetChanged();
 
 
@@ -865,25 +932,27 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
     }
 
+
     //
     private void initYouTubePlayerView(String secondVideo) {
-
 //        getLifecycle().addObserver(binding.youtubePlayerView);
 
         try {
-        binding.youtubePlayerView.initialize(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(YouTubePlayer youTubePlayer) {
-                super.onReady(youTubePlayer);
-                MLog.d("num 1");
-                MLog.d("youtube Player null check : " + youTubePlayer);
-                mYoutubePlayer = youTubePlayer;
-                MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
-                MLog.d("num 5");
-                youTubePlayer.cueVideo(secondVideo, 0f);
+            binding.youtubePlayerView.initialize(new AbstractYouTubePlayerListener() {
+                @Override
+                public void onReady(YouTubePlayer youTubePlayer) {
+                    super.onReady(youTubePlayer);
+                    MLog.d("num 1");
+                    MLog.d("youtube Player null check : " + youTubePlayer);
+                    mYoutubePlayer = youTubePlayer;
+                    MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
+                    MLog.d("num 5");
+                    addFullScreenListenerToPlayer();
+                    youTubePlayer.cueVideo(secondVideo, 0f);
 //                recyclerClickListener(mYoutubePlayer);
-            }
-        });
+
+                }
+            });
 
         } catch (Exception e) {
             Toast.makeText(getContext(), "네트워크 환경을 확인해주세요", Toast.LENGTH_LONG).show();
@@ -916,6 +985,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //        }
 
     }
+
 
     //
 //
@@ -967,5 +1037,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         //realm 저장
         saveVideo(title, imageUrl, playId);
     }
+
+
 //}
 }

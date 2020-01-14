@@ -78,6 +78,10 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
     }
 
 
+
+    public void callMaintoolBar() {
+        binding.toolbar.setVisibility(View.VISIBLE);
+    }
     /**
      * 최근본목록 툴바 모두 삭제 버튼 불러오기
      * @param isShowMenuButton true 불러오기

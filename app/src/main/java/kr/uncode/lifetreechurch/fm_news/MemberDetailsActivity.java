@@ -3,6 +3,7 @@ package kr.uncode.lifetreechurch.fm_news;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -19,6 +20,7 @@ import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.base.BaseActivity;
 import kr.uncode.lifetreechurch.base.BaseApplication;
 import kr.uncode.lifetreechurch.databinding.FmMemberdetailsBinding;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 /**
@@ -38,12 +40,22 @@ public class MemberDetailsActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.fm_memberdetails);
         MLog.d("hi member Activity");
 
-
-
+        backPlay();
         Intent intent = getIntent();
         imgUrl= intent.getExtras().getString(DETAILS_IMAGE_CODE);
         setImage();
     }
+
+    public void backPlay() {
+        binding.backKey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MLog.d("main back click");
+                finish();
+            }
+        });
+    }
+
 
     private void setImage() {
         if (imgUrl != null) {

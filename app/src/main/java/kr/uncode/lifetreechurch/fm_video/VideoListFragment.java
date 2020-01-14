@@ -502,7 +502,11 @@ public class VideoListFragment extends BaseFragment {
 
 
 //                이두개의 메세드의 순서가 바뀌면 에러가남
+                //클릭하면 동영상 바꾸기
+
                 changingVideo(playId, youTubePlayer);
+
+
                 //realm 저장
                 saveVideo(title, imageUrl, playId);
             }
@@ -536,26 +540,45 @@ public class VideoListFragment extends BaseFragment {
      */
     private void saveVideo(String title, String image, String videoId) {
         MLog.d("non save metheod");
-        List<String> temp = new ArrayList<>();
+
+
 
         final Realm realm = Realm.getDefaultInstance();
-        RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).findAll();
-//        if (realmResults.size() == 0) {
-//            saveRecentVideo(title, image, videoId); }
-        MLog.d("realmResult" + realmResults);
+
+        RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).equalTo("videoId",videoId).findAll();
+
 
 
         if (realmResults.size() != 0) {
+            MLog.d("realm result :" + realmResults);
+        } else {
+            MLog.d("realm result : no exsit" + realmResults);
             saveRecentVideo(title, image, videoId);
-            for (int e=0; e<realmResults.size(); e++) {
-                temp.add(realmResults.get(e).videoId);
-                MLog.d("realmResult videoId" + temp);
-            }
 
-            for (int i =0; i<temp.size(); i++) {
-                MLog.d("text  aaaaa" + videoId.equals(temp.get(i)));
-            }
         }
+
+
+
+//        List<String> temp = new ArrayList<>();
+//
+//        final Realm realm = Realm.getDefaultInstance();
+//        RealmResults<UserVideo> realmResults = realm.where(UserVideo.class).findAll();
+////        if (realmResults.size() == 0) {
+////            saveRecentVideo(title, image, videoId); }
+//        MLog.d("realmResult" + realmResults);
+//
+//
+//        if (realmResults.size() != 0) {
+//            saveRecentVideo(title, image, videoId);
+//            for (int e = 0; e < realmResults.size(); e++) {
+//                temp.add(realmResults.get(e).videoId);
+//                MLog.d("realmResult videoId" + temp);
+//            }
+//
+//            for (int i = 0; i < temp.size(); i++) {
+//                MLog.d("text  aaaaa" + videoId.equals(temp.get(i)));
+//            }
+//        }
 
     }
 

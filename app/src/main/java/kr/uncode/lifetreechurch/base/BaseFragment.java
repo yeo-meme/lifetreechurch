@@ -115,6 +115,14 @@ public class BaseFragment extends Fragment {
             parentActivity.recentVideoListGo(isShow);
         }
     }
+
+    public void toolbarController(boolean isShow) {
+        Activity activity = getActivity();
+        if (activity instanceof  MainActivity) {
+            MainActivity mainActivity = (MainActivity) activity;
+            mainActivity.callMaintoolBar(isShow);
+        }
+    }
 //    public void videoListTopMenuShowController(boolean isShowMenuButton) {
 //        Activity activity = getActivity();
 //        if (activity instanceof MainActivity) {
@@ -138,6 +146,8 @@ public class BaseFragment extends Fragment {
             parentActivity.backKeyShow(isShowMenuButton);
         }
     }
+
+
     public void progressON() {
         Activity activity = getActivity();
         if (activity instanceof BaseActivity) {

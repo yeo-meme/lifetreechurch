@@ -46,14 +46,16 @@ public class NoticeFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         noticeAdapter = new NoticeAdapter();
         getContent();
+        toolbarController(false);
 
-        binding.closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().getSupportFragmentManager().popBackStack();
 
-            }
-        });
+//        binding.closeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                getActivity().getSupportFragmentManager().popBackStack();
+//
+//            }
+//        });
         noticeAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onListItemClick(List aa, int position) {
@@ -81,6 +83,17 @@ public class NoticeFragment extends BaseFragment {
             }
         });
 
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.backKey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
 
     private void setAdapter() {

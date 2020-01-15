@@ -47,6 +47,8 @@ public class Weekly_Fm extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_weekly, container, false);
         ClickCheck();
+        toolbarController(true);
+        backKeyShowController(true);
         progressON("Loading...");
         return binding.getRoot();
     }

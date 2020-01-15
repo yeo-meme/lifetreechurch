@@ -73,17 +73,24 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
     }
 
 
+
+
     private void initPageLoad() {
         replaceFragment(new InitFragment(), false);
     }
 
 
-
-    public void callMaintoolBar() {
-        binding.toolbar.setVisibility(View.VISIBLE);
+    public void callMaintoolBar(boolean isShow) {
+        if (isShow) {
+            binding.toolbar.setVisibility(View.VISIBLE);
+        } else {
+            binding.toolbar.setVisibility(View.GONE);
+        }
     }
+
     /**
      * 최근본목록 툴바 모두 삭제 버튼 불러오기
+     *
      * @param isShowMenuButton true 불러오기
      */
     public void toolbarMenuButtonController(boolean isShowMenuButton) {
@@ -97,6 +104,7 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
     /**
      * 비디오리스트에서 상단에 최근본 목록 가기 위해 메뉴 버튼 생성
+     *
      * @param isShow true일때
      */
     public void recentVideoListGo(boolean isShow) {
@@ -109,6 +117,7 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
     /**
      * 메뉴안에 딜리티 키보여주기
+     *
      * @param v
      */
     public void showPopup(View v) {
@@ -121,7 +130,7 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
 
     public void showPopupVideoList(View v) {
-        PopupMenu popupMenu = new PopupMenu(getApplicationContext(),v);
+        PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.menu_videolist, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(this::onMenuItemClick);
@@ -138,6 +147,7 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
     /**
      * 백키 숨기기
+     *
      * @param isShow true 일때
      */
     public void backKeyHide(boolean isShow) {
@@ -148,6 +158,7 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
 
     /**
      * 백키 보여주기
+     *
      * @param isShow true 일때
      */
     public void backKeyShow(boolean isShow) {
@@ -155,6 +166,9 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
             binding.backKey.setVisibility(View.VISIBLE);
         }
     }
+
+
+
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()) {

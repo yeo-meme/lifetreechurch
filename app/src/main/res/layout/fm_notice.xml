@@ -44,10 +44,10 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:tint="@color/happy"
-                android:id="@+id/closeBtn"
-                app:srcCompat="@drawable/ic_close_black_24dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
+                android:id="@+id/back_key"
+                app:srcCompat="@drawable/backspace_black_24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
                 android:visibility="visible"
                 android:layout_centerVertical="true"/>
 

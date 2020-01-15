@@ -37,7 +37,17 @@ public class WeeklyImage1Fm extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_weekly1, container, false);
 //        binding = FragmentMainBinding.inflate(inflater, container, false);
+        backKeyHideController(true);
+//        closeController(true);
+        toolbarController(false);
+        binding.closeBtn.setVisibility(View.VISIBLE);
 
+        binding.closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
         return binding.getRoot();
     }
 

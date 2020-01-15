@@ -121,6 +121,8 @@
 
         <!--리사이클러뷰와 플로팅 버튼 ARea-->
         <RelativeLayout
+            android:id="@+id/all_background"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -134,10 +136,12 @@
                 android:id="@+id/allListButton"
                 layout="@layout/floatinglist"
                 android:layout_width="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_height="wrap_content" />
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp" />
 
 
         </RelativeLayout>

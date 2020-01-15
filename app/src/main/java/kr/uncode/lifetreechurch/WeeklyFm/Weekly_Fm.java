@@ -23,7 +23,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import kr.uncode.lifetreechurch.Config.UnCodeWeeklyConfig;
-import kr.uncode.lifetreechurch.Model.BlogWeekly;
+import kr.uncode.lifetreechurch.Model.Weekly;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
@@ -111,17 +111,16 @@ public class Weekly_Fm extends BaseFragment {
 
     private void getJinNu(View view) {
         jinuWeeklyConfig = new UnCodeWeeklyConfig();
-        jinuWeeklyConfig.jiNuList(new ResponseCallback<BlogWeekly>() {
+        jinuWeeklyConfig.jiNuList(new ResponseCallback<Weekly>() {
             @Override
-            public void response(BlogWeekly response) {
+            public void response(Weekly response) {
                 if (response != null) {
                     MLog.d("jinuAPI ok!!");
                     for (int i = 0; i < response.data.size(); i++) {
-                        BlogWeekly.Data blogWeekly = response.data.get(i);
-                        weekly1Url = blogWeekly.imgurl1;
-                        weekly2Url = blogWeekly.imgurl2;
+                        Weekly.Data blogWeekly = response.data.get(i);
+                        weekly1Url = blogWeekly.imgurls.get(i);
+                        weekly2Url = blogWeekly.imgurls.get(i+1);
                         MLog.d("data get ImageUrl : " + weekly1Url);
-                        MLog.d("data get ImageUrl : " + weekly2Url);
                     }
                     showWeekly(view);
 

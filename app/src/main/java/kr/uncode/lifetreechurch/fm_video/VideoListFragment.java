@@ -79,6 +79,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     private Integer totalItemCount = 10;
 
 
+
     private boolean moring_check = false;
     private boolean after_check = false;
     private boolean wed_check = false;
@@ -95,20 +96,20 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_morningvideolist, container, false);
 //        binding.categoryButton.setOnClickListener(this::viewShow);
+//
 
-        binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
+
+        binding.allListButton.allButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onFocusChange(View view, boolean b) {
 
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        MLog.d("touchchchchch");
-                        break;
+                if (b == false) {
+                    MLog.d("touchhhhh");
+                    closeSubMenusFab();
+
                 }
-                return true;
             }
         });
-
         //카테고리아이콘
         mRecyclerAdapter.setOnItemClickListener(this);
 
@@ -161,10 +162,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     /**
      * 플로팅버튼 이미지 입히기
@@ -174,7 +171,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            binding.allListButton.dawnIcon.setClipToOutline(true);
 //        }
-
         Glide.with(getContext())
                 .load(R.drawable.c)
                 .circleCrop()
@@ -226,9 +222,11 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         MLog.d("onCreated View youTubePlayer" + mYoutubePlayer);
 
 
+
+
+//        binding.allBackground.setOnTouchListener(mTouchEvent);
         //카테고리 선택할때 영상을 바꿔줌
         categoryChanger(view);
-
 
         fabEx();
         //팝업창 애니메이션
@@ -237,9 +235,24 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
         //스크롤 마지막에 닿았을때 데이터 새로 불러오기
         scrollChanger();
-        allList_get(view);
+
+        //처음 게시물 불러오는 함수덴 온크리에이트에서도 불리고 있었음
+//       allList_get(view);
     }
 
+
+//    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
+//        @Override
+//        public boolean onTouch(View view, MotionEvent motionEvent) {
+//
+//            int action = motionEvent.getActionMasked();
+//
+//            if (action == MotionEvent.ACTION_DOWN) {
+//             MLog.d("touchchchchch");
+//         }
+//            return true;
+//        }
+//    };
 
     private void setmYoutubePlayer() {
 
@@ -252,6 +265,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
      * false = fabExpanded  .. 오픈
      */
     private void fabEx() {
+
         binding.allListButton.allButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -302,7 +316,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
     /**
      * 카테고리별로 스크롤이 마지막이 됐을때 페이징 하기 위해 레트로핏 데이터 호출
-     *
+     *307
      * @param categoryId 카테고리별 네임
      * @param pageNum    초기값 0 +1씩 증가! 스크롤해서 > add로 넘어와을때
      */
@@ -315,12 +329,10 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 if (response != null) {
 //                    binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
                     MLog.d("allAll result :" + response.data);
-
                     mRecyclerAdapter.addItem(response.data);
                     MLog.d("unCodeModeList add :" + unCodeModelList);
-
+                    mRecyclerAdapter.notifyDataSetChanged();
                     binding.recyclerViewFeed.setAdapter(mRecyclerAdapter);
-
                     progressOFF();
                 }
             }
@@ -342,9 +354,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-
                 if (lastVisibleItemPosition >= totalItemCount - 1) {
 
                     if (moring_check == true) {
@@ -386,7 +396,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
                     totalItemCount += 10;
                     currentPage += 1;
-                    delayedRecyclerNotice(lastVisibleItemPosition);
+                    delayedRecyclerNotice(lastVisibleItemPosition+1);
 
                     MLog.d("lastVisible :" + lastVisibleItemPosition);
                 }
@@ -407,7 +417,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 binding.recyclerViewFeed.getLayoutManager().scrollToPosition(lastVisible);
                 MLog.d("handler Check :" + lastVisible);
             }
-        }, 500);
+        }, 0);
     }
 
     /**
@@ -415,9 +425,9 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
      *
      * @param view
      */
-    private void allList_get(View view) {
-        getVideoId(currentPage);
-    }
+//    private void allList_get(View view) {
+//        getVideoId(currentPage);
+//    }
 //
 
     /**
@@ -502,6 +512,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             @Override
             public void onClick(View view) {
                 MLog.d("call all list");
+                mRecyclerAdapter.clearItem();
                 moring_check = false;
                 after_check = false;
                 wed_check = false;
@@ -532,6 +543,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
          */
         getVideoId(currentPage);
 
+        all = true;
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
 //        recyclerClickListener(youTubePlayer);
@@ -862,8 +874,9 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //
 
     /**
-     * 카테고리별 유튜브 영상 긁어오기
+     * 카테고리를 변경하면 아이템을 만들기
      *
+     * 873
      * @param categoryId  = 카테고리 키워드
      * @param currentPage = 카테고리 페이지 Number
      */
@@ -874,10 +887,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             @Override
             public void response(UnCodeVideoModel response) {
                 MLog.d("youtube Model Ok");
-
-
                 if (response != null) {
-                    mRecyclerAdapter.clearItem();
+//                    mRecyclerAdapter.clearItem();
                     mRecyclerAdapter.setItems(response.data);
                     for (int a = 0; a > response.data.size(); a++) {
                         if (a == 0) {
@@ -922,7 +933,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 }
                 setYoutubeData();
 //                scrollChanger();
-                all = true;
+//                all = true;
                 mRecyclerAdapter.notifyDataSetChanged();
 
 
@@ -947,7 +958,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                     mYoutubePlayer = youTubePlayer;
                     MLog.d("youtube Player null check mmmmm : " + mYoutubePlayer);
                     MLog.d("num 5");
-                    addFullScreenListenerToPlayer();
+//                    addFullScreenListenerToPlayer();
                     youTubePlayer.cueVideo(secondVideo, 0f);
 //                recyclerClickListener(mYoutubePlayer);
 
@@ -995,11 +1006,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     private void setYoutubeData() {
         //패스
         binding.recyclerViewFeed.setHasFixedSize(true);
-
-
         //가로세로 설정 매니저
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-
         // Data View 처리
         binding.recyclerViewFeed.setLayoutManager(layoutManager);
 

@@ -92,6 +92,11 @@ public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder>
 //        notifyDataSetChanged();
 //    }
 
+
+    /**
+     * 스크롤을 내렸을때 데이터를 호출하려고 처음 데이터를 담는 그릇
+     * @param youtube
+     */
     public void addItem(List<UnCodeVideoModel.Data> youtube) {
 
         if (youtube != null) {

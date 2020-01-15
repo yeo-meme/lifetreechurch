@@ -95,11 +95,11 @@ public class UnCodeVideoConfig {
 //    }
 //
 //
-//    public void jiNuList(final ResponseCallback<BlogWeekly> callback) {
-//        final Call<BlogWeekly> task = apiService.getWeekly();
-//        task.enqueue(new Callback<BlogWeekly>() {
+//    public void jiNuList(final ResponseCallback<Weekly> callback) {
+//        final Call<Weekly> task = apiService.getWeekly();
+//        task.enqueue(new Callback<Weekly>() {
 //            @Override
-//            public void onResponse(Call<BlogWeekly> call, Response<BlogWeekly> response) {
+//            public void onResponse(Call<Weekly> call, Response<Weekly> response) {
 //
 //                if (response.isSuccessful()) {
 //                    MLog.d(response.body().toString());
@@ -108,7 +108,7 @@ public class UnCodeVideoConfig {
 //            }
 //
 //            @Override
-//            public void onFailure(Call<BlogWeekly> call, Throwable t) {
+//            public void onFailure(Call<Weekly> call, Throwable t) {
 //                callback.response(null);
 //            }
 //        });

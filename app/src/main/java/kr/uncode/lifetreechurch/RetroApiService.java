@@ -1,6 +1,6 @@
 package kr.uncode.lifetreechurch;
 
-import kr.uncode.lifetreechurch.Model.BlogWeekly;
+import kr.uncode.lifetreechurch.Model.Weekly;
 import kr.uncode.lifetreechurch.Model.HappyModel;
 import kr.uncode.lifetreechurch.Model.NewMemberModel;
 import kr.uncode.lifetreechurch.Model.NoticeModel;
@@ -25,7 +25,7 @@ public interface RetroApiService {
             "x-uncode-key:YokmmOcL68okD1dXFPew9trNgULYXlIwYTakIvZ7"
     })
     @GET("/ttlmc/weekly")
-    Call<BlogWeekly> getWeekly();
+    Call<Weekly> getWeekly();
 
 
     @Headers({

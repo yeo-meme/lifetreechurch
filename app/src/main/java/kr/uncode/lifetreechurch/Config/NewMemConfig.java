@@ -1,6 +1,5 @@
 package kr.uncode.lifetreechurch.Config;
 
-import kr.uncode.lifetreechurch.Model.BlogWeekly;
 import kr.uncode.lifetreechurch.Model.NewMemberModel;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.RetroApiService;

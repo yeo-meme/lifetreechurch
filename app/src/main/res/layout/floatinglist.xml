@@ -11,6 +11,8 @@
 
         <!-- 플로팅버튼 리니어시작-->
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
@@ -19,6 +21,8 @@
             android:orientation="vertical">
             <!--첫번째 플로팅 버튼-->
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/morning"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -57,6 +61,8 @@
             </LinearLayout>
             <!--두번째 플로팅 버튼-->
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/after"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -95,6 +101,8 @@
             </LinearLayout>
             <!--세번째 플로팅 버튼-->
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/dawn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -134,6 +142,8 @@
             </LinearLayout>
             <!--네번째 플로팅 버튼-->
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/wed"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -213,6 +223,8 @@
 
             <!-- 플로팅버튼 카테고리 버튼 시작-->
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:id="@+id/all_button_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -244,6 +256,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/all_button"
+                    android:focusable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="visible"

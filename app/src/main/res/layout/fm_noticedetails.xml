@@ -10,7 +10,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical">
-        
+
 
         <ImageView
             android:layout_width="60dp"

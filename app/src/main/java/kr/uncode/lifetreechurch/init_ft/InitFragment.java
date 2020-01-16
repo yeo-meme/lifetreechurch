@@ -2,11 +2,15 @@ package kr.uncode.lifetreechurch.init_ft;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +26,13 @@ import kr.uncode.lifetreechurch.fm_news.NewMiddleFragment;
 import kr.uncode.lifetreechurch.fm_video.VideoFragment;
 import kr.uncode.lifetreechurch.IntroduceBottomActivity.IntroduceChActivity;
 import kr.uncode.lifetreechurch.fm_video.VideoListFragment;
+import kr.uncode.lifetreechurch.utils.MLog;
+import kr.uncode.lifetreechurch.utils.Utils;
 
 public class InitFragment extends BaseFragment {
     private ProgressDialog progressDialog;
 
+    private Context context;
     FmMainBinding binding;
 
     @Nullable
@@ -33,16 +40,38 @@ public class InitFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_main, container, false);
 //        binding = FragmentMainBinding.inflate(inflater, container, false);
+        context = getContext();
         backKeyHideController(true);
         recentMenuShowController(false);
         toolbarMenuButtonController(false);
 
+//
+//        if (Utils.isNetworkConnected(context)) {}
+//        else {
+//            Toast.makeText(context,"네트워크 환경을 확인해주세요~",Toast.LENGTH_LONG).show();
+//        }
         return binding.getRoot();
     }
+
+
+//    public static void isNetworkConnected(Context context) {
+//
+//        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+//        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+//        if (isConnected) {
+//            MLog.d("network"+isConnected);
+//        } else {
+//            MLog.d("network"+isConnected);
+//            Toast.makeText(context,"네트워크가 꺼져 있습니다~ 네트워크 환경이 필요합니다~",Toast.LENGTH_LONG).show();
+//
+//        }
+//    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         menuListener();
     }
 
@@ -62,6 +91,7 @@ public class InitFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), IntroduceChActivity.class);
         startActivity(intent);
     }
+
     private void introduce(View view) {
         Intent intent = new Intent(getActivity(), IntroduceActivity.class);
         startActivity(intent);
@@ -70,16 +100,30 @@ public class InitFragment extends BaseFragment {
 
 
     private void happyClick(View view) {
-        progressON("Loading...");
 
-        replaceFragment(new HappyColumnFragment(),true);
+        if (Utils.isNetworkConnected(context)) {
+            progressON("Loading...");
+            replaceFragment(new HappyColumnFragment(), true);
+
+        } else {
+            Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
     private void news(View view) {
-        replaceFragment(new NewMiddleFragment(),true);
+
+        if (Utils.isNetworkConnected(context)) {
+            replaceFragment(new NewMiddleFragment(), true);
+
+        } else {
+            Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
+        }
+
 
     }
+
     private void alert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Coming Soon");
@@ -91,15 +135,26 @@ public class InitFragment extends BaseFragment {
     private void videoClick(View view) {
 //        alert();
 
+
+        if (Utils.isNetworkConnected(context)) {
+            replaceFragment(new VideoListFragment(), true);
+        } else {
+            Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
+        }
+
 //        String player_state = "주일오전";
-        replaceFragment(new VideoListFragment(),true);
 //        replaceFragment(new VideoFragment(),true);
     }
 
     private void weeklyClick(View view) {
 //        alert();
 
-        replaceFragment(new Weekly_Fm(), true);
+        if (Utils.isNetworkConnected(context)) {
+            replaceFragment(new Weekly_Fm(), true);
+
+        } else {
+            Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
+        }
 //        loading(view);
 //        binding.progress.setVisibility(View.VISIBLE);
     }

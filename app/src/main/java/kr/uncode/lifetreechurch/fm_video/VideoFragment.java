@@ -1,6 +1,10 @@
 package kr.uncode.lifetreechurch.fm_video;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +27,7 @@ import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmYoutubeBinding;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.video_bottom_menu.MyVideoStorage;
 
@@ -33,6 +38,7 @@ public class VideoFragment extends BaseFragment {
     FmYoutubeBinding binding;
 
 
+    private Context context;
     private static final String MORNING = "MORNING";
     private static final String AFTERNOON = "AFTERNOON";
     private static final String WEDNESDAY = "WEDNESDAY";
@@ -106,6 +112,8 @@ public class VideoFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_youtube, container, false);
+        context = getContext();
+
         return binding.getRoot();
     }
 
@@ -183,6 +191,10 @@ public class VideoFragment extends BaseFragment {
 //        replaceFragment(new VideoListFragment(), true);
         replaceFragmentYoutube(new VideoListFragment(), true,MORNING);
     }
+
+
+
+
 
     @Override
     public void onDestroy() {

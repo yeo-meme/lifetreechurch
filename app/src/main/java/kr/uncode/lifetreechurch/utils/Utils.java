@@ -2,8 +2,13 @@ package kr.uncode.lifetreechurch.utils;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,5 +37,24 @@ public class Utils {
             if (hide) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             else imm.showSoftInput(view, 0);
         }
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+    }
+
+    private static void notNetworked() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                notConnected();
+
+            }
+        },1000);
     }
 }

@@ -64,6 +64,11 @@ public class MainActivity extends BaseActivity implements PopupMenu.OnMenuItemCl
         });
     }
 
+    public void notConnected() {
+        getSupportFragmentManager().popBackStack();
+
+    }
+
     public void replaceFragment(Fragment fragment, boolean addToBackStack) {
         replaceFragment(R.id.main_container, fragment, addToBackStack);
     }

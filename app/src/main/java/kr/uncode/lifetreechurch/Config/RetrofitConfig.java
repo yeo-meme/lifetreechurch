@@ -21,8 +21,12 @@ public class RetrofitConfig {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor).build();
+                .addInterceptor(interceptor)
+                .build();
 
+
+//        okHttpClient.setReadTimeout(1, TimeUnit.MINUTES);
+//        okHttpClient.setConnectTimeout(1, TimeUnit.MINUTES);
         retrofit = new Retrofit.Builder()
                 .baseUrl(SERVER_URL)
                 .addConverterFactory(GsonConverterFactory.create())

@@ -1,7 +1,10 @@
 package kr.uncode.lifetreechurch.fm_video;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -39,7 +42,9 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
+import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
+import kr.uncode.lifetreechurch.utils.Utils;
 
 
 public class VideoListFragment extends BaseFragment implements OnItemClickListener<UnCodeVideoModel.Data> {
@@ -86,6 +91,10 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     private boolean dwan_check = false;
 
     private boolean all = false;
+
+
+    private Context context;
+
 
     @Nullable
     @Override
@@ -160,6 +169,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             }
         });
     }
+
+
 
 
 
@@ -543,7 +554,15 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
          */
         getVideoId(currentPage);
 
+
+        context = getContext();
         all = true;
+
+        if (Utils.isNetworkConnected(context)) {}
+        else {
+            Toast.makeText(context,"네트워크 연결이 안되어 있어 실행되지 않습니다~",Toast.LENGTH_LONG).show();
+            notConnected();
+        }
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
 //        recyclerClickListener(youTubePlayer);

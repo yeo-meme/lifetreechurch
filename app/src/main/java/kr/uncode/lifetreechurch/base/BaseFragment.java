@@ -3,15 +3,20 @@ package kr.uncode.lifetreechurch.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.animation.Animation;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
+import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.utils.MPref;
 
 /**
@@ -50,6 +55,16 @@ public class BaseFragment extends Fragment {
             prarentActivity.setTollbarTitle(title);
         }
     }
+
+
+    public void notConnected() {
+        Activity activity = getActivity();
+        if (activity instanceof MainActivity) {
+            MainActivity parentActivity = (MainActivity) activity;
+            parentActivity.notConnected();
+        }
+    }
+
 
 
     /**

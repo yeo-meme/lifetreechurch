@@ -2,9 +2,12 @@ package kr.uncode.lifetreechurch.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +44,7 @@ public class BaseApplication extends Application {
     public void progressON(Activity activity, String message) {
 
         if (activity == null || activity.isFinishing()) {
-            return;
+            return ;
         }
 
 
@@ -70,6 +73,7 @@ public class BaseApplication extends Application {
         if (!TextUtils.isEmpty(message)) {
             tv_progress_message.setText(message);
         }
+
 
     }
 

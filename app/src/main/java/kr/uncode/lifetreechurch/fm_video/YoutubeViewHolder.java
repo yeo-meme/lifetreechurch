@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 
@@ -27,6 +28,7 @@ public class YoutubeViewHolder extends BaseViewHolder {
 
     private YoutubeRecyclerAdapter youtubeRecyclerAdapter;
 
+    private LinearLayoutManager manager;
 
 
 
@@ -72,6 +74,9 @@ public class YoutubeViewHolder extends BaseViewHolder {
     public void onBind(int position) {
         super.onBind(position);
 //        final UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) VIDEO_LIST.get(position);
+
+
+
 
 //        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
         b.getRoot().setOnClickListener(new View.OnClickListener() {

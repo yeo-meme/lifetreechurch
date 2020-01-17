@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +20,7 @@ import kr.uncode.lifetreechurch.databinding.ItemYoutubeListBinding;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class YoutubeRecyclerAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+
 
     ItemYoutubeListBinding binding;
 //    private List<UnCodeVideoModel.Data> UtubeBasket;

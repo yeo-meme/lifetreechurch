@@ -369,7 +369,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 if (lastVisibleItemPosition >= totalItemCount - 1) {
 
                     if (moring_check == true) {
-                        MLog.d("오전in");
+                        MLog.d("scroll : 오전in");
                         String morning = "오전";
                         addVideoCategory(morning, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
@@ -377,6 +377,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                     }
                     if (after_check == true) {
                         String after = "오후";
+                        MLog.d("scroll : 오후");
                         addVideoCategory(after, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
@@ -384,6 +385,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
                     if (wed_check == true) {
                         String wed = "수요";
+                        MLog.d("scroll : 수요일");
                         addVideoCategory(wed, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
@@ -391,12 +393,14 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
                     if (dwan_check == true) {
                         String dawn = "새벽";
+                        MLog.d("scroll : 새벽");
                         addVideoCategory(dawn, currentPage);
                         MLog.d("마지막 totalItemCount: " + totalItemCount);
                         MLog.d("마지막 lastVisiblNUm : " + lastVisibleItemPosition);
                     }
 
                     if (all == true) {
+                        MLog.d("scroll : 전체");
                         addVideoCategory("", currentPage);
                         MLog.d("here in all");
                     }
@@ -425,10 +429,10 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                binding.recyclerViewFeed.getLayoutManager().scrollToPosition(lastVisible);
+               binding.recyclerViewFeed.getLayoutManager().scrollToPosition(lastVisible);
                 MLog.d("handler Check :" + lastVisible);
             }
-        }, 0);
+        }, 300);
     }
 
     /**

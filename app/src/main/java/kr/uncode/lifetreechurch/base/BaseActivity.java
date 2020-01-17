@@ -12,12 +12,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import kr.uncode.lifetreechurch.Dialog.DialogProgress;
 import kr.uncode.lifetreechurch.fm_news.NewMemberFragment;
 import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 
 public class BaseActivity extends AppCompatActivity {
     private FragmentManager fm;
+
+    private DialogProgress dialogProgress;
 
     private OnBackPressedListener mBackListener;
 
@@ -27,6 +30,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialogProgress = new DialogProgress(this);
         fm = getSupportFragmentManager();
     }
 
@@ -72,14 +76,20 @@ public class BaseActivity extends AppCompatActivity {
         public void onBack();
     }
 
-    public void progressON(String message) {
+    public DialogProgress getDialogProgress() {
+        return dialogProgress;
+    }
 
+    public void showProgress() {
+        if (dialogProgress != null && !dialogProgress.isShowing()) dialogProgress.show();
+    }
+
+    public void dismissProgress() {DialogProgress.dismiss(dialogProgress);}
+    public void progressON(String message) {
         Activity activity = this;
         if (activity instanceof BaseActivity) {
             BaseApplication.getInstance().progressON(activity,message);
         }
-
-
     }
 
     public void progressOFF() {

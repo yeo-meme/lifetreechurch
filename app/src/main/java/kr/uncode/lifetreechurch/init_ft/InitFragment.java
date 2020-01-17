@@ -45,11 +45,7 @@ public class InitFragment extends BaseFragment {
         recentMenuShowController(false);
         toolbarMenuButtonController(false);
 
-//
-//        if (Utils.isNetworkConnected(context)) {}
-//        else {
-//            Toast.makeText(context,"네트워크 환경을 확인해주세요~",Toast.LENGTH_LONG).show();
-//        }
+
         return binding.getRoot();
     }
 
@@ -103,9 +99,13 @@ public class InitFragment extends BaseFragment {
 
         if (Utils.isNetworkConnected(context)) {
             progressON("Loading...");
+            MLog.d("넷워크 true happy");
+
             replaceFragment(new HappyColumnFragment(), true);
 
         } else {
+            MLog.d("넷워크 false happy");
+
             Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
         }
 
@@ -116,8 +116,11 @@ public class InitFragment extends BaseFragment {
 
         if (Utils.isNetworkConnected(context)) {
             replaceFragment(new NewMiddleFragment(), true);
+            MLog.d("넷워크 true news");
 
         } else {
+            MLog.d("넷워크 false news");
+
             Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
         }
 
@@ -138,7 +141,10 @@ public class InitFragment extends BaseFragment {
 
         if (Utils.isNetworkConnected(context)) {
             replaceFragment(new VideoListFragment(), true);
+            MLog.d("넷워크 true video");
+
         } else {
+            MLog.d("넷워크 false video");
             Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
         }
 
@@ -151,8 +157,11 @@ public class InitFragment extends BaseFragment {
 
         if (Utils.isNetworkConnected(context)) {
             replaceFragment(new Weekly_Fm(), true);
+            MLog.d("넷워크 true weekly");
 
         } else {
+            MLog.d("넷워크 false weekly");
+
             Toast.makeText(context, "네트워크 환경을 확인해주세요~", Toast.LENGTH_LONG).show();
         }
 //        loading(view);

@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import java.util.concurrent.TimeUnit;
 
+import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.databinding.DialogProgressBinding;
 
 
@@ -45,7 +46,6 @@ public class DialogProgress extends Dialog {
 
         handler = new Handler();
         binding.ivLoading.setImageDrawable(animationDrawable);
-
 
     }
 

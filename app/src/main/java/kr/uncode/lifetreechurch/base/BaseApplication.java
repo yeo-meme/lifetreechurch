@@ -2,26 +2,33 @@ package kr.uncode.lifetreechurch.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialog;
 
+import java.util.concurrent.TimeUnit;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import kr.uncode.lifetreechurch.Dialog.DialogProgress;
 import kr.uncode.lifetreechurch.R;
 
 public class BaseApplication extends Application {
     private static BaseApplication instance;
     AppCompatDialog progressDialog;
 
+    private Handler handler;
     public static BaseApplication getInstance() {
         return instance;
     }
@@ -30,8 +37,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-
         Realm.init(this);
 
         RealmConfiguration config = new RealmConfiguration.Builder()
@@ -39,6 +44,10 @@ public class BaseApplication extends Application {
                 .build();
 
         Realm.setDefaultConfiguration(config);
+
+
+        handler = new Handler();
+
     }
 
     public void progressON(Activity activity, String message) {
@@ -57,6 +66,9 @@ public class BaseApplication extends Application {
             progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             progressDialog.setContentView(R.layout.progress_loading);
             progressDialog.show();
+
+            handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(10));
+
         }
 
 

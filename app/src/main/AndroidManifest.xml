@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".lt_main.MainActivity">
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +30,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name=".fm_happy.HappyWebActivity"/>
 
+        <activity android:name=".lt_main.MainActivity"/>
     </application>
 
 </manifest>

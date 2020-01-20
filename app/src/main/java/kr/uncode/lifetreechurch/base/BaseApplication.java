@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDialog;
 
@@ -23,6 +24,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import kr.uncode.lifetreechurch.Dialog.DialogProgress;
 import kr.uncode.lifetreechurch.R;
+import kr.uncode.lifetreechurch.utils.MLog;
 
 public class BaseApplication extends Application {
     private static BaseApplication instance;
@@ -67,7 +69,13 @@ public class BaseApplication extends Application {
             progressDialog.setContentView(R.layout.progress_loading);
             progressDialog.show();
 
-            handler.postDelayed(runnable, TimeUnit.SECONDS.toMillis(10));
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    MLog.d("loading delayed..");
+                    progressOFF();
+                }
+            }, TimeUnit.SECONDS.toMillis(10));
 
         }
 

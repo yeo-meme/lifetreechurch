@@ -84,7 +84,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     private Integer totalItemCount = 10;
 
 
-
     private boolean moring_check = false;
     private boolean after_check = false;
     private boolean wed_check = false;
@@ -130,6 +129,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         recentMenuShowController(true);
         return binding.getRoot();
     }
+
     private void addCustomActionsToPlayer() {
         Drawable customAction1Icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_insert_emoticon_black_24dp);
         Drawable customAction2Icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_insert_emoticon_black_24dp);
@@ -142,7 +142,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         binding.youtubePlayerView.getPlayerUiController().setCustomAction2(customAction2Icon, view ->
                 Toast.makeText(getActivity(), "custom action1 clicked", Toast.LENGTH_SHORT).show());
     }
-
 
 
     private void removeCustomActionsFromPlayer() {
@@ -163,15 +162,12 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
             @Override
             public void onYouTubePlayerExitFullScreen() {
-               getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 binding.youtubePlayerView.exitFullScreen();
                 removeCustomActionsFromPlayer();
             }
         });
     }
-
-
-
 
 
     /**
@@ -233,11 +229,9 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         MLog.d("onCreated View youTubePlayer" + mYoutubePlayer);
 
 
-
-
 //        binding.allBackground.setOnTouchListener(mTouchEvent);
         //카테고리 선택할때 영상을 바꿔줌
-        categoryChanger(view);
+        categoryChanger();
 
         fabEx();
         //팝업창 애니메이션
@@ -264,6 +258,15 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //            return true;
 //        }
 //    };
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getVideoId(currentPage);
+        scrollChanger();
+
+    }
 
     private void setmYoutubePlayer() {
 
@@ -327,7 +330,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
     /**
      * 카테고리별로 스크롤이 마지막이 됐을때 페이징 하기 위해 레트로핏 데이터 호출
-     *307
+     * 307
+     *
      * @param categoryId 카테고리별 네임
      * @param pageNum    초기값 0 +1씩 증가! 스크롤해서 > add로 넘어와을때
      */
@@ -411,7 +415,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
                     totalItemCount += 10;
                     currentPage += 1;
-                    delayedRecyclerNotice(lastVisibleItemPosition+1);
+                    delayedRecyclerNotice(lastVisibleItemPosition + 1);
 
                     MLog.d("lastVisible :" + lastVisibleItemPosition);
                 }
@@ -429,7 +433,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-               binding.recyclerViewFeed.getLayoutManager().scrollToPosition(lastVisible);
+                binding.recyclerViewFeed.getLayoutManager().scrollToPosition(lastVisible);
                 MLog.d("handler Check :" + lastVisible);
             }
         }, 300);
@@ -447,10 +451,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
     /**
      * 카테고리 별 메뉴 클릭시 화면 체인져
-     *
-     * @param view
      */
-    private void categoryChanger(View view) {
+    private void categoryChanger() {
         binding.allListButton.morning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -562,9 +564,9 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         context = getContext();
         all = true;
 
-        if (Utils.isNetworkConnected(context)) {}
-        else {
-            Toast.makeText(context,"네트워크 연결이 안되어 있어 실행되지 않습니다~",Toast.LENGTH_LONG).show();
+        if (Utils.isNetworkConnected(context)) {
+        } else {
+            Toast.makeText(context, "네트워크 연결이 안되어 있어 실행되지 않습니다~", Toast.LENGTH_LONG).show();
             notConnected();
         }
 
@@ -898,8 +900,9 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
     /**
      * 카테고리를 변경하면 아이템을 만들기
-     *
+     * <p>
      * 873
+     *
      * @param categoryId  = 카테고리 키워드
      * @param currentPage = 카테고리 페이지 Number
      */
@@ -989,7 +992,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             });
 
         } catch (Exception e) {
-            Toast.makeText(getContext(), "네트워크 환경을 확인해주세요", Toast.LENGTH_LONG).show();
 
         }
 

@@ -1,5 +1,6 @@
 package kr.uncode.lifetreechurch.fm_video;
 
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -7,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +33,10 @@ public class YoutubeViewHolder extends BaseViewHolder {
     private LinearLayoutManager manager;
 
 
-
-
     public void setOnItemClickListener(OnItemClickListener<UnCodeVideoModel.Data> listener) {
         this.mListener = listener;
     }
+
     public YoutubeViewHolder(@NonNull ItemYoutubeListBinding itemView, List<UnCodeVideoModel.Data> data) {
         super(itemView);
         b = itemView;
@@ -65,8 +66,6 @@ public class YoutubeViewHolder extends BaseViewHolder {
 //    }
 
 
-
-
     @Override
     protected void clear() {
     }
@@ -76,18 +75,37 @@ public class YoutubeViewHolder extends BaseViewHolder {
 //        final UnCodeVideoModel.Data items = (UnCodeVideoModel.Data) VIDEO_LIST.get(position);
 
 
-
-
-//        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
         b.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mListener != null) {
-                    MLog.d("holder Listenr");
-                    mListener.onListItemClick(utubeBasket,getAdapterPosition());
-                }
+                Snackbar.make(view,"로딩중입니다",Snackbar.LENGTH_LONG).show();
             }
         });
+//        UnCodeVideoModel.Data items =  (UnCodeVideoModel.Data)VIDEO_LIST.get(position);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                b.getRoot().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mListener != null) {
+                            MLog.d("holder Listenr");
+                            mListener.onListItemClick(utubeBasket, getAdapterPosition());
+                        }
+                    }
+                });
+
+            }
+        }, 3000);
+//        b.getRoot().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mListener != null) {
+//                    MLog.d("holder Listenr");
+//                    mListener.onListItemClick(utubeBasket,getAdapterPosition());
+//                }
+//            }
+//        });
 
         if (utubeBasket != null) {
             String title = utubeBasket.get(position).title;

@@ -24,7 +24,6 @@ public class NewMiddleFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         MLog.d("middle in");
         backKeyShowController(true);
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fm_newsmiddle,container,false);
         return binding.getRoot();
     }
@@ -41,7 +40,7 @@ public class NewMiddleFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        toolbarController(true);
 
 
     }

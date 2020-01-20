@@ -3,8 +3,6 @@ package kr.uncode.lifetreechurch.fm_video;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -42,7 +40,6 @@ import kr.uncode.lifetreechurch.ResponseCallback;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.base.OnItemClickListener;
 import kr.uncode.lifetreechurch.databinding.FmMorningvideolistBinding;
-import kr.uncode.lifetreechurch.lt_main.MainActivity;
 import kr.uncode.lifetreechurch.utils.MLog;
 import kr.uncode.lifetreechurch.utils.Utils;
 
@@ -107,17 +104,17 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //
 
 
-        binding.allListButton.allButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-
-                if (b == false) {
-                    MLog.d("touchhhhh");
-                    closeSubMenusFab();
-
-                }
-            }
-        });
+//        binding.allListButton.allButton.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//
+//                if (b == false) {
+//                    MLog.d("touchhhhh");
+//                    closeSubMenusFab();
+//
+//                }
+//            }
+//        });
         //카테고리아이콘
         mRecyclerAdapter.setOnItemClickListener(this);
 
@@ -127,8 +124,22 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         toolbarMenuButtonController(false);
         backKeyShowController(true);
         recentMenuShowController(true);
+
+//        touchListener(binding.getRoot());
         return binding.getRoot();
     }
+
+//    private void touchListener(View view) {
+//        view.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//               if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN) {
+//                   MLog.d("onTouch");
+//               }
+//                return true;
+//            }
+//        });
+//    }
 
     private void addCustomActionsToPlayer() {
         Drawable customAction1Icon = ContextCompat.getDrawable(getActivity(), R.drawable.ic_insert_emoticon_black_24dp);
@@ -246,18 +257,18 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     }
 
 
-//    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
-//        @Override
-//        public boolean onTouch(View view, MotionEvent motionEvent) {
-//
-//            int action = motionEvent.getActionMasked();
-//
-//            if (action == MotionEvent.ACTION_DOWN) {
-//             MLog.d("touchchchchch");
-//         }
-//            return true;
-//        }
-//    };
+    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+
+            int action = motionEvent.getActionMasked();
+
+            if (action == MotionEvent.ACTION_OUTSIDE) {
+                MLog.d("touchchchchch");
+            }
+            return true;
+        }
+    };
 
 
     @Override
@@ -453,9 +464,12 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
      * 카테고리 별 메뉴 클릭시 화면 체인져
      */
     private void categoryChanger() {
+        //주일오전
         binding.allListButton.morning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressON();
+
                 String categoryId = "오전";
                 mRecyclerAdapter.clearItem();
                 currentPage = 0;
@@ -469,11 +483,16 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 getVideoCategroyId(categoryId, currentPage);
 
                 closeSubMenusFab();
+                progressOFF();
             }
         });
+
+        //주일오후
         binding.allListButton.after.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressON();
+
                 String categoryId = "오후";
                 mRecyclerAdapter.clearItem();
                 moring_check = false;
@@ -487,12 +506,17 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
 
+                progressOFF();
 
             }
         });
+
+        //새벽예배
         binding.allListButton.dawn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressON();
+
                 String categoryId = "새벽";
                 mRecyclerAdapter.clearItem();
                 moring_check = false;
@@ -505,12 +529,16 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
+                progressOFF();
 
             }
         });
+
+        //수요예배
         binding.allListButton.wed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressON();
                 String categoryId = "수요";
                 mRecyclerAdapter.clearItem();
                 moring_check = false;
@@ -522,12 +550,17 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
+                progressOFF();
 
             }
         });
+
+        //전체보기
         binding.allListButton.callAllListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressON();
+
                 MLog.d("call all list");
                 mRecyclerAdapter.clearItem();
                 moring_check = false;
@@ -536,8 +569,9 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 dwan_check = false;
                 all = true;
 //                allList_get(view);
-                getVideoId(currentPage);
+                getVideoCategroyId("", currentPage);
                 closeSubMenusFab();
+                progressOFF();
 
             }
         });
@@ -546,7 +580,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         // 카테고리 오픈 클로즈 애니메이션 적용
         fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
@@ -569,6 +602,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
             Toast.makeText(context, "네트워크 연결이 안되어 있어 실행되지 않습니다~", Toast.LENGTH_LONG).show();
             notConnected();
         }
+
 
         //어댑터에서 온클릭리스너의 상황을 듣고 있는 리스너
 //        recyclerClickListener(youTubePlayer);
@@ -605,6 +639,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //            @Override
 //            public void onListItemClick(List<UnCodeVideoModel.Data> aa, int position) {
 //
+
+
 //
 //                MLog.d("click in");
 //                //REALM으로 최근 본 영상기록을 저장하기 위해 클릭이 일어난 데이터를 Realm에 저장
@@ -1066,7 +1102,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 
         changingVideo(playId);
 
-
+        closeSubMenusFab();
         //realm 저장
         saveVideo(title, imageUrl, playId);
     }

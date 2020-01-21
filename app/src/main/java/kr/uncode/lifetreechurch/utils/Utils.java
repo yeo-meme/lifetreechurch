@@ -44,10 +44,11 @@ public class Utils {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (cm == null) return false;
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isWifi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
-        MLog.d("wifi" + isWifi);
-        MLog.d("wifi network" + activeNetwork.isConnectedOrConnecting());
-        return isWifi && activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+//        boolean isWifi = activeNetwork.getType() == ConnectivityManager;
+//        MLog.d("wifi" + isWifi);
+//        MLog.d("wifi network" + activeNetwork.isConnectedOrConnecting());
+        if (activeNetwork == null) return false;
+        return  activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
     }
 

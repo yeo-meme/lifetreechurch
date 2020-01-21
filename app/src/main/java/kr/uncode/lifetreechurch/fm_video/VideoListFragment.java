@@ -274,6 +274,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
     @Override
     public void onResume() {
         super.onResume();
+        progressON("Loading...");
         getVideoId(currentPage);
         scrollChanger();
 
@@ -468,7 +469,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         binding.allListButton.morning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressON();
+                progressON("Loading...");
 
                 String categoryId = "오전";
                 mRecyclerAdapter.clearItem();
@@ -483,7 +484,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 getVideoCategroyId(categoryId, currentPage);
 
                 closeSubMenusFab();
-                progressOFF();
             }
         });
 
@@ -491,7 +491,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         binding.allListButton.after.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressON();
+                progressON("Loading...");
+
 
                 String categoryId = "오후";
                 mRecyclerAdapter.clearItem();
@@ -506,7 +507,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
 
-                progressOFF();
 
             }
         });
@@ -515,7 +515,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         binding.allListButton.dawn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressON();
+                progressON("Loading...");
+
 
                 String categoryId = "새벽";
                 mRecyclerAdapter.clearItem();
@@ -529,7 +530,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
-                progressOFF();
 
             }
         });
@@ -538,7 +538,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         binding.allListButton.wed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressON();
+                progressON("Loading...");
+
                 String categoryId = "수요";
                 mRecyclerAdapter.clearItem();
                 moring_check = false;
@@ -550,7 +551,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                 totalItemCount = 10;
                 getVideoCategroyId(categoryId, currentPage);
                 closeSubMenusFab();
-                progressOFF();
 
             }
         });
@@ -559,7 +559,8 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
         binding.allListButton.callAllListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressON();
+                progressON("Loading...");
+
 
                 MLog.d("call all list");
                 mRecyclerAdapter.clearItem();
@@ -571,7 +572,6 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
 //                allList_get(view);
                 getVideoCategroyId("", currentPage);
                 closeSubMenusFab();
-                progressOFF();
 
             }
         });
@@ -1024,6 +1024,7 @@ public class VideoListFragment extends BaseFragment implements OnItemClickListen
                     youTubePlayer.cueVideo(secondVideo, 0f);
 //                recyclerClickListener(mYoutubePlayer);
 
+                    progressOFF();
                 }
             });
 

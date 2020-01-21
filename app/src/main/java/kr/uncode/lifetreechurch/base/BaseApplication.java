@@ -74,6 +74,7 @@ public class BaseApplication extends Application {
                 public void run() {
                     MLog.d("loading delayed..");
                     progressOFF();
+//                    Toast.makeText(getApplicationContext(),"네트워크 환경을 확인하시고 재시도 해주세요~",Toast.LENGTH_LONG).show();
                 }
             }, TimeUnit.SECONDS.toMillis(10));
 

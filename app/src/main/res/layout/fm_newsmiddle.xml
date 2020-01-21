@@ -20,6 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="새가족 소식"
+            android:textColor="@color/white"
             android:fontFamily="@font/scdream2"
             android:textSize="50sp"
             android:id="@+id/newMemBtn"/>
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="교우 소식"
+            android:textColor="@color/white"
             android:fontFamily="@font/scdream2"
             android:textSize="50sp"
             android:id="@+id/newsBtn"/>

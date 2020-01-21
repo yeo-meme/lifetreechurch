@@ -2,6 +2,7 @@ package kr.uncode.lifetreechurch.fm_notice;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -34,10 +35,18 @@ public class NoticeDetailsActivity extends BaseActivity {
         MLog.d("hello notice details activity");
 
 
+
         Intent intent = getIntent();
         String content = intent.getExtras().getString(NOTICE_DETAILS_CODE);
         String date = intent.getExtras().getString(NOTICE_DETAILS_DATE);
         binding.noticeContent.setText(content);
         binding.noticeDate.setText(date);
+        binding.closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
+
 }

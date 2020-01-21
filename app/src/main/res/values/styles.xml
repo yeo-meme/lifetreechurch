@@ -11,4 +11,11 @@
         <!-- ripple effect color-->
     </style>
 
+
+
+    <style name="BasicCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/ultramarin_blue</item>
+        <item name="colorAccent">@color/ultramarin_blue</item>
+    </style>
 </resources>

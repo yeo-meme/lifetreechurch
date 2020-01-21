@@ -72,12 +72,11 @@ dependencies {
 
 
     //meterial
-
-
-
     implementation 'com.google.android.material:material:1.1.0-alpha09'
     implementation  'jp.wasabeef:glide-transformations:1.0.6@aar'
 
+    // Jsoup
+    implementation 'org.jsoup:jsoup:1.11.3'
 
 
 }

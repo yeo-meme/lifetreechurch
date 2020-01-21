@@ -2,6 +2,7 @@ package kr.uncode.lifetreechurch.utils;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -50,6 +51,13 @@ public class Utils {
         if (activeNetwork == null) return false;
         return  activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
+    }
+
+
+    public static void displayDialog(Dialog dialog, Activity activity) {
+        if (dialog != null && activity != null && !activity.isFinishing()) {
+            dialog.show();
+        }
     }
 
     private static void notNetworked() {

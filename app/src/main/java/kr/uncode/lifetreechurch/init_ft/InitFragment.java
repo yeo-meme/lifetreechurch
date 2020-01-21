@@ -4,8 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,23 +16,26 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
 import kr.uncode.lifetreechurch.IntroduceBottomActivity.IntroduceActivity;
+import kr.uncode.lifetreechurch.IntroduceBottomActivity.IntroduceChActivity;
+import kr.uncode.lifetreechurch.Market.DialogMarketVersionConfirm;
+import kr.uncode.lifetreechurch.Market.MarketUpdate;
 import kr.uncode.lifetreechurch.R;
 import kr.uncode.lifetreechurch.WeeklyFm.Weekly_Fm;
 import kr.uncode.lifetreechurch.base.BaseFragment;
 import kr.uncode.lifetreechurch.databinding.FmMainBinding;
 import kr.uncode.lifetreechurch.fm_happy.HappyColumnFragment;
 import kr.uncode.lifetreechurch.fm_news.NewMiddleFragment;
-import kr.uncode.lifetreechurch.fm_video.VideoFragment;
-import kr.uncode.lifetreechurch.IntroduceBottomActivity.IntroduceChActivity;
 import kr.uncode.lifetreechurch.fm_video.VideoListFragment;
 import kr.uncode.lifetreechurch.utils.MLog;
+import kr.uncode.lifetreechurch.utils.MPref;
 import kr.uncode.lifetreechurch.utils.Utils;
 
-public class InitFragment extends BaseFragment {
+public class InitFragment extends BaseFragment implements MarketUpdate.MarketUpdateTaskCallback {
     private ProgressDialog progressDialog;
-
+    private DialogMarketVersionConfirm dialog;
     private Context context;
     FmMainBinding binding;
+    private boolean isVersionCheckRunning = false;
 
     @Nullable
     @Override
@@ -46,11 +48,34 @@ public class InitFragment extends BaseFragment {
         toolbarMenuButtonController(false);
 
 
+        //dialog init
+        dialog = new DialogMarketVersionConfirm(getContext());
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
         return binding.getRoot();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (dialog != null && dialog.isShowing()) dialog.cancel();
+    }
 
-//    public static void isNetworkConnected(Context context) {
+
+    private void startActivityGoogleMarket() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=kr.uncode.lifetreechurch"));
+            intent.setPackage("kr.uncode.lifetreechurch");
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //    public static void isNetworkConnected(Context context) {
 //
 //        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 //        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -111,6 +136,19 @@ public class InitFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MLog.i();
+
+        //앱 체크
+        if (!isVersionCheckRunning && Utils.isNetworkConnected(getActivity())) {
+            isVersionCheckRunning = true;
+            MarketUpdate checkTask = new MarketUpdate(getActivity());
+            checkTask.setTaskCallback(this);
+            checkTask.execute();
+        }
+    }
 
     private void news(View view) {
 
@@ -166,6 +204,58 @@ public class InitFragment extends BaseFragment {
         }
 //        loading(view);
 //        binding.progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void marketUpdate(int type) {
+
+        isVersionCheckRunning = false;
+
+        switch (type) {
+            case MarketUpdate.MARKET_UPDATE_NOTHING:
+                MLog.i("MARKET_UPDATE_NOTHING");
+                break;
+            case MarketUpdate.MARKET_UPDATE_REQUIRED:
+                MLog.i("MARKET_UPDATE_REQUIRED");
+                dialog.setOnDialogCallback(new DialogMarketVersionConfirm.DialogCallback() {
+                    @Override
+                    public void dialogCallbackOK() {
+                        startActivityGoogleMarket();
+                    }
+
+                    @Override
+                    public void dialogCallbackCANCEL() {
+                        getActivity().finish();
+                    }
+                });
+
+
+                dialog.setType(type);
+                Utils.displayDialog(dialog, getActivity());
+                break;
+            case MarketUpdate.MARKET_UPDATE_OPTIONAL:
+                MLog.i("MARKET_UPDATE_OPTIONAL");
+                dialog.setOnDialogCallback(new DialogMarketVersionConfirm.DialogCallback() {
+                    @Override
+                    public void dialogCallbackOK() {
+                        startActivityGoogleMarket();
+                    }
+
+                    @Override
+                    public void dialogCallbackCANCEL() {
+
+                    }
+                });
+                dialog.setType(type);
+
+
+                if (MPref.isMarketUpdateDialogShow()) {
+                    Utils.displayDialog(dialog,getActivity());
+                } else {
+                    MLog.d("next Activity");
+                }
+                break;
+        }
     }
 
 //    public void loading(View view) {

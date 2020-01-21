@@ -20,7 +20,7 @@ public class MPref {
 
     public static void setMarketUpdateDialogCheckInTime(long checkInTime) {
         MLog.d("save checkInTime :" + checkInTime);
-        prefsEditor.putLong(APP_SHARED_PREFS, checkInTime);
+        prefsEditor.putLong(MARKET_UPDATE_DIALOG_CHECK_IN_TIME, checkInTime);
         prefsEditor.commit();
     }
 

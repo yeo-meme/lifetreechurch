@@ -147,6 +147,8 @@ public class InitFragment extends BaseFragment implements MarketUpdate.MarketUpd
             MarketUpdate checkTask = new MarketUpdate(getActivity());
             checkTask.setTaskCallback(this);
             checkTask.execute();
+        } else {
+            MLog.d("check resume");
         }
     }
 

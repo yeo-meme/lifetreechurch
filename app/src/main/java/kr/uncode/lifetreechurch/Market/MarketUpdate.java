@@ -47,7 +47,7 @@ public class MarketUpdate extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... voids) {
+    protected String doInBackground(Void... params) {
 
         try {
             String StoreUrl = "https://play.google.com/store/apps/details?id=kr.uncode.lifetreechurch";
@@ -113,9 +113,7 @@ public class MarketUpdate extends AsyncTask<Void, Void, String> {
                         taskCallback.marketUpdate(MARKET_UPDATE_NOTHING);
                     }
                 }
-
             } catch (PackageManager.NameNotFoundException e) {
-
                 MLog.d(e.getMessage());
                 taskCallback.marketUpdate(MARKET_UPDATE_NOTHING);
             }

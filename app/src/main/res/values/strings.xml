@@ -2,7 +2,7 @@
 
 <resources>
     <string name="app_name">LifeTreeChurch</string>
-    <string name="youtube_key">AIzaSyAw_oKC0mMtfXVZYdkxVBrdpAhYQylkpDU</string>
+    <string name="youtube_key"></string>
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="alert_market_update_required">필수 업데이트가 있습니다.\n업데이트 후 사용 가능합니다.</string>
     <string name="str_next">다음에</string>
